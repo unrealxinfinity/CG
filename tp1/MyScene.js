@@ -29,11 +29,14 @@ export class MyScene extends CGFscene {
 
     //Initialize scene objects
     this.axis = new CGFaxis(this);
-    this.parallelogram = new MyTriangleBig(this);
+    this.triangleSmall = new MyTriangleSmall(this);
+    this.triangleBig = new MyTriangleBig(this);
+    
+    
 
     //Objects connected to MyInterface
     this.displayAxis = true;
-    this.displayParallelogram = true;
+    this.exchangeTriangleSize = true;
     this.scaleFactor = 1;
   }
   initLights() {
@@ -96,7 +99,8 @@ export class MyScene extends CGFscene {
 
     // ---- BEGIN Primitive drawing section
 
-    if (this.displayParallelogram) this.parallelogram.display();
+    if (this.exchangeTriangleSize) this.triangleBig.display();
+    else this.triangleSmall.display();g
 
     // ---- END Primitive drawing section
   }
