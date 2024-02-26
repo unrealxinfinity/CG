@@ -100,7 +100,7 @@ export class MyScene extends CGFscene {
     // ---- BEGIN Primitive drawing section
 
     if (this.exchangeTriangleSize) this.triangleBig.display();
-    else this.triangleSmall.display();g
+    else this.triangleSmall.display();
 
     // ---- END Primitive drawing section
   }
