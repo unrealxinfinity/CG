@@ -5,6 +5,7 @@ import { MyTriangleSmall } from "./MyTriangleSmall.js";
 import { MyTriangleBig } from "./MyTriangleBig.js";
 import { MyParallelogram } from "./MyParallelogram.js";
 import { MyUnitCube } from "./MyUnitCube.js";
+import { MyTangram } from "./MyTangram.js";
 
 /**
  * MyScene
@@ -34,6 +35,7 @@ export class MyScene extends CGFscene {
     this.diamond = new MyDiamond(this);
     this.parallelogram = new MyParallelogram(this);
     this.cube = new MyUnitCube(this);
+    this.tangram = new MyTangram(this);
     
     
 
@@ -100,57 +102,8 @@ export class MyScene extends CGFscene {
     ];
 
     this.multMatrix(sca);
-    /*
-    //Diamond
-    //this.translate(-1,0,0)
-    this.pushMatrix();
-    var m = [1,0,0,0,
-       0,1,0,0,
-       0,0,1,0,
-      -1,0,0,1];
-    this.multMatrix(m);
-    this.diamond.display();
-    this.popMatrix();
-    
-    //Triangle Small
-    this.pushMatrix();
-    this.translate(1,0,0);
-    this.triangleSmall.display();
-    this.popMatrix();
-    //Triangle Big
-    this.pushMatrix();
-    this.translate(0,-2,0);
-    this.rotate(Math.PI/2,0,0,1);
-    this.scale(2,2,2);
-    this.triangleSmall.display();
-    this.popMatrix();
-    //Triangle Big 2
-    this.pushMatrix();
-    this.translate(0,-2,0);
-    this.rotate(-Math.PI/2,0,0,1);
-    this.scale(2,2,2);
-    this.triangleSmall.display();
-    this.popMatrix();
-    //Triangle Small 2
-    this.pushMatrix();
-    this.translate(-2,-1,0);
-    this.rotate(-Math.PI/2,0,0,1);
-    this.triangleSmall.display();
-    this.popMatrix();
-    // Triangle medium 
-    this.pushMatrix();
-    this.translate(1,-1,0);
-    this.rotate(-Math.PI/4,0,0,1);
-    this.scale(Math.sqrt(2),Math.sqrt(2),Math.sqrt(2));
-    this.triangleSmall.display();
-    this.popMatrix();
-    this.pushMatrix();
-    this.rotate(Math.PI/1.5,0,0,1);
-    this.scale(1,-1,1);
-    this.parallelogram.display();
-    this.popMatrix();
-    */
-    this.cube.display();
+
+    this.tangram.display();
     // ---- BEGIN Primitive drawing section
 
     //if (this.exchangeTriangleSize) this.triangleBig.display();
