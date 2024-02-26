@@ -36,7 +36,6 @@ export class MyUnitCube extends CGFobject {
 			3, 0, 4,
 			6, 2, 5,
 			2, 1, 5,
-
 		];
 
 		//The defined indices (and corresponding vertices)
