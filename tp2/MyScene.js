@@ -4,6 +4,7 @@ import { MyTriangle } from "./MyTriangle.js";
 import { MyTriangleSmall } from "./MyTriangleSmall.js";
 import { MyTriangleBig } from "./MyTriangleBig.js";
 import { MyParallelogram } from "./MyParallelogram.js";
+import { MyUnitCube } from "./MyUnitCube.js";
 
 /**
  * MyScene
@@ -32,6 +33,7 @@ export class MyScene extends CGFscene {
     this.triangleSmall = new MyTriangleSmall(this);
     this.diamond = new MyDiamond(this);
     this.parallelogram = new MyParallelogram(this);
+    this.cube = new MyUnitCube(this);
     
     
 
@@ -98,6 +100,7 @@ export class MyScene extends CGFscene {
     ];
 
     this.multMatrix(sca);
+    /*
     //Diamond
     //this.translate(-1,0,0)
     this.pushMatrix();
@@ -146,6 +149,8 @@ export class MyScene extends CGFscene {
     this.scale(1,-1,1);
     this.parallelogram.display();
     this.popMatrix();
+    */
+    this.cube.display();
     // ---- BEGIN Primitive drawing section
 
     //if (this.exchangeTriangleSize) this.triangleBig.display();
