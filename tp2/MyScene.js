@@ -103,11 +103,11 @@ export class MyScene extends CGFscene {
 
     this.multMatrix(sca);
 
-    this.pushMatrix();
+    /*this.pushMatrix();
     this.translate(0, 0, -3.5);
     this.scale(6, 6, 6);
     this.cube.display();
-    this.popMatrix();
+    this.popMatrix();*/
     this.tangram.display();
     // ---- BEGIN Primitive drawing section
 
