@@ -43,10 +43,12 @@ export class MyScene extends CGFscene {
         this.displayNormals = false;
         this.objectComplexity = 0.5;
         this.scaleFactor = 2.0;
+        this.globalAmbientLight= 0.0;
+
 
     }
     initLights() {
-        this.setGlobalAmbientLight(0.3, 0.3, 0.3, 1.0);
+        this.setGlobalAmbientLight(this.globalAmbientLight, this.globalAmbientLight, this.globalAmbientLight, 1.0);
 
         this.lights[0].setPosition(2.0, 2.0, -1.0, 1.0);
         this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
@@ -129,8 +131,8 @@ export class MyScene extends CGFscene {
 
         this.customMaterialValues = {
             'Ambient': '#0000ff',
-            'Diffuse': '#ff0000',
-            'Specular': '#000000',
+            'Diffuse': '#000000',
+            'Specular': '#ffff00',
             'Shininess': 10
         }
         this.customMaterial = new CGFappearance(this);
@@ -174,6 +176,8 @@ export class MyScene extends CGFscene {
         
         this.objects[this.selectedObject].display();
         this.popMatrix();
+        this.setGlobalAmbientLight(this.globalAmbientLight, this.globalAmbientLight, this.globalAmbientLight, 1.0);
+
         // ---- END Primitive drawing section
     }
 }
