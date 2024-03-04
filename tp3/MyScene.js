@@ -2,6 +2,8 @@ import { CGFscene, CGFcamera, CGFaxis, CGFappearance } from "../lib/CGF.js";
 import { MyPyramid } from "./MyPyramid.js";
 import { MyCone } from "./MyCone.js";
 import { MyPlane } from "./MyPlane.js";
+import { MyTangram } from "./MyTangram.js";
+import { MyUnitCube } from "./MyUnitCube.js";
 
 /**
 * MyScene
@@ -30,6 +32,8 @@ export class MyScene extends CGFscene {
         this.plane = new MyPlane(this, 5);
         this.cone = new MyCone(this, 3, 1);
         this.pyramid = new MyPyramid(this, 3, 1);
+        this.tangram = new MyTangram(this);
+        this.cube = new MyUnitCube(this);
         
         this.objects = [this.plane, this.pyramid, this.cone];
 
@@ -160,19 +164,35 @@ export class MyScene extends CGFscene {
         if (this.displayAxis)
             this.axis.display();
 
-        // ---- BEGIN Primitive drawing section
-
         this.materials[this.selectedMaterial].apply();
 
         this.pushMatrix();
         this.scale(this.scaleFactor,this.scaleFactor,this.scaleFactor);
         
-        if (this.displayNormals)
+        if (this.displayNormals) {
             this.objects[this.selectedObject].enableNormalViz();
-        else
+            this.tangram.enableNormalVizT();
+            this.cube.enableNormalViz();
+        }
+        else {
             this.objects[this.selectedObject].disableNormalViz();
-        
-        this.objects[this.selectedObject].display();
+            this.tangram.disableNormalVizT();
+            this.cube.disableNormalViz();
+        }
+
+        this.pushMatrix();
+        this.translate(2.5, 0.1, 3.25);
+        this.rotate(-Math.PI/2, 1, 0, 0);
+        // matrix + tangram set
+        this.pushMatrix();
+        this.translate(0, -0.5, -0.6);
+        this.scale(5, 7.5, 1);
+        this.cube.display();
+        this.popMatrix();
+        this.tangram.display();
+        // end of matrix + tangram set
+        this.popMatrix();
+
         this.popMatrix();
         // ---- END Primitive drawing section
     }
