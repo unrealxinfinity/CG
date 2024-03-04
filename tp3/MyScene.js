@@ -107,6 +107,13 @@ export class MyScene extends CGFscene {
 
 
     initMaterials() {
+        // Wood color
+        this.materialWood = new CGFappearance(this);
+        this.materialWood.setAmbient(0.478, 0.22, 0.071, 1.0);
+        this.materialWood.setDiffuse(0.478, 0.22, 0.071, 1.0);
+        this.materialWood.setSpecular(0, 0, 0, 1.0);
+        this.materialWood.setShininess(10.0);
+
         // Red Ambient (no diffuse, no specular)
         this.material1 = new CGFappearance(this);
         this.material1.setAmbient(1, 0, 0, 1.0);
@@ -187,8 +194,10 @@ export class MyScene extends CGFscene {
         this.pushMatrix();
         this.translate(0, -0.5, -0.6);
         this.scale(5, 7.5, 1);
+        this.materialWood.apply();
         this.cube.display();
         this.popMatrix();
+        this.materials[this.selectedMaterial].apply();
         this.tangram.display();
         // end of matrix + tangram set
         this.popMatrix();
