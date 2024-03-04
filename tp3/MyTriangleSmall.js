@@ -14,18 +14,25 @@ export class MyTriangleSmall extends CGFobject {
 		this.vertices = [
 			-1,0,0, //0
 			1,0,0, //1
-			0,1,0 //2
+			0,1,0, //2
+			-1,0,0, //3 0 repeat
+			1,0,0, //4 1 repeat
+			0,1,0 //5 2 repeat
 		];
 
 		//Counter-clockwise reference of vertices
 		this.indices = [
-			1,2,0
+			1,2,0,
+			3,5,4
 		];
 
 		this.normals = [
 			0, 0, 1,
 			0, 0, 1,
-			0, 0, 1
+			0, 0, 1,
+			0,0,-1,
+			0,0,-1,
+			0,0,-1
 		]
 		
 

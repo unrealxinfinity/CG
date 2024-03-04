@@ -189,7 +189,7 @@ export class MyScene extends CGFscene {
         this.pushMatrix();
         this.translate(0, -0.5, -0.6);
         this.scale(5, 7.5, 1);
-        this.cube.display();
+        //this.cube.display();
         this.popMatrix();
         this.tangram.display();
         // end of matrix + tangram set
