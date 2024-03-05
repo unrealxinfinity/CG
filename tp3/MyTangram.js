@@ -102,7 +102,6 @@ export class MyTangram extends CGFobject {
 		this.scene.pushMatrix();
 		this.scene.rotate(Math.PI/1.5,0,0,1);
 		this.scene.scale(1,-1,1);
-		this.setColor(0.996, 1, 0);
 		parallelogramMaterial.apply();
 		this.parallelogram.display();
 		this.scene.popMatrix();
