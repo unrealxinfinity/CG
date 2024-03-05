@@ -198,7 +198,7 @@ export class MyScene extends CGFscene {
         this.cube.display();
         this.popMatrix();
         this.materials[this.selectedMaterial].apply();
-        this.tangram.display();
+        this.tangram.display(this.customMaterial);
         // end of matrix + tangram set
         this.popMatrix();
 
