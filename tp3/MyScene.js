@@ -4,6 +4,7 @@ import { MyCone } from "./MyCone.js";
 import { MyPlane } from "./MyPlane.js";
 import { MyTangram } from "./MyTangram.js";
 import { MyUnitCube } from "./MyUnitCube.js";
+import { MyPrism } from "./MyPrism.js";
 
 /**
 * MyScene
@@ -34,6 +35,7 @@ export class MyScene extends CGFscene {
         this.pyramid = new MyPyramid(this, 3, 1);
         this.tangram = new MyTangram(this);
         this.cube = new MyUnitCube(this);
+        this.prism = new MyPrism(this, 6, 1);
         
         this.objects = [this.plane, this.pyramid, this.cone];
 
@@ -178,15 +180,16 @@ export class MyScene extends CGFscene {
         
         if (this.displayNormals) {
             this.objects[this.selectedObject].enableNormalViz();
-            this.tangram.enableNormalVizT();
-            this.cube.enableNormalViz();
+            //this.tangram.enableNormalVizT();
+            //this.cube.enableNormalViz();
         }
         else {
             this.objects[this.selectedObject].disableNormalViz();
-            this.tangram.disableNormalVizT();
-            this.cube.disableNormalViz();
+            //this.tangram.disableNormalVizT();
+            //this.cube.disableNormalViz();
         }
 
+        /*
         this.pushMatrix();
         this.translate(2.5, 0.1, 3.25);
         this.rotate(-Math.PI/2, 1, 0, 0);
@@ -202,7 +205,10 @@ export class MyScene extends CGFscene {
         // end of matrix + tangram set
         this.popMatrix();
 
-        this.popMatrix();
+        this.popMatrix();*/
+        this.prism.display();
+
+
         // ---- END Primitive drawing section
     }
 }
