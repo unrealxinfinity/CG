@@ -43,7 +43,9 @@ export class MyPrism extends CGFobject {
 			this.indices.push(...[(start+2+2*this.slices), start+2*this.slices, start+2]);
 			vertex_offset = (vertex_offset == 0) ? 1 : 0;
 		}
-		const final = 2*this.slices - 2;
+		const final = 2*this.slices*(index+1) - 2;
+		console.log([final, offset+1, final+2*this.slices])
+		console.log([offset+2*this.slices+1, final+2*this.slices, offset+1])
 		this.indices.push(...[final, offset+1, final+2*this.slices]);
 		this.indices.push(...[offset+2*this.slices+1, final+2*this.slices, offset+1]);
 	}
