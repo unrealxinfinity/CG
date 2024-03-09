@@ -180,11 +180,13 @@ export class MyScene extends CGFscene {
         
         if (this.displayNormals) {
             this.objects[this.selectedObject].enableNormalViz();
+            this.prism.enableNormalViz();
             //this.tangram.enableNormalVizT();
             //this.cube.enableNormalViz();
         }
         else {
             this.objects[this.selectedObject].disableNormalViz();
+            this.prism.disableNormalViz();
             //this.tangram.disableNormalVizT();
             //this.cube.disableNormalViz();
         }
