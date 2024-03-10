@@ -150,10 +150,10 @@ export class MyScene extends CGFscene {
 
         this.updateCustomMaterial();
 
-        this.materials = [this.material1, this.material2, this.material3, this.customMaterial];
+        this.materials = [this.material1, this.material2, this.material3, this.customMaterial,this.materialWood];
 
         // Labels and ID's for object selection on MyInterface
-        this.materialIDs = {'Red Ambient': 0, 'Red Diffuse': 1, 'Red Specular': 2, 'Custom': 3 };
+        this.materialIDs = {'Red Ambient': 0, 'Red Diffuse': 1, 'Red Specular': 2, 'Custom': 3,"Wood Specular": 4 };
     }
     display() {
         // ---- BEGIN Background, camera and axis setup
@@ -196,7 +196,7 @@ export class MyScene extends CGFscene {
         this.pushMatrix();
         this.translate(0, -0.5, -0.6);
         this.scale(5, 7.5, 1);
-        this.materialWood.apply();
+        this.materials[4].apply();
         this.cube.display();
         this.popMatrix();
         this.materials[this.selectedMaterial].apply();
