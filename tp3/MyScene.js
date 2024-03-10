@@ -4,7 +4,8 @@ import { MyCone } from "./MyCone.js";
 import { MyPlane } from "./MyPlane.js";
 import { MyTangram } from "./MyTangram.js";
 import { MyUnitCube } from "./MyUnitCube.js";
-
+import { MyPrism } from "./MyPrism.js";
+import { MyCylinder } from "./MyCylinder.js";
 /**
 * MyScene
 * @constructor
@@ -34,11 +35,12 @@ export class MyScene extends CGFscene {
         this.pyramid = new MyPyramid(this, 3, 1);
         this.tangram = new MyTangram(this);
         this.cube = new MyUnitCube(this);
-        
-        this.objects = [this.plane, this.pyramid, this.cone];
+        this.prism = new MyPrism(this, 8, 20);
+        this.cylinder = new MyCylinder(this, 8, 20);
+        this.objects = [this.plane, this.pyramid, this.cone, this.cube, this.prism, this.tangram,this.cylinder];
 
         // Labels and ID's for object selection on MyInterface
-        this.objectIDs = { 'Plane': 0 , 'Pyramid': 1, 'Cone': 2};
+        this.objectIDs = { 'Plane': 0 , 'Pyramid': 1, 'Cone': 2, 'Cube': 3, 'Prism': 4, 'Tangram': 5, 'Cylinder': 6};
 
         //Other variables connected to MyInterface
         this.selectedObject = 0;
@@ -180,15 +182,18 @@ export class MyScene extends CGFscene {
         
         if (this.displayNormals) {
             this.objects[this.selectedObject].enableNormalViz();
-            this.tangram.enableNormalVizT();
-            this.cube.enableNormalViz();
+            //this.prism.enableNormalViz();
+            //this.tangram.enableNormalVizT();
+            //this.cube.enableNormalViz();
         }
         else {
             this.objects[this.selectedObject].disableNormalViz();
-            this.tangram.disableNormalVizT();
-            this.cube.disableNormalViz();
+            //this.prism.disableNormalViz();
+            //this.tangram.disableNormalVizT();
+            //this.cube.disableNormalViz();
         }
 
+        /*
         this.pushMatrix();
         this.translate(2.5, 0.1, 3.25);
         this.rotate(-Math.PI/2, 1, 0, 0);
@@ -200,13 +205,19 @@ export class MyScene extends CGFscene {
         this.cube.display();
         this.popMatrix();
         this.materials[this.selectedMaterial].apply();
-        this.tangram.display();
+        this.tangram.display(this.customMaterial);
         // end of matrix + tangram set
         this.popMatrix();
 
+        this.popMatrix();*/
+        /*this.pushMatrix();
+        this.rotate(-Math.PI/2, 1, 0, 0);
+        this.prism.display();
         this.popMatrix();
+        
+        */
+        this.objects[this.selectedObject].display();
         this.setGlobalAmbientLight(this.globalAmbientLight, this.globalAmbientLight, this.globalAmbientLight, 1.0);
-
         // ---- END Primitive drawing section
     }
 }
