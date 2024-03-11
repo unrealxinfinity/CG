@@ -5,7 +5,7 @@ import { MyPlane } from "./MyPlane.js";
 import { MyTangram } from "./MyTangram.js";
 import { MyUnitCube } from "./MyUnitCube.js";
 import { MyPrism } from "./MyPrism.js";
-
+import { MyCylinder } from "./MyCylinder.js";
 /**
 * MyScene
 * @constructor
@@ -36,11 +36,11 @@ export class MyScene extends CGFscene {
         this.tangram = new MyTangram(this);
         this.cube = new MyUnitCube(this);
         this.prism = new MyPrism(this, 8, 20);
-        
-        this.objects = [this.plane, this.pyramid, this.cone];
+        this.cylinder = new MyCylinder(this, 8, 20);
+        this.objects = [this.plane, this.pyramid, this.cone, this.cube, this.prism, this.tangram,this.cylinder];
 
         // Labels and ID's for object selection on MyInterface
-        this.objectIDs = { 'Plane': 0 , 'Pyramid': 1, 'Cone': 2};
+        this.objectIDs = { 'Plane': 0 , 'Pyramid': 1, 'Cone': 2, 'Cube': 3, 'Prism': 4, 'Tangram': 5, 'Cylinder': 6};
 
         //Other variables connected to MyInterface
         this.selectedObject = 0;
@@ -49,10 +49,12 @@ export class MyScene extends CGFscene {
         this.displayNormals = false;
         this.objectComplexity = 0.5;
         this.scaleFactor = 2.0;
+        this.globalAmbientLight= 0.0;
+
 
     }
     initLights() {
-        this.setGlobalAmbientLight(0.3, 0.3, 0.3, 1.0);
+        this.setGlobalAmbientLight(this.globalAmbientLight, this.globalAmbientLight, this.globalAmbientLight, 1.0);
 
         this.lights[0].setPosition(2.0, 2.0, -1.0, 1.0);
         this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
@@ -142,18 +144,18 @@ export class MyScene extends CGFscene {
 
         this.customMaterialValues = {
             'Ambient': '#0000ff',
-            'Diffuse': '#ff0000',
-            'Specular': '#000000',
+            'Diffuse': '#000000',
+            'Specular': '#ffff00',
             'Shininess': 10
         }
         this.customMaterial = new CGFappearance(this);
 
         this.updateCustomMaterial();
 
-        this.materials = [this.material1, this.material2, this.material3, this.customMaterial];
+        this.materials = [this.material1, this.material2, this.material3, this.customMaterial,this.materialWood];
 
         // Labels and ID's for object selection on MyInterface
-        this.materialIDs = {'Red Ambient': 0, 'Red Diffuse': 1, 'Red Specular': 2, 'Custom': 3 };
+        this.materialIDs = {'Red Ambient': 0, 'Red Diffuse': 1, 'Red Specular': 2, 'Custom': 3,"Wood Specular": 4 };
     }
     display() {
         // ---- BEGIN Background, camera and axis setup
@@ -180,13 +182,13 @@ export class MyScene extends CGFscene {
         
         if (this.displayNormals) {
             this.objects[this.selectedObject].enableNormalViz();
-            this.prism.enableNormalViz();
+            //this.prism.enableNormalViz();
             //this.tangram.enableNormalVizT();
             //this.cube.enableNormalViz();
         }
         else {
             this.objects[this.selectedObject].disableNormalViz();
-            this.prism.disableNormalViz();
+            //this.prism.disableNormalViz();
             //this.tangram.disableNormalVizT();
             //this.cube.disableNormalViz();
         }
@@ -199,7 +201,7 @@ export class MyScene extends CGFscene {
         this.pushMatrix();
         this.translate(0, -0.5, -0.6);
         this.scale(5, 7.5, 1);
-        this.materialWood.apply();
+        this.materials[4].apply();
         this.cube.display();
         this.popMatrix();
         this.materials[this.selectedMaterial].apply();
@@ -208,12 +210,14 @@ export class MyScene extends CGFscene {
         this.popMatrix();
 
         this.popMatrix();*/
-        this.pushMatrix();
+        /*this.pushMatrix();
         this.rotate(-Math.PI/2, 1, 0, 0);
         this.prism.display();
         this.popMatrix();
-
-
+        
+        */
+        this.objects[this.selectedObject].display();
+        this.setGlobalAmbientLight(this.globalAmbientLight, this.globalAmbientLight, this.globalAmbientLight, 1.0);
         // ---- END Primitive drawing section
     }
 }
