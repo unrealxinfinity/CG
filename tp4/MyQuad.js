@@ -15,24 +15,24 @@ export class MyQuad extends CGFobject {
 	
 	initBuffers() {
 		this.vertices = [
-			-0.5, -0.5, 0,	//0
-			0.5, -0.5, 0,	//1
-			-0.5, 0.5, 0,	//2
-			0.5, 0.5, 0		//3
+			-0.5, 0, -0.5, //0 this
+			0.5, 0, -0.5,  //1 this
+			-0.5, 0, 0.5,  //2 this
+			0.5, 0, 0.5,    //3 this
 		];
 
 		//Counter-clockwise reference of vertices
 		this.indices = [
-			0, 1, 2,
-			1, 3, 2
+			2,3,0,
+            3,1,0
 		];
 
 		//Facing Z positive
 		this.normals = [
-			0, 0, 1,
-			0, 0, 1,
-			0, 0, 1,
-			0, 0, 1
+			0, 1, 0,
+			0, 1, 0,
+			0, 1, 0,
+			0, 1, 0
 		];
 		
 		/*
