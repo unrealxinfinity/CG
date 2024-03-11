@@ -12,7 +12,7 @@ export class MyTriangleSmall extends CGFobject {
 
 	setTexCoords(texCoords) {
 		this.texCoords = texCoords;
-		this.initGLBuffers();
+		this.updateTexCoordsGLBuffers();
 	}
 	
 	initBuffers() {
