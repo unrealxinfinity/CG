@@ -45,7 +45,7 @@ export class MyTangram extends CGFobject {
 		this.initGLBuffers();
 	}
 
-	display(parallelogramMaterial) {
+	display(tangramMaterial) {
 		this.scene.pushMatrix();
 		var m = [1,0,0,0,
 		0,1,0,0,
@@ -53,15 +53,14 @@ export class MyTangram extends CGFobject {
 		-1,0,0,1];
 		this.scene.multMatrix(m);
 		this.setColor(0.25, 1, 0);
-		this.material.apply();
+		tangramMaterial.apply();
 		this.diamond.display();
 		this.scene.popMatrix();
 		
 		//Triangle Small
 		this.scene.pushMatrix();
 		this.scene.translate(1,0,0);
-		this.setColor(0.616, 0.208, 0.702);
-		this.material.apply();
+		this.triangle.setTexCoords([0, 0, 0, 0.5, 0.25, 0.25]);
 		this.triangle.display();
 		this.scene.popMatrix();
 		//Triangle Big
@@ -69,8 +68,7 @@ export class MyTangram extends CGFobject {
 		this.scene.translate(0,-2,0);
 		this.scene.rotate(Math.PI/2,0,0,1);
 		this.scene.scale(2,2,2);
-		this.setColor(0.851, 0.494, 0.031);
-		this.material.apply();
+		this.triangle.setTexCoords([1, 1, 1, 0, 0.5, 0.5]);
 		this.triangle.display();
 		this.scene.popMatrix();
 		//Triangle Big 2
@@ -78,16 +76,14 @@ export class MyTangram extends CGFobject {
 		this.scene.translate(0,-2,0);
 		this.scene.rotate(-Math.PI/2,0,0,1);
 		this.scene.scale(2,2,2);
-		this.setColor(0.173, 0.643, 0.941);
-		this.material.apply();
+		this.triangle.setTexCoords([1, 0, 0, 0, 0.5, 0.5]);
 		this.triangle.display();
 		this.scene.popMatrix();
 		//Triangle Small 2
 		this.scene.pushMatrix();
 		this.scene.translate(-2,-1,0);
 		this.scene.rotate(-Math.PI/2,0,0,1);
-		this.setColor(0.941, 0.059, 0.059);
-		this.material.apply();
+		this.triangle.setTexCoords([0.25, 0.75, 0.75, 0.75, 0.5, 0.5]);
 		this.triangle.display();
 		this.scene.popMatrix();
 		// Triangle medium 
@@ -95,14 +91,12 @@ export class MyTangram extends CGFobject {
 		this.scene.translate(1,-1,0);
 		this.scene.rotate(-Math.PI/4,0,0,1);
 		this.scene.scale(Math.sqrt(2),Math.sqrt(2),Math.sqrt(2));
-		this.setColor(1, 0.694, 0.843);
-		this.material.apply();
+		this.triangle.setTexCoords([0.5, 1, 0, 0.5, 0, 1]);
 		this.triangle.display();
 		this.scene.popMatrix();
 		this.scene.pushMatrix();
 		this.scene.rotate(Math.PI/1.5,0,0,1);
 		this.scene.scale(1,-1,1);
-		parallelogramMaterial.apply();
 		this.parallelogram.display();
 		this.scene.popMatrix();
 	}

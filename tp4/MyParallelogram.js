@@ -18,6 +18,13 @@ export class MyParallelogram extends CGFobject {
             3, 1, 0  //3
 		];
 
+		this.texCoords = [
+			1, 1,
+			0.75, 0.75,
+			0.5, 1,
+			0.25, 0.75
+		]
+
 		//Counter-clockwise reference of vertices
 		this.indices = [
 			0, 2, 1,

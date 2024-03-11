@@ -9,6 +9,11 @@ export class MyTriangleSmall extends CGFobject {
 		super(scene);
 		this.initBuffers();
 	}
+
+	setTexCoords(texCoords) {
+		this.texCoords = texCoords;
+		this.initGLBuffers();
+	}
 	
 	initBuffers() {
 		this.vertices = [
@@ -16,6 +21,8 @@ export class MyTriangleSmall extends CGFobject {
 			1,0,0, //1
 			0,1,0 //2
 		];
+
+		this.texCoords = []
 
 		//Counter-clockwise reference of vertices
 		this.indices = [

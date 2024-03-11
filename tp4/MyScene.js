@@ -1,5 +1,6 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFtexture } from "../lib/CGF.js";
 import { MyQuad } from "./MyQuad.js";
+import { MyTangram } from "./MyTangram.js";
 
 /**
  * MyScene
@@ -27,6 +28,7 @@ export class MyScene extends CGFscene {
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.quad = new MyQuad(this);
+        this.tangram = new MyTangram(this);
 
         //------ Applied Material
         this.quadMaterial = new CGFappearance(this);
@@ -46,6 +48,7 @@ export class MyScene extends CGFscene {
 
         //-------Objects connected to MyInterface
         this.displayAxis = true;
+        this.hideQuad = false;
         this.scaleFactor = 5;
         this.selectedTexture = -1;        
         this.wrapS = 0;
@@ -58,6 +61,9 @@ export class MyScene extends CGFscene {
         this.textureIds = { 'Board': 0, 'Floor': 1, 'Window': 2 };
         this.wrappingS = { 'Repeat': 0, 'Clamp to edge': 1, 'Mirrored repeat': 2 };
         this.wrappingT = { 'Repeat': 0, 'Clamp to edge': 1, 'Mirrored repeat': 2 };
+
+        this.tangramMaterial = new CGFappearance(this);
+        this.tangramMaterial.setTexture(new CGFtexture(this, 'images/tangram.png'));
 
       }
 
@@ -116,7 +122,8 @@ export class MyScene extends CGFscene {
 
         // ---- BEGIN Primitive drawing section
 
-        this.quadMaterial.apply();
+        if (!this.hideQuad)
+            this.quadMaterial.apply();
 
         // Default texture filtering in WebCGF is LINEAR. 
         // Uncomment next line for NEAREST when magnifying, or 
@@ -124,7 +131,10 @@ export class MyScene extends CGFscene {
         
         // this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST);
 
-        this.quad.display();
+        if (!this.hideQuad)
+            this.quad.display();
+
+        this.tangram.display(this.tangramMaterial);
 
         // ---- END Primitive drawing section
     }
