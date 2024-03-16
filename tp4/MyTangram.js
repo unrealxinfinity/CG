@@ -46,6 +46,7 @@ export class MyTangram extends CGFobject {
 	}
 
 	display(tangramMaterial) {
+
 		this.scene.pushMatrix();
 		var m = [1,0,0,0,
 		0,1,0,0,

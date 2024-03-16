@@ -1,4 +1,4 @@
-import {CGFobject} from '../lib/CGF.js';
+import {CGFappearance, CGFobject, CGFtexture} from '../lib/CGF.js';
 import { MyQuad } from './MyQuad.js';
 /**
  * MyDiamond
@@ -6,9 +6,20 @@ import { MyQuad } from './MyQuad.js';
  * @param scene - Reference to MyScene object
  */
 export class MyUnitCubeQuad extends CGFobject {
-	constructor(scene) {
+	constructor(scene,textura1,texture,texture3,textura4,textura5,textura6) {
 		super(scene);
 		this.initBuffers();
+		this.texture1=textura1;
+		this.texture2=texture;
+		this.texture3=texture3;
+		this.texture4=textura4;
+		this.texture5=textura5;
+		this.texture6=textura6;
+		this.material = new CGFappearance(this.scene);
+		this.material.setAmbient(0.1, 0.1, 0.1, 1);
+        this.material.setDiffuse(0.9, 0.9, 0.9, 1);
+        this.material.setSpecular(0.1, 0.1, 0.1, 1);
+        this.material.setShininess(10.0);
 	}
 	
 	initBuffers() {
@@ -24,38 +35,55 @@ export class MyUnitCubeQuad extends CGFobject {
 		this.initGLBuffers();
 	}
 	display(){
+		
+		this.material.setTexture(this.texture6);
+		this.material.apply();
 		this.scene.pushMatrix();
 		this.scene.translate(0,-0.5,0);
 		this.scene.rotate(Math.PI,1,0,0);
 		this.quad.display();
 		this.scene.popMatrix();
-		
+
+		this.material.setTexture(this.texture1);
+		this.material.apply();
 		this.scene.pushMatrix();
 		this.scene.translate(0,0.5,0);
 		this.quad.display();
 		this.scene.popMatrix();
 
+		this.material.setTexture(this.texture2);
+		this.material.apply();
 		this.scene.pushMatrix();
 		this.scene.translate(0,0,0.5);
 		this.scene.rotate(Math.PI/2,1,0,0);
+		this.quad.updateTexCoords([0,0,1,0,0,1,1,1]);
 		this.quad.display();
 		this.scene.popMatrix();
 
+		this.material.setTexture(this.texture4);
+		this.material.apply();
 		this.scene.pushMatrix();
 		this.scene.translate(0,0,-0.5);
 		this.scene.rotate(-Math.PI/2,1,0,0);
+		this.quad.updateTexCoords([1,1,0,1,1,0,0,0]);
 		this.quad.display();
 		this.scene.popMatrix();
 
+		this.material.setTexture(this.texture5);
+		this.material.apply();	
 		this.scene.pushMatrix();
 		this.scene.translate(-0.5,0,0);
 		this.scene.rotate(Math.PI/2,0,0,1);
+		this.quad.updateTexCoords([0,1,0,0,1,1,1,0])
 		this.quad.display();
 		this.scene.popMatrix();
 
+		this.material.setTexture(this.texture3);
+		this.material.apply();
 		this.scene.pushMatrix();
 		this.scene.translate(0.5,0,0);
 		this.scene.rotate(-Math.PI/2,0,0,1);
+		this.quad.updateTexCoords([1,0,1,1,0,0,0,1]);
 		this.quad.display();
 		this.scene.popMatrix();
 
