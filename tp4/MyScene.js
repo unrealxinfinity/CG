@@ -134,7 +134,8 @@ export class MyScene extends CGFscene {
         // add a checkbox in the GUI to alternate in real time
         if(this.filtering)
             this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST);
-
+        else
+            this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.LINEAR);
         if (!this.hideQuad)
            // this.quad.display();
             this.quadCube.display();    
