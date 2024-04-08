@@ -17,21 +17,28 @@ export class MySphere extends CGFobject {
 	}
 
     constructVertices() {
+        const jPart = Math.PI/this.stacks;
+        const iPart = 2*Math.PI/this.slices;
         for (let i = 0; i < this.slices; i++) {
-            const phi = (2*Math.PI/this.slices)*i;
+            const phi = iPart*i;
             for (let j = 1; j < this.stacks; j++) {
-                //const theta = (-Math.PI/2) + (2*Math.PI/this.stacks)*j;
-                const theta = (Math.PI/this.stacks)*j;
-                this.vertices.push(Math.sin(theta)*Math.sin(phi),Math.cos(theta),Math.sin(theta)*Math.cos(phi));
-                this.normals.push(Math.sin(theta)*Math.sin(phi),Math.cos(theta),Math.sin(theta)*Math.cos(phi));
+                const theta = jPart*j;
+                const thetaSin = Math.sin(theta);
+                const vertex = [thetaSin*Math.sin(phi), Math.cos(theta), thetaSin*Math.cos(phi)];
+                this.vertices.push(...vertex);
+                this.normals.push(...vertex);
                 this.texCoords.push(i/this.slices, j/this.stacks);
             }
         }
         const phi = 0;
         for (let j = 1; j < this.stacks; j++) {
-            const theta = (Math.PI/this.stacks)*j;
-            this.vertices.push(Math.sin(theta)*Math.sin(phi),Math.cos(theta),Math.sin(theta)*Math.cos(phi));
-            this.normals.push(Math.sin(theta)*Math.sin(phi),Math.cos(theta),Math.sin(theta)*Math.cos(phi));
+            const theta = jPart*j;
+            const thetaSin = Math.sin(theta);
+            const vertex = [thetaSin*Math.sin(phi), Math.cos(theta), thetaSin*Math.cos(phi)];
+            this.vertices.push(...vertex);
+            this.normals.push(...vertex);
+            //this.vertices.push(Math.sin(theta)*Math.sin(phi),Math.cos(theta),Math.sin(theta)*Math.cos(phi));
+            //this.normals.push(Math.sin(theta)*Math.sin(phi),Math.cos(theta),Math.sin(theta)*Math.cos(phi));
             this.texCoords.push(1, j/this.stacks);
         }
         for (let i = 0; i < this.slices; i++) {
@@ -44,8 +51,6 @@ export class MySphere extends CGFobject {
             this.normals.push(0,-1,0);
             this.texCoords.push((i+0.5)/this.slices, 1);
         }
-        //this.vertices.push(0,1,0,0,-1,0);
-        //this.normals.push(0,1,0,0,-1,0);
     }
 
     constructIndices() {
