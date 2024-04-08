@@ -7,11 +7,12 @@ import {CGFobject} from '../../lib/CGF.js';
  * @param stacks - number of stacked prisms
  */
 export class MySphere extends CGFobject {
-	constructor(scene, slices, stacks) {
+	constructor(scene, slices, stacks, inverted) {
 		super(scene);
 
 		this.slices = slices;
 		this.stacks = stacks;
+        this.inverted = inverted;
 
 		this.initBuffers();
 	}
