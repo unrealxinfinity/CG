@@ -4,8 +4,8 @@
 
 ## TP 4 Notes
 
-- In the initial experiences, had a better understanding of texture mapping by experimenting with different mapping coordinates for the pixels in the textels;
-- In part 1, we initialized a texture using a picture of a tangram and mapped each of the vertices with a texture cordinate corresponding the geometrical shape formed by the vertices in order to map the texture to MyTangram;
-- In part 2, we did essentially the same as the first exercise, but we mapped a cube with different textures for each of the faces and we played around with the filtering by uncommenting a line of code related to the scene.
+- In part 1, we continued working with our tangram shape. This time, we applied a texture to the different components instead of just setting their color through the lighting components of the materials. We had to use different texture coordinates for each component of the shape.
+- In part 2, we used the unit cube made out of quads from previous TPs and we applied a different texture to each face of the cube in order to recreate the grass block. Due to the way the faces were oriented in our implementation of the unit cube, the side faces needed different texture coordinates in order to keep the small patch of grass in the correct orientation.
+
 ![Screenshot 1](screenshots/cg-t05g10-tp4-1.png)
 ![Screenshot 2](screenshots/cg-t05g10-tp4-2.png)
