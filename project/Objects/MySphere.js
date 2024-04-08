@@ -27,27 +27,29 @@ export class MySphere extends CGFobject {
                 this.texCoords.push(i/this.slices, j/this.stacks);
             }
         }
+        const phi = 0;
+        for (let j = 1; j < this.stacks; j++) {
+            const theta = (Math.PI/this.stacks)*j;
+            this.vertices.push(Math.sin(theta)*Math.sin(phi),Math.cos(theta),Math.sin(theta)*Math.cos(phi));
+            this.normals.push(Math.sin(theta)*Math.sin(phi),Math.cos(theta),Math.sin(theta)*Math.cos(phi));
+            this.texCoords.push(1, j/this.stacks);
+        }
         this.vertices.push(0,1,0,0,-1,0);
         this.normals.push(0,1,0,0,-1,0);
     }
 
     constructIndices() {
-        for (let i = 0; i < this.slices-1; i++) {
+        for (let i = 0; i < this.slices; i++) {
             for (let j = 0; j < this.stacks-2; j++) {
                 this.indices.push((this.stacks-1)*i + j, (this.stacks-1)*i + j+1, (this.stacks-1)*(i+1) + j+1);
                 this.indices.push((this.stacks-1)*(i+1) + j+1, (this.stacks-1)*(i+1) + j, (this.stacks-1)*i + j);
             }
         }
-        for (let j = 0; j < this.stacks-2; j++) {
-            const i = this.slices-1;
-            this.indices.push((this.stacks-1)*i + j, (this.stacks-1)*i + j+1, j+1);
-            this.indices.push(j+1, j, (this.stacks-1)*i + j);
-        }
 
-        const top = this.slices * (this.stacks-1);
+        const top = (this.slices+1) * (this.stacks-1);
         for (let i = 0; i < this.slices; i++) {
-            this.indices.push(top, (this.stacks-1)*i, ((this.stacks-1)*(i+1)) % top);
-            this.indices.push((this.stacks-1)*(i+1)-1, top+1, ((this.stacks-1)*(i+2)-1) % top);
+            this.indices.push(top, (this.stacks-1)*i, ((this.stacks-1)*(i+1)));
+            this.indices.push((this.stacks-1)*(i+1)-1, top+1, ((this.stacks-1)*(i+2)-1));
         }
     }
 
