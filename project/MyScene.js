@@ -1,6 +1,8 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
 import { MyPlane } from "./MyPlane.js";
-
+import { MyPetale } from "./Flower/MyPetale.js";
+import { MyReceptale } from "./Flower/MyReceptale.js";
+import { MyStem } from "./Flower/MyStem.js";
 /**
  * MyScene
  * @constructor
@@ -26,7 +28,9 @@ export class MyScene extends CGFscene {
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
-
+    this.petale = new MyPetale(this);
+    this.receptale = new MyReceptale(this, 10, 10, 1);
+    this.stem = new MyStem(this, 10, 10);
     //Objects connected to MyInterface
     this.displayAxis = true;
     this.scaleFactor = 1;
@@ -75,7 +79,9 @@ this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     if (this.displayAxis) this.axis.display();
 
     // ---- BEGIN Primitive drawing section
-
+    /*this.petale.display();
+    this.receptale.display();
+    this.stem.display();*/
     this.pushMatrix();
     this.appearance.apply();
     this.translate(0,-100,0);
