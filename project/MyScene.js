@@ -33,7 +33,7 @@ export class MyScene extends CGFscene {
     this.petale = new MyPetale(this);
     this.receptale = new MyReceptale(this, 10, 10, 1);
     this.stem = new MyStem(this, 10, 10);
-    this.sphere = new MySphere(this, 4, 4);
+    this.sphere = new MySphere(this, 20, 20);
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -41,10 +41,14 @@ export class MyScene extends CGFscene {
 
     this.enableTextures(true);
 
-this.texture = new CGFtexture(this, "images/terrain.jpg");
-this.appearance = new CGFappearance(this);
-this.appearance.setTexture(this.texture);
-this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+    this.texture = new CGFtexture(this, "images/terrain.jpg");
+    this.earth = new CGFtexture(this, "images/earth.jpg");
+    this.appearance = new CGFappearance(this);
+    this.appearance.setTexture(this.texture);
+    this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+    this.earthppearance = new CGFappearance(this);
+    this.earthppearance.setTexture(this.earth);
+    this.earthppearance.setTextureWrap('REPEAT', 'REPEAT');
 
   }
   initLights() {
@@ -87,6 +91,7 @@ this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     this.receptale.display();
     this.stem.display();*/
     this.pushMatrix();
+    this.earthppearance.apply();
     this.sphere.display();
     this.appearance.apply();
     this.translate(0,-100,0);
