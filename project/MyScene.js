@@ -1,5 +1,6 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
 import { MyPlane } from "./MyPlane.js";
+import { MySphere } from "./MySphere.js";
 
 /**
  * MyScene
@@ -26,6 +27,7 @@ export class MyScene extends CGFscene {
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
+    this.sphere = new MySphere(this, 4, 4);
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -77,6 +79,7 @@ this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     // ---- BEGIN Primitive drawing section
 
     this.pushMatrix();
+    this.sphere.display();
     this.appearance.apply();
     this.translate(0,-100,0);
     this.scale(400,400,400);
