@@ -3,6 +3,8 @@ import { MyPlane } from "./MyPlane.js";
 import { MyPetale } from "./Flower/MyPetale.js";
 import { MyReceptale } from "./Flower/MyReceptale.js";
 import { MyStem } from "./Flower/MyStem.js";
+import { MySphere } from "./Objects/MySphere.js";
+
 /**
  * MyScene
  * @constructor
@@ -31,6 +33,8 @@ export class MyScene extends CGFscene {
     this.petale = new MyPetale(this);
     this.receptale = new MyReceptale(this, 10, 10, 1);
     this.stem = new MyStem(this, 10, 10);
+    this.sphere = new MySphere(this, 4, 4);
+
     //Objects connected to MyInterface
     this.displayAxis = true;
     this.scaleFactor = 1;
@@ -83,6 +87,7 @@ this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     this.receptale.display();
     this.stem.display();*/
     this.pushMatrix();
+    this.sphere.display();
     this.appearance.apply();
     this.translate(0,-100,0);
     this.scale(400,400,400);
