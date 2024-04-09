@@ -4,6 +4,7 @@ import { MyPetale } from "./Flower/MyPetale.js";
 import { MyReceptale } from "./Flower/MyReceptale.js";
 import { MyStem } from "./Flower/MyStem.js";
 import { MySphere } from "./Objects/MySphere.js";
+import { MyPanorama } from "./Objects/MyPanorama.js";
 
 /**
  * MyScene
@@ -49,6 +50,7 @@ export class MyScene extends CGFscene {
     this.earthppearance = new CGFappearance(this);
     this.earthppearance.setTexture(this.earth);
     this.earthppearance.setTextureWrap('REPEAT', 'REPEAT');
+    this.panorama = new MyPanorama(this, this.earth);
 
   }
   initLights() {
@@ -91,8 +93,7 @@ export class MyScene extends CGFscene {
     this.receptale.display();
     this.stem.display();*/
     this.pushMatrix();
-    this.earthppearance.apply();
-    this.sphere.display();
+    this.panorama.display();
     this.appearance.apply();
     this.translate(0,-100,0);
     this.scale(400,400,400);

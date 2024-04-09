@@ -2,7 +2,7 @@ import {CGFobject} from '../../lib/CGF.js';
 /**
  * MySphere
  * @constructor
- * @param scene - Reference to MySphere object
+ * @param scene - Reference to MyScene object
  * @param slices - number of faces
  * @param stacks - number of stacked prisms
  */
