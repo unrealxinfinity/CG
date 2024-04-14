@@ -5,6 +5,7 @@ import { MyReceptale } from "./Flower/MyReceptale.js";
 import { MyStem } from "./Flower/MyStem.js";
 import { MySphere } from "./Objects/MySphere.js";
 import { MyPanorama } from "./Objects/MyPanorama.js";
+import { MyFlower } from "./Flower/MyFlower.js";
 
 /**
  * MyScene
@@ -35,6 +36,7 @@ export class MyScene extends CGFscene {
     this.receptale = new MyReceptale(this, 10, 10, 1);
     this.stem = new MyStem(this, 10, 10);
     this.sphere = new MySphere(this, 50, 50, true);
+    this.flower = new MyFlower(this, 4, 0, 2);
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -89,7 +91,7 @@ export class MyScene extends CGFscene {
     if (this.displayAxis) this.axis.display();
 
     // ---- BEGIN Primitive drawing section
-    this.petal.display();
+    this.flower.display();
     /*this.receptale.display();
     this.stem.display();*/
     this.pushMatrix();

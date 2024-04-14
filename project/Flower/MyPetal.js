@@ -6,13 +6,12 @@ import { MyTriangle } from '../Objects/MyTriangle.js';
  * @param scene - Reference to MyScene object
  */
 export class MyPetal extends CGFobject {
-	constructor(scene, angle) {
+	constructor(scene) {
 		super(scene);
-                this.angle = angle;
 		this.triangle = new MyTriangle(scene);
 	}
 	
-	display() {
+	display(angle) {
                 this.scene.pushMatrix();
                 this.scene.scale(0.5, 1, 1);
                 this.scene.pushMatrix();
@@ -21,7 +20,7 @@ export class MyPetal extends CGFobject {
                 this.triangle.display();
                 this.scene.popMatrix(); 
                 this.scene.translate(0, 1, 0);
-                this.scene.rotate(this.angle, 1, 0, 0);
+                this.scene.rotate(angle, 1, 0, 0);
                 this.triangle.display();
                 this.scene.popMatrix();
 	}
