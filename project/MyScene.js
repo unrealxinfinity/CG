@@ -45,7 +45,7 @@ export class MyScene extends CGFscene {
     this.enableTextures(true);
 
     this.texture = new CGFtexture(this, "images/terrain.jpg");
-    this.earth = new CGFtexture(this, "images/earth.jpg");
+    this.earth = new CGFtexture(this, "images/landscape.jpg");
     this.appearance = new CGFappearance(this);
     this.appearance.setTexture(this.texture);
     this.appearance.setTextureWrap('REPEAT', 'REPEAT');
@@ -53,7 +53,6 @@ export class MyScene extends CGFscene {
     this.earthppearance.setTexture(this.earth);
     this.earthppearance.setTextureWrap('REPEAT', 'REPEAT');
     this.panorama = new MyPanorama(this, this.earth);
-    this.sphere = new MySphere(this, 20, 20, false);
 
   }
   initLights() {
@@ -64,7 +63,7 @@ export class MyScene extends CGFscene {
   }
   initCameras() {
     this.camera = new CGFcamera(
-      1.0,
+      Math.PI/2,
       0.1,
       1000,
       vec3.fromValues(50, 10, 15),
@@ -96,9 +95,7 @@ export class MyScene extends CGFscene {
     /*this.receptale.display();
     this.stem.display();*/
     this.pushMatrix();
-    this.earthppearance.apply();
-    this.sphere.display();
-    //this.panorama.display(this.camera.position);
+    this.panorama.display(this.camera.position);
     /*this.appearance.apply();
     this.translate(0,-100,0);
     this.scale(400,400,400);
