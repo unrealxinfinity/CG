@@ -17,10 +17,12 @@ export class MyFlower extends CGFobject {
         this.receptacle = new MyReceptale(this.scene, 20, 20, innerRadius);
         this.petal = new MyPetal(this.scene, 0);
         this.angles = [];
+        this.baseAngles = [];
         const halfPi = Math.PI/2;
         const quarterPi = Math.PI/4;
         for (let i = 0; i < petals; i++) {
             this.angles.push(Math.random()*halfPi - quarterPi);
+            this.baseAngles.push(Math.random()*halfPi - quarterPi);
         }
     }
 
@@ -30,6 +32,7 @@ export class MyFlower extends CGFobject {
             this.scene.pushMatrix();
             this.scene.rotate(rotationStep*i, 0, 0, 1);
             this.scene.translate(0, this.outerRadius - 2, 0);
+            this.scene.rotate(this.baseAngles[i], 1, 0, 0);
             this.petal.display(this.angles[i]);
             this.scene.popMatrix();
         }
