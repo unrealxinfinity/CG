@@ -95,7 +95,7 @@ export class MyScene extends CGFscene {
     /*this.receptale.display();
     this.stem.display();*/
     this.pushMatrix();
-    this.panorama.display();
+    this.panorama.display(this.camera.position);
     /*this.appearance.apply();
     this.translate(0,-100,0);
     this.scale(400,400,400);

@@ -26,8 +26,9 @@ export class MyPanorama extends CGFobject {
         this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     }
 
-    display() {
+    display(cameraPosition) {
         this.scene.pushMatrix();
+        this.scene.translate(...cameraPosition);
         this.scene.scale(200, 200, 200);
         this.appearance.apply();
         this.sphere.display();
