@@ -1,6 +1,7 @@
 import {CGFobject} from '../../lib/CGF.js';
 /**
  * MySphere
+ * Has unit size of 1(radius) and is centered at the origin
  * @constructor
  * @param scene - Reference to MySphere object
  * @param slices - number of faces

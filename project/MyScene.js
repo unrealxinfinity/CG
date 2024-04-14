@@ -4,7 +4,7 @@ import { MyPetale } from "./Flower/MyPetale.js";
 import { MyReceptale } from "./Flower/MyReceptale.js";
 import { MyStem } from "./Flower/MyStem.js";
 import { MySphere } from "./Objects/MySphere.js";
-
+import { MyFlower } from "./Flower/MyFlower.js";
 /**
  * MyScene
  * @constructor
@@ -31,9 +31,10 @@ export class MyScene extends CGFscene {
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
     this.petale = new MyPetale(this);
-    this.receptale = new MyReceptale(this, 10, 10, 1);
+    this.receptale = new MyReceptale(this, 10, 10);
     this.stem = new MyStem(this, 10, 10);
     this.sphere = new MySphere(this, 4, 4);
+    this.flower = new MyFlower(this);
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -83,11 +84,14 @@ this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     if (this.displayAxis) this.axis.display();
 
     // ---- BEGIN Primitive drawing section
-    /*this.petale.display();
-    this.receptale.display();
-    this.stem.display();*/
+    
     this.pushMatrix();
-    this.sphere.display();
+    /*//this.sphere.display();
+    this.petale.display();
+    //this.receptale.display();
+    this.stem.display();
+    */
+    this.flower.display();
     this.appearance.apply();
     this.translate(0,-100,0);
     this.scale(400,400,400);

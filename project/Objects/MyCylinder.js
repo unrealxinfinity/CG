@@ -1,6 +1,7 @@
 import {CGFobject} from '../../lib/CGF.js';
 /**
  * MyCylinder
+ * Has unit size (length 1) and it starts at origin and grows downwards.
  * @constructor
  * @param scene - Reference to MyScene object
  * @param slices - number of faces
