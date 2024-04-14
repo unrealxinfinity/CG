@@ -1,6 +1,7 @@
 import {CGFobject} from '../../lib/CGF.js';
 import { MySphere } from '../Objects/MySphere.js';
 import { MyPetal } from './MyPetal.js';
+import { MyReceptale } from './MyReceptale.js';
 
 /**
  * MyFlower
@@ -13,7 +14,7 @@ export class MyFlower extends CGFobject {
         this.innerRadius = innerRadius;
         this.outerRadius = outerRadius;
         this.petals = petals;
-        this.sphere = new MySphere(scene, 20, 20, false);
+        this.receptacle = new MyReceptale(this.scene, 20, 20, innerRadius);
         this.petal = new MyPetal(this.scene, 0);
         this.angles = [];
         const halfPi = Math.PI/2;
@@ -32,5 +33,6 @@ export class MyFlower extends CGFobject {
             this.petal.display(this.angles[i]);
             this.scene.popMatrix();
         }
+        this.receptacle.display();
     }
 }

@@ -15,8 +15,8 @@ export class MyReceptale extends CGFobject {
 
     display() {
         this.scene.pushMatrix();
-        this.scene.scale(radius, radius, radius);
+        this.scene.scale(this.radius, this.radius, this.radius);
         this.sphere.display();
-        this.popMatrix();
+        this.scene.popMatrix();
     }
 }
