@@ -3,85 +3,94 @@ import {CGFobject} from '../../lib/CGF.js';
  * MySphere
  * Has unit size of 1(radius) and is centered at the origin
  * @constructor
- * @param scene - Reference to MySphere object
+ * @param scene - Reference to MyScene object
  * @param slices - number of faces
  * @param stacks - number of stacked prisms
  */
 export class MySphere extends CGFobject {
-	constructor(scene, slices, stacks) {
+	constructor(scene, slices, stacks, inverted) {
 		super(scene);
 
 		this.slices = slices;
 		this.stacks = stacks;
+        this.inverted = inverted;
 
 		this.initBuffers();
 	}
-	
-	constructSlice(z) {
-		const slice = []
-		const twoPi = 2*Math.PI;
-		let normal_offset = 1;
-		const normal_angle_offset = Math.PI/this.slices;
-		for (let i = 0; i < this.slices; i++) {
-			const angle = twoPi * (i/this.slices);
-			const vertex = [Math.cos(angle), Math.sin(angle), z]; 
-			slice.push(...vertex);
-			this.normals.push(...[Math.cos(angle + normal_offset*normal_angle_offset), Math.sin(angle + normal_offset*normal_angle_offset), 0]);
-			this.normals.push(...[Math.cos(angle - normal_offset*normal_angle_offset), Math.sin(angle - normal_offset*normal_angle_offset), 0]);
-			slice.push(...vertex);
-			normal_offset = -normal_offset;
-		}
-
-		return slice;
-	}
-
-	extendVertices(index) {
-		const offset = 2*this.slices*index;
-		let vertex_offset = 0;
-		for (let i = 0; i < 2*this.slices -2; i=i+2) {
-			const start = i+offset + vertex_offset;
-			this.indices.push(...[start, start+2, start+2*this.slices]);
-			this.indices.push(...[(start+2+2*this.slices), start+2*this.slices, start+2]);
-			vertex_offset = (vertex_offset == 0) ? 1 : 0;
-		}
-		const final = 2*this.slices*(index+1) - 2;
-		console.log([final, offset+1, final+2*this.slices])
-		console.log([offset+2*this.slices+1, final+2*this.slices, offset+1])
-		this.indices.push(...[final, offset+1, final+2*this.slices]);
-		this.indices.push(...[offset+2*this.slices+1, final+2*this.slices, offset+1]);
-	}
 
     constructVertices() {
+        const jPart = Math.PI/this.stacks;
+        const iPart = 2*Math.PI/this.slices;
         for (let i = 0; i < this.slices; i++) {
-            const phi = (2*Math.PI/this.slices)*i;
+            const phi = iPart*i;
             for (let j = 1; j < this.stacks; j++) {
-                //const theta = (-Math.PI/2) + (2*Math.PI/this.stacks)*j;
-                const theta = (Math.PI/this.stacks)*j;
-                this.vertices.push(Math.sin(theta)*Math.sin(phi),Math.cos(theta),Math.sin(theta)*Math.cos(phi));
-                this.normals.push(Math.sin(theta)*Math.sin(phi),Math.cos(theta),Math.sin(theta)*Math.cos(phi));
+                const theta = jPart*j;
+                const thetaSin = Math.sin(theta);
+                const vertex = [thetaSin*Math.sin(phi), Math.cos(theta), thetaSin*Math.cos(phi)];
+                this.vertices.push(...vertex);
+                if (this.inverted)
+                    this.normals.push(-vertex[0], -vertex[1], -vertex[2]);
+                else
+                    this.normals.push(...vertex);
+                this.texCoords.push(i/this.slices, j/this.stacks);
             }
         }
-        this.vertices.push(0,1,0,0,-1,0);
-        this.normals.push(0,1,0,0,-1,0);
+        const phi = 0;
+        for (let j = 1; j < this.stacks; j++) {
+            const theta = jPart*j;
+            const thetaSin = Math.sin(theta);
+            const vertex = [thetaSin*Math.sin(phi), Math.cos(theta), thetaSin*Math.cos(phi)];
+            this.vertices.push(...vertex);
+            if (this.inverted)
+                this.normals.push(-vertex[0], -vertex[1], -vertex[2]);
+            else
+                this.normals.push(...vertex);
+            //this.vertices.push(Math.sin(theta)*Math.sin(phi),Math.cos(theta),Math.sin(theta)*Math.cos(phi));
+            //this.normals.push(Math.sin(theta)*Math.sin(phi),Math.cos(theta),Math.sin(theta)*Math.cos(phi));
+            this.texCoords.push(1, j/this.stacks);
+        }
+        for (let i = 0; i < this.slices; i++) {
+            this.vertices.push(0,1,0);
+            if (this.inverted)
+                this.normals.push(0,-1,0);
+            else 
+                this.normals.push(0,1,0);
+            this.texCoords.push((i+0.5)/this.slices, 0);
+        }
+        for (let i = 0; i < this.slices; i++) {
+            this.vertices.push(0,-1,0);
+            if (this.inverted)
+                this.normals.push(0,1,0);
+            else
+                this.normals.push(0,-1,0);
+            this.texCoords.push((i+0.5)/this.slices, 1);
+        }
     }
 
     constructIndices() {
-        for (let i = 0; i < this.slices-1; i++) {
+        for (let i = 0; i < this.slices; i++) {
             for (let j = 0; j < this.stacks-2; j++) {
-                this.indices.push((this.stacks-1)*i + j, (this.stacks-1)*i + j+1, (this.stacks-1)*(i+1) + j+1);
-                this.indices.push((this.stacks-1)*(i+1) + j+1, (this.stacks-1)*(i+1) + j, (this.stacks-1)*i + j);
+                if (this.inverted) {
+                    this.indices.push((this.stacks-1)*i + j+1, (this.stacks-1)*i + j, (this.stacks-1)*(i+1) + j+1);
+                    this.indices.push((this.stacks-1)*(i+1) + j, (this.stacks-1)*(i+1) + j+1, (this.stacks-1)*i + j);
+                }
+                else {
+                    this.indices.push((this.stacks-1)*i + j, (this.stacks-1)*i + j+1, (this.stacks-1)*(i+1) + j+1);
+                    this.indices.push((this.stacks-1)*(i+1) + j+1, (this.stacks-1)*(i+1) + j, (this.stacks-1)*i + j);
+                }
             }
         }
-        for (let j = 0; j < this.stacks-2; j++) {
-            const i = this.slices-1;
-            this.indices.push((this.stacks-1)*i + j, (this.stacks-1)*i + j+1, j+1);
-            this.indices.push(j+1, j, (this.stacks-1)*i + j);
-        }
 
-        const top = this.slices * (this.stacks-1);
+        const top = (this.slices+1) * (this.stacks-1);
         for (let i = 0; i < this.slices; i++) {
-            this.indices.push(top, (this.stacks-1)*i, ((this.stacks-1)*(i+1)) % top);
-            this.indices.push((this.stacks-1)*(i+1)-1, top+1, ((this.stacks-1)*(i+2)-1) % top);
+            if (this.inverted) {
+                this.indices.push((this.stacks-1)*i, top+1, ((this.stacks-1)*(i+1)));
+                this.indices.push(top+this.slices+i, (this.stacks-1)*(i+1)-1, ((this.stacks-1)*(i+2)-1));
+            }
+            else {
+                this.indices.push(top+i, (this.stacks-1)*i, ((this.stacks-1)*(i+1)));
+                this.indices.push((this.stacks-1)*(i+1)-1, top+this.slices+i, ((this.stacks-1)*(i+2)-1));
+            }
         }
     }
 
@@ -89,6 +98,7 @@ export class MySphere extends CGFobject {
 		this.normals = [];
 		this.vertices = []
 		this.indices = [];
+		this.texCoords = [];
 		
         this.constructVertices();
         this.constructIndices();

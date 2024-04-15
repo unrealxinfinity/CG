@@ -9,10 +9,14 @@ import { MySphere } from '../Objects/MySphere.js';
 export class MyReceptale extends CGFobject {
     constructor(scene, slices, stacks, radius) {
         super(scene);
-        this.sphere = new MySphere(scene, slices, stacks, radius);
+        this.radius = radius;
+        this.sphere = new MySphere(scene, slices, stacks, false);
     }
 
     display() {
+        this.scene.pushMatrix();
+        this.scene.scale(this.radius, this.radius, this.radius);
         this.sphere.display();
+        this.scene.popMatrix();
     }
 }

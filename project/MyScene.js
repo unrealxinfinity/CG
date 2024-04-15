@@ -1,10 +1,12 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
 import { MyPlane } from "./MyPlane.js";
-import { MyPetale } from "./Flower/MyPetale.js";
+import { MyPetal } from "./Flower/MyPetal.js";
 import { MyReceptale } from "./Flower/MyReceptale.js";
 import { MyStem } from "./Flower/MyStem.js";
 import { MySphere } from "./Objects/MySphere.js";
+import { MyPanorama } from "./Objects/MyPanorama.js";
 import { MyFlower } from "./Flower/MyFlower.js";
+
 /**
  * MyScene
  * @constructor
@@ -30,11 +32,11 @@ export class MyScene extends CGFscene {
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
-    this.petale = new MyPetale(this);
-    this.receptale = new MyReceptale(this, 10, 10);
+    this.petal = new MyPetal(this, Math.PI/4);
+    this.receptale = new MyReceptale(this, 10, 10, 1);
     this.stem = new MyStem(this, 10, 10);
-    this.sphere = new MySphere(this, 4, 4);
-    this.flower = new MyFlower(this);
+    this.sphere = new MySphere(this, 50, 50, true);
+    this.flower = new MyFlower(this, 8, 2, 4);
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -42,10 +44,15 @@ export class MyScene extends CGFscene {
 
     this.enableTextures(true);
 
-this.texture = new CGFtexture(this, "images/terrain.jpg");
-this.appearance = new CGFappearance(this);
-this.appearance.setTexture(this.texture);
-this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+    this.texture = new CGFtexture(this, "images/terrain.jpg");
+    this.earth = new CGFtexture(this, "images/landscape.jpg");
+    this.appearance = new CGFappearance(this);
+    this.appearance.setTexture(this.texture);
+    this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+    this.earthppearance = new CGFappearance(this);
+    this.earthppearance.setTexture(this.earth);
+    this.earthppearance.setTextureWrap('REPEAT', 'REPEAT');
+    this.panorama = new MyPanorama(this, this.earth);
 
   }
   initLights() {
@@ -56,7 +63,7 @@ this.appearance.setTextureWrap('REPEAT', 'REPEAT');
   }
   initCameras() {
     this.camera = new CGFcamera(
-      1.0,
+      Math.PI/2,
       0.1,
       1000,
       vec3.fromValues(50, 10, 15),
@@ -84,19 +91,16 @@ this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     if (this.displayAxis) this.axis.display();
 
     // ---- BEGIN Primitive drawing section
-    
-    this.pushMatrix();
-    /*//this.sphere.display();
-    this.petale.display();
-    //this.receptale.display();
-    this.stem.display();
-    */
     this.flower.display();
-    this.appearance.apply();
+    /*this.receptale.display();
+    this.stem.display();*/
+    this.pushMatrix();
+    this.panorama.display(this.camera.position);
+    /*this.appearance.apply();
     this.translate(0,-100,0);
     this.scale(400,400,400);
     this.rotate(-Math.PI/2.0,1,0,0);
-    this.plane.display();
+    this.plane.display();*/
     this.popMatrix();
 
     // ---- END Primitive drawing section
