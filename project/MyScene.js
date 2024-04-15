@@ -56,7 +56,7 @@ export class MyScene extends CGFscene {
     this.petalppearance.setTexture(this.petal);
     this.petalppearance.setTextureWrap('REPEAT', 'REPEAT');
     this.panorama = new MyPanorama(this, this.earth);
-    this.flower = new MyFlower(this, 8, 3, 4, this.petalppearance, [0.5, 0.17, 0]);
+    this.flower = new MyFlower(this, 8, 4, 7, this.petalppearance, [0.5, 0.17, 0]);
 
   }
   initLights() {
