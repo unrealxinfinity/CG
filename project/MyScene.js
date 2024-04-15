@@ -33,8 +33,9 @@ export class MyScene extends CGFscene {
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
     this.receptale = new MyReceptale(this, 10, 10, 1);
-    this.stem = new MyStem(this, 10, 10);
+    this.stem = new MyStem(this, 10, 10,0.1);
     this.sphere = new MySphere(this, 50, 50, true);
+    this.petal = new MyPetal(this);
     
 
     //Objects connected to MyInterface
@@ -95,7 +96,8 @@ export class MyScene extends CGFscene {
     if (this.displayAxis) this.axis.display();
 
     // ---- BEGIN Primitive drawing section
-    this.flower.display();
+    //this.flower.display();
+    //this.petal.display(Math.PI/2, [0, 1]);
     /*this.receptale.display();
     this.stem.display();*/
     this.pushMatrix();
