@@ -1,4 +1,4 @@
-import {CGFobject} from '../../lib/CGF.js';
+import {CGFappearance, CGFobject} from '../../lib/CGF.js';
 import { MySphere } from '../Objects/MySphere.js';
 import { MyPetal } from './MyPetal.js';
 import { MyReceptale } from './MyReceptale.js';
@@ -14,6 +14,11 @@ export class MyFlower extends CGFobject {
         this.innerRadius = innerRadius;
         this.outerRadius = outerRadius;
         this.petals = petals;
+        this.receptacleApp = new CGFappearance(scene);
+        this.receptacleApp.setAmbient(0.5, 0.17, 0, 1);
+        this.receptacleApp.setDiffuse(0.5, 0.17, 0, 1);
+        this.receptacleApp.setSpecular(0, 0, 0, 1);
+        this.receptacleApp.setShininess(10);
         this.receptacle = new MyReceptale(this.scene, 20, 20, innerRadius);
         this.petal = new MyPetal(this.scene, 0);
         this.angles = [];
@@ -50,6 +55,7 @@ export class MyFlower extends CGFobject {
             this.petal.display(this.angles[i], this.texCoords[i]);
             this.scene.popMatrix();
         }
+        this.receptacleApp.apply();
         this.receptacle.display();
     }
 }
