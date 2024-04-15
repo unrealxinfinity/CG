@@ -20,7 +20,7 @@ export class MyFlower extends CGFobject {
         this.receptacleApp.setSpecular(0, 0, 0, 1);
         this.receptacleApp.setShininess(10);
         this.receptacle = new MyReceptale(this.scene, 20, 20, innerRadius);
-        this.petal = new MyPetal(this.scene, 0);
+        this.petal = new MyPetal(this.scene, innerRadius, outerRadius);
         this.angles = [];
         this.baseAngles = [];
         this.texCoords = [];
@@ -50,7 +50,7 @@ export class MyFlower extends CGFobject {
         for (let i = 0; i < this.petals; i++) {
             this.scene.pushMatrix();
             this.scene.rotate(rotationStep*i, 0, 0, 1);
-            this.scene.translate(0, this.outerRadius - 2, 0);
+            this.scene.translate(0, this.innerRadius, 0);
             this.scene.rotate(this.baseAngles[i], 1, 0, 0);
             this.petal.display(this.angles[i], this.texCoords[i]);
             this.scene.popMatrix();
