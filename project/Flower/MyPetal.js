@@ -11,16 +11,18 @@ export class MyPetal extends CGFobject {
 		this.triangle = new MyTriangle(scene);
 	}
 	
-	display(angle) {
+	display(angle, texCoords) {
                 this.scene.pushMatrix();
                 this.scene.scale(0.5, 1, 1);
                 this.scene.pushMatrix();
                 this.scene.rotate(Math.PI, 0, 0, 1);
                 this.scene.translate(0, -1, 0);
+                this.triangle.updateTexCoords(texCoords[0]);
                 this.triangle.display();
                 this.scene.popMatrix(); 
                 this.scene.translate(0, 1, 0);
                 this.scene.rotate(angle, 1, 0, 0);
+                this.triangle.updateTexCoords(texCoords[1]);
                 this.triangle.display();
                 this.scene.popMatrix();
 	}

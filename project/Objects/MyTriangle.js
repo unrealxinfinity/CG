@@ -9,6 +9,11 @@ export class MyTriangle extends CGFobject {
 		super(scene);
 		this.initBuffers();
 	}
+
+	updateTexCoords(texCoords) {
+		this.texCoords = texCoords;
+		this.updateTexCoordsGLBuffers();
+	}
 	
 	initBuffers() {
 		this.vertices = [
@@ -34,6 +39,8 @@ export class MyTriangle extends CGFobject {
 			0,0,-1,
 			0,0,-1,
 		]
+
+		this.texCoords = []
 
 		//The defined indices (and corresponding vertices)
 		//will be read in groups of three to draw triangles

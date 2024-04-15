@@ -32,11 +32,10 @@ export class MyScene extends CGFscene {
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
-    this.petal = new MyPetal(this, Math.PI/4);
     this.receptale = new MyReceptale(this, 10, 10, 1);
     this.stem = new MyStem(this, 10, 10);
     this.sphere = new MySphere(this, 50, 50, true);
-    this.flower = new MyFlower(this, 8, 2, 4);
+    
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -46,13 +45,18 @@ export class MyScene extends CGFscene {
 
     this.texture = new CGFtexture(this, "images/terrain.jpg");
     this.earth = new CGFtexture(this, "images/landscape.jpg");
+    this.petal = new CGFtexture(this, "images/petal.jpg");
     this.appearance = new CGFappearance(this);
     this.appearance.setTexture(this.texture);
     this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     this.earthppearance = new CGFappearance(this);
     this.earthppearance.setTexture(this.earth);
     this.earthppearance.setTextureWrap('REPEAT', 'REPEAT');
+    this.petalppearance = new CGFappearance(this);
+    this.petalppearance.setTexture(this.petal);
+    this.petalppearance.setTextureWrap('REPEAT', 'REPEAT');
     this.panorama = new MyPanorama(this, this.earth);
+    this.flower = new MyFlower(this, 8, 2, 4, this.petalppearance);
 
   }
   initLights() {
@@ -91,7 +95,7 @@ export class MyScene extends CGFscene {
     if (this.displayAxis) this.axis.display();
 
     // ---- BEGIN Primitive drawing section
-    //this.flower.display();
+    this.flower.display();
     /*this.receptale.display();
     this.stem.display();*/
     this.pushMatrix();
