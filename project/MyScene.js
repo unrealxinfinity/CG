@@ -42,7 +42,8 @@ export class MyScene extends CGFscene {
     this.scaleFactor = 1;
 
     this.enableTextures(true);
-    this.petalTextures = [new CGFtexture(this, "images/petal1.jpg"), new CGFtexture(this, "images/petal2.jpg")];
+    this.petalTextures = [new CGFtexture(this, "images/petal1.jpg"), new CGFtexture(this, "images/petal2.jpg"),
+                  new CGFtexture(this, "images/petal3.jpg")];
 
     this.texture = new CGFtexture(this, "images/terrain.jpg");
     this.earth = new CGFtexture(this, "images/landscape.jpg");
