@@ -32,10 +32,10 @@ export class MyFlower extends CGFobject {
     static generateTexCoords() {
         const x = Math.random()*0.85;
         const y = Math.random()*Math.sqrt(3)/20;
-        const texCoordsA = [x+0.05, y+Math.sqrt(3)/20, 0, x+0.1, y, x, y];
-        texCoordsA.push(texCoordsA);
-        const texCoordsB = [0, x+0.1, x+0.05, y+Math.sqrt(3)/20, x+0.15, y+Math.sqrt(3)/20];
-        texCoordsB.push(texCoordsB);
+        const texCoordsA = [x+0.05, y+Math.sqrt(3)/20, x+0.1, 0, x, y];
+        texCoordsA.push(...texCoordsA);
+        const texCoordsB = [x+0.1, 0, x+0.05, y+Math.sqrt(3)/20, x+0.15, y+Math.sqrt(3)/20];
+        texCoordsB.push(...texCoordsB);
         return [texCoordsA, texCoordsB];
     }
 
