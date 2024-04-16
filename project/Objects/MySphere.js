@@ -7,9 +7,10 @@ import {CGFobject} from '../../lib/CGF.js';
  * @param stacks - number of stacked prisms
  */
 export class MySphere extends CGFobject {
-	constructor(scene, slices, stacks, inverted) {
+	constructor(scene, slices, stacks, inverted, perturb) {
 		super(scene);
 
+        this.perturb = perturb;
 		this.slices = slices;
 		this.stacks = stacks;
         this.inverted = inverted;
@@ -18,6 +19,7 @@ export class MySphere extends CGFobject {
 	}
 
     constructVertices() {
+        const firstLastPerturb = Math.random()*0.2+0.7;
         const jPart = Math.PI/this.stacks;
         const iPart = 2*Math.PI/this.slices;
         for (let i = 0; i < this.slices; i++) {
@@ -25,7 +27,11 @@ export class MySphere extends CGFobject {
             for (let j = 1; j < this.stacks; j++) {
                 const theta = jPart*j;
                 const thetaSin = Math.sin(theta);
-                const vertex = [thetaSin*Math.sin(phi), Math.cos(theta), thetaSin*Math.cos(phi)];
+                let vertex = [thetaSin*Math.sin(phi), Math.cos(theta), thetaSin*Math.cos(phi)];
+                if (this.perturb) {
+                    const random = i == 0 ? firstLastPerturb : Math.random()*0.2 + 0.7;
+                    vertex = vertex.map(v => random*v);
+                }
                 this.vertices.push(...vertex);
                 if (this.inverted)
                     this.normals.push(-vertex[0], -vertex[1], -vertex[2]);
@@ -38,7 +44,10 @@ export class MySphere extends CGFobject {
         for (let j = 1; j < this.stacks; j++) {
             const theta = jPart*j;
             const thetaSin = Math.sin(theta);
-            const vertex = [thetaSin*Math.sin(phi), Math.cos(theta), thetaSin*Math.cos(phi)];
+            let vertex = [thetaSin*Math.sin(phi), Math.cos(theta), thetaSin*Math.cos(phi)];
+            if (this.perturb) {
+                vertex = vertex.map(v => firstLastPerturb*v);
+            }
             this.vertices.push(...vertex);
             if (this.inverted)
                 this.normals.push(-vertex[0], -vertex[1], -vertex[2]);

@@ -6,6 +6,7 @@ import { MyStem } from "./Flower/MyStem.js";
 import { MySphere } from "./Objects/MySphere.js";
 import { MyPanorama } from "./Objects/MyPanorama.js";
 import { MyFlower } from "./Flower/MyFlower.js";
+import { MyRock } from "./Objects/MyRock.js";
 
 /**
  * MyScene
@@ -59,6 +60,10 @@ export class MyScene extends CGFscene {
     this.petalppearance.setSpecular(0,0,0,1);
     this.panorama = new MyPanorama(this, this.earth);
     this.flower = new MyFlower(this, 16, 4, 8, this.petalppearance, [0.5, 0.17, 0]);
+    this.rock = new MyRock(this, 3);
+
+    this.flatShader = new CGFshader(this.gl, "shaders/flat.vert", "shaders/flat.frag");
+    this.rockShader = new CGFshader(this.gl, "shaders/uScale.vert", "shaders/uScale.frag");
 
   }
   initLights() {
@@ -97,7 +102,8 @@ export class MyScene extends CGFscene {
     if (this.displayAxis) this.axis.display();
 
     // ---- BEGIN Primitive drawing section
-    this.flower.display();
+    //this.flower.display();
+    this.rock.display();
     /*this.receptale.display();
     this.stem.display();*/
     this.pushMatrix();
