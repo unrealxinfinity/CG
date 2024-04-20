@@ -6,6 +6,9 @@ import { MyStem } from "./Flower/MyStem.js";
 import { MySphere } from "./Objects/MySphere.js";
 import { MyPanorama } from "./Objects/MyPanorama.js";
 import { MyFlower } from "./Flower/MyFlower.js";
+import { MyRock } from "./Objects/MyRock.js";
+import { MyBee } from "./Objects/MyBee.js";
+import { MyRockSet } from "./Objects/MyRockSet.js";
 
 /**
  * MyScene
@@ -42,6 +45,7 @@ export class MyScene extends CGFscene {
     this.scaleFactor = 1;
 
     this.enableTextures(true);
+    this.petalTextures = [new CGFtexture(this, "images/petal1.jpg"), new CGFtexture(this, "images/petal2.jpg")];
 
     this.texture = new CGFtexture(this, "images/terrain.jpg");
     this.earth = new CGFtexture(this, "images/landscape.jpg");
@@ -53,10 +57,17 @@ export class MyScene extends CGFscene {
     this.earthppearance.setTexture(this.earth);
     this.earthppearance.setTextureWrap('REPEAT', 'REPEAT');
     this.petalppearance = new CGFappearance(this);
-    this.petalppearance.setTexture(this.petal);
+    this.petalppearance.setTexture(this.petalTextures[Math.floor(Math.random()*this.petalTextures.length)]);
     this.petalppearance.setTextureWrap('REPEAT', 'REPEAT');
+    this.petalppearance.setSpecular(0,0,0,1);
     this.panorama = new MyPanorama(this, this.earth);
     this.flower = new MyFlower(this, 16, 4, 8, this.petalppearance, [0.5, 0.17, 0]);
+    this.rock = new MyRock(this, 3, null, null);
+    this.rockSet = new MyRockSet(this, 1, 4);
+    this.bee = new MyBee(this);
+
+    this.flatShader = new CGFshader(this.gl, "shaders/flat.vert", "shaders/flat.frag");
+    this.rockShader = new CGFshader(this.gl, "shaders/uScale.vert", "shaders/uScale.frag");
 
   }
   initLights() {
@@ -95,7 +106,8 @@ export class MyScene extends CGFscene {
     if (this.displayAxis) this.axis.display();
 
     // ---- BEGIN Primitive drawing section
-    this.flower.display();
+    //this.flower.display();
+    this.rockSet.display();
     /*this.receptale.display();
     this.stem.display();*/
     this.pushMatrix();
