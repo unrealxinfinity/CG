@@ -8,9 +8,10 @@ import {CGFobject} from '../../lib/CGF.js';
  * @param stacks - number of stacked prisms
  */
 export class MySphere extends CGFobject {
-	constructor(scene, slices, stacks, inverted) {
+	constructor(scene, slices, stacks, inverted, perturb) {
 		super(scene);
 
+        this.perturb = perturb;
 		this.slices = slices;
 		this.stacks = stacks;
         this.inverted = inverted;
@@ -19,6 +20,7 @@ export class MySphere extends CGFobject {
 	}
 
     constructVertices() {
+        const firstLastPerturb = Math.random()*0.3+0.85;
         const jPart = Math.PI/this.stacks;
         const iPart = 2*Math.PI/this.slices;
         for (let i = 0; i < this.slices; i++) {
@@ -26,7 +28,11 @@ export class MySphere extends CGFobject {
             for (let j = 1; j < this.stacks; j++) {
                 const theta = jPart*j;
                 const thetaSin = Math.sin(theta);
-                const vertex = [thetaSin*Math.sin(phi), Math.cos(theta), thetaSin*Math.cos(phi)];
+                let vertex = [thetaSin*Math.sin(phi), Math.cos(theta), thetaSin*Math.cos(phi)];
+                if (this.perturb) {
+                    const random = i == 0 ? firstLastPerturb : Math.random()*0.3+0.85;
+                    vertex = vertex.map(v => random*v);
+                }
                 this.vertices.push(...vertex);
                 if (this.inverted)
                     this.normals.push(-vertex[0], -vertex[1], -vertex[2]);
@@ -39,7 +45,10 @@ export class MySphere extends CGFobject {
         for (let j = 1; j < this.stacks; j++) {
             const theta = jPart*j;
             const thetaSin = Math.sin(theta);
-            const vertex = [thetaSin*Math.sin(phi), Math.cos(theta), thetaSin*Math.cos(phi)];
+            let vertex = [thetaSin*Math.sin(phi), Math.cos(theta), thetaSin*Math.cos(phi)];
+            if (this.perturb) {
+                vertex = vertex.map(v => firstLastPerturb*v);
+            }
             this.vertices.push(...vertex);
             if (this.inverted)
                 this.normals.push(-vertex[0], -vertex[1], -vertex[2]);
@@ -49,8 +58,13 @@ export class MySphere extends CGFobject {
             //this.normals.push(Math.sin(theta)*Math.sin(phi),Math.cos(theta),Math.sin(theta)*Math.cos(phi));
             this.texCoords.push(1, j/this.stacks);
         }
+        const topPerturb = Math.random()*0.3+0.85;
+        const bottomPerturb = Math.random()*0.3+0.85;
         for (let i = 0; i < this.slices; i++) {
-            this.vertices.push(0,1,0);
+            if (this.perturb)
+                this.vertices.push(0,topPerturb,0);
+            else
+                this.vertices.push(0,1,0);
             if (this.inverted)
                 this.normals.push(0,-1,0);
             else 
@@ -58,7 +72,10 @@ export class MySphere extends CGFobject {
             this.texCoords.push((i+0.5)/this.slices, 0);
         }
         for (let i = 0; i < this.slices; i++) {
-            this.vertices.push(0,-1,0);
+            if (this.perturb)
+                this.vertices.push(0,-topPerturb,0);
+            else
+                this.vertices.push(0,-1,0);
             if (this.inverted)
                 this.normals.push(0,1,0);
             else

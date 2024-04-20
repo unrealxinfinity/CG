@@ -17,7 +17,7 @@ export class MyFlower extends CGFobject {
         this.receptacleApp = new CGFappearance(scene);
         this.receptacleApp.setAmbient(...receptacleColor, 1);
         this.receptacleApp.setDiffuse(...receptacleColor, 1);
-        this.receptacleApp.setSpecular(0, 0, 0, 1);
+        this.receptacleApp.setSpecular(0, 0, 0, 0);
         this.receptacleApp.setShininess(10);
         this.receptacle = new MyReceptale(this.scene, 20, 20, innerRadius);
         this.petal = new MyPetal(this.scene, innerRadius, outerRadius);

@@ -10,7 +10,7 @@ export class MyReceptale extends CGFobject {
     constructor(scene, slices, stacks, radius) {
         super(scene);
         this.radius = radius;
-        this.sphere = new MySphere(scene, slices, stacks, false);
+        this.sphere = new MySphere(scene, slices, stacks, false, false);
     }
 
     display() {
