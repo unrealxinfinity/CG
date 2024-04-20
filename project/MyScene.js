@@ -34,10 +34,9 @@ export class MyScene extends CGFscene {
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
     this.receptale = new MyReceptale(this, 10, 10, 1);
-    this.stem = new MyStem(this, 10, 10,3,0.2,3,4);
+    
     this.sphere = new MySphere(this, 50, 50, true);
     this.petalTest = new MyPetal(this,1,2);
-    this.myLeaf = new MyLeaf(this, 10, 10, 7);
     
     
 
@@ -50,6 +49,7 @@ export class MyScene extends CGFscene {
     this.texture = new CGFtexture(this, "images/terrain.jpg");
     this.earth = new CGFtexture(this, "images/landscape.jpg");
     this.petal = new CGFtexture(this, "images/petal.jpg");
+    this.leafTexture = new CGFtexture(this, "images/leaf.jpg");
     this.appearance = new CGFappearance(this);
     this.appearance.setTexture(this.texture);
     this.appearance.setTextureWrap('REPEAT', 'REPEAT');
@@ -59,8 +59,15 @@ export class MyScene extends CGFscene {
     this.petalppearance = new CGFappearance(this);
     this.petalppearance.setTexture(this.petal);
     this.petalppearance.setTextureWrap('REPEAT', 'REPEAT');
+    this.leafappearance = new CGFappearance(this);
+    this.leafappearance.setTexture(this.leafTexture);
+    this.leafappearance.setTextureWrap('REPEAT', 'REPEAT');
     this.panorama = new MyPanorama(this, this.earth);
-    this.flower = new MyFlower(this, 16, 4, 8, this.petalppearance, [0.5, 0.17, 0]);
+
+    this.flower = new MyFlower(this, 16,5, 2, 8, this.petalppearance,this.leafTexture, [0.5, 0.17, 0], [0.6, 1,0.4]);
+    this.myLeaf = new MyLeaf(this, 10, 10, 7);
+    this.stem = new MyStem(this, 10, 10,3,0.2,3,4,this.leafTexture,[0.6, 1,0.4]);
+
 
   }
   initLights() {
@@ -99,10 +106,10 @@ export class MyScene extends CGFscene {
     if (this.displayAxis) this.axis.display();
 
     // ---- BEGIN Primitive drawing section
-    //this.flower.display();
+    this.flower.display();
     //this.petalTest.display(Math.PI/4, [0, 1]);
     /*this.receptale.display();*/
-    this.stem.display();
+    //this.stem.display();
     //this.myLeaf.display(Math.PI/4);
     this.pushMatrix();
     this.panorama.display(this.camera.position);

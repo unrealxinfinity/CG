@@ -1,4 +1,4 @@
-import {CGFobject} from '../../lib/CGF.js';
+import {CGFobject,CGFappearance} from '../../lib/CGF.js';
 import {MyCylinder} from '../Objects/MyCylinder.js';
 import { MyLeaf } from './MyLeaf.js';
 
@@ -10,18 +10,24 @@ import { MyLeaf } from './MyLeaf.js';
  * @param stacks - number of stacked prisms
  */
 export class MyStem extends CGFobject {
-	constructor(scene, slices, stacks, numStems,innerRadius,outterRadius,maxLength) {
+	constructor(scene, slices, stacks, numStems,innerRadius,outterRadius,maxLength,leafTexture,leafColor) {
 		super(scene);
 		this.numberOfStems=numStems;
-		
+		this.leafApp = new CGFappearance(scene);
+        this.leafApp.setAmbient(...leafColor, 1);
+        this.leafApp.setDiffuse(...leafColor, 1);
+        this.leafApp.setSpecular(0, 0, 0, 0);
+        this.leafApp.setShininess(10);
+		console.log("numStems: "+numStems);
 		//stem related attributes
 		this.stemLength = maxLength;
 		this.radius = innerRadius;
 		this.outterRadius=outterRadius;
 		this.maxStemAngleZ = Math.asin((outterRadius)/this.stemLength) * 0.5;
-		this.minStemAngleZ = -this.maxStemAngleZ;
+		this.minStemAngleZ = 0;
 		this.maxStemLength = maxLength;
 		this.minStemLength = 1;
+		this.maxStemAngleY = Math.PI*2;
 		this.stemEndCoords=[[0,0,0]];
 		this.stemAngles=[];
 		this.stemLengths=[];
@@ -36,17 +42,12 @@ export class MyStem extends CGFobject {
 		this.cylinder = new MyCylinder(scene, slices, stacks);
 		this.randomize();
 		this.calculateStemEnds();
-		console.log(this.stemAngles);
-		console.log(this.leafAnglesZ);
-		console.log(this.stemLengths);
-		console.log(this.leafLengths);
-		console.log(this.stemEndCoords);
 		
 	}
 	randomize(){
 		for(var i=0;i<this.numberOfStems;i++){
 			var stemAngleZ =  Math.random() * (this.maxStemAngleZ - this.minStemAngleZ) + this.minStemAngleZ;
-			var stemAngleY = Math.random() * Math.PI*2;
+			var stemAngleY = Math.random() * this.maxStemAngleY;
 			this.stemAngles.push({y:stemAngleY,z:stemAngleZ});
 			var stemLength = Math.random() * (this.maxStemLength - this.minStemLength) + this.minStemLength;
 			this.stemLengths.push(stemLength);
@@ -71,9 +72,10 @@ export class MyStem extends CGFobject {
 	
 	}
 	makeStem(i){
+		this.leafApp.apply();
 		this.scene.pushMatrix();
 		this.scene.translate(this.stemEndCoords[i][0],this.stemEndCoords[i][1],this.stemEndCoords[i][2]);
-		this.scene.rotate(this.stemAngles[i].y+Math.PI,0,1,0);
+		this.scene.rotate(this.stemAngles[i].y,0,1,0);
 		this.scene.rotate(this.leafAnglesZ[i],0,0,1);
 		this.leaf.display(this.leafLengths[i]);
 		this.scene.popMatrix();
@@ -86,7 +88,6 @@ export class MyStem extends CGFobject {
 		this.scene.rotate(Math.PI/2, 1, 0, 0);
 		this.cylinder.display();
 		this.scene.popMatrix();
-		//this.calculateLeafEnd(i,this.stemEndCoords,this.stemAngles[i]);
 	}
 	display(){
 		for(var i=0;i<this.numberOfStems;i++){

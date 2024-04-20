@@ -2,14 +2,14 @@ import {CGFappearance, CGFobject} from '../../lib/CGF.js';
 import { MySphere } from '../Objects/MySphere.js';
 import { MyPetal } from './MyPetal.js';
 import { MyReceptale } from './MyReceptale.js';
-
+import { MyStem } from './MyStem.js';
 /**
  * MyFlower
  * @constructor
  * @param scene - Reference to MyScene object
  */
 export class MyFlower extends CGFobject {
-    constructor(scene, petals, innerRadius, outerRadius, petalTex, receptacleColor) {
+    constructor(scene, petals,stems, innerRadius, outerRadius, petalTex,leafText, receptacleColor,leafColor) {
         super(scene);
         this.innerRadius = innerRadius;
         this.outerRadius = outerRadius;
@@ -21,6 +21,7 @@ export class MyFlower extends CGFobject {
         this.receptacleApp.setShininess(10);
         this.receptacle = new MyReceptale(this.scene, 20, 20, innerRadius);
         this.petal = new MyPetal(this.scene, innerRadius, outerRadius);
+        this.stem = new MyStem(this.scene, 10, 10,stems,0.3,outerRadius,outerRadius+2,this.leafTexture,leafColor);
         this.angles = [];
         this.baseAngles = [];
         this.texCoords = [];
@@ -57,5 +58,10 @@ export class MyFlower extends CGFobject {
         }
         this.receptacleApp.apply();
         this.receptacle.display();
+        this.scene.pushMatrix();
+        this.scene.pushMatrix();
+        this.scene.translate(0, -this.innerRadius, 0);
+        this.stem.display();
+        this.scene.popMatrix();
     }
 }
