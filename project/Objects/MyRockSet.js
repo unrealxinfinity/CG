@@ -11,23 +11,31 @@ export class MyRockSet extends CGFobject {
 	constructor(scene, radius, stages) {
 		super(scene);
 
-        this.rocks = stages*stages;
+        this.rocks = 0;
+        for (let stage = 0; stage < stages; stage++) {
+            const len = 1 + stage*2;
+            this.rocks += len*len;
+        }
         this.stages = stages;
         this.radius = radius;
         this.rock = new MyRock(scene, radius, null, null);
         
+        this.initParams();
 	}
 
     initParams() {
         this.scales = [];
         this.angles = [];
-        for (let i = 0; i < 3; i++) {
-            this.scales.push(Math.random()*0.5 + 0.7);
-            this.angles.push(Math.random());
+        for (let i = 0; i < this.rocks; i++) {
+            this.scales.push([Math.random()*0.3 + 0.8, Math.random()*0.3 + 0.8, Math.random()*0.3 + 0.8]);
+            this.angles.push([Math.random(), Math.random(), Math.random()]);
+            
         }
+        console.log(this.scales);
     }
 
     display() {
+        let rockIndex = 0;
         for (let i = 0; i < this.stages; i++) {
             const len = 1 + 2*i;
             this.scene.pushMatrix();
@@ -36,7 +44,8 @@ export class MyRockSet extends CGFobject {
                 for (let y = 0; y < len; y++) {
                     this.scene.pushMatrix();
                     this.scene.translate(x*this.radius, 0, y*this.radius);
-                    this.rock.display();
+                    this.rock.display(this.scales[rockIndex], this.angles[rockIndex]);
+                    rockIndex++;
                     this.scene.popMatrix();
                 }
             }
