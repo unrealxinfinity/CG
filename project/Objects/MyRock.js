@@ -7,12 +7,14 @@ import { MySphere } from './MySphere.js';
  * @param texture - texture to apply
  */
 export class MyRock extends CGFobject {
-	constructor(scene, radius) {
+	constructor(scene, radius, scales, angles) {
 		super(scene);
 
         this.radius = radius;
         this.sphere = new MySphere(scene, 10, 10, false, true);
 		this.initMaterial();
+        if (scales) this.scales = scales;
+        if (angles) this.angles = angles;
         this.initParams();
 	}
 
