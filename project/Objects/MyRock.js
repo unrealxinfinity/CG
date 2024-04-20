@@ -13,6 +13,7 @@ export class MyRock extends CGFobject {
         this.radius = radius;
         this.sphere = new MySphere(scene, 10, 10, false, true);
 		this.initMaterial();
+        this.initParams();
 	}
 
     initMaterial() {
@@ -22,9 +23,22 @@ export class MyRock extends CGFobject {
         this.appearance.setSpecular(0,0,0,1);
     }
 
+    initParams() {
+        this.scales = [];
+        this.angles = [];
+        for (let i = 0; i < 3; i++) {
+            this.scales.push(Math.random()*0.5 + 0.7);
+            this.angles.push(Math.random());
+        }
+    }
+
     display() {
         this.appearance.apply();
+        this.scene.pushMatrix();
+        this.scene.scale(...this.scales);
+        this.scene.rotate(Math.PI/2, ...this.angles);
         this.sphere.display();
+        this.scene.popMatrix();
     }
 
 }
