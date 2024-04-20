@@ -35,6 +35,8 @@ export class MyRockSet extends CGFobject {
     }
 
     display() {
+        this.scene.pushMatrix();
+        this.scene.translate(0, (this.stages-1)*this.radius, 0);
         let rockIndex = 0;
         for (let i = 0; i < this.stages; i++) {
             const len = 1 + 2*i;
@@ -51,6 +53,7 @@ export class MyRockSet extends CGFobject {
             }
             this.scene.popMatrix();
         }
+        this.scene.popMatrix();
     }
 
 }
