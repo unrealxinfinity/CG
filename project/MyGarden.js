@@ -28,7 +28,7 @@ export class MyGarden extends CGFobject {
         this.leafColor;
         this.rows=rows;
         this.cols=cols;
-        this.spaceInBetween=1;
+        this.spaceInBetween=10;
 
         for(let i=0;i<rows;i++){
             for(let j=0;j<cols;j++){
@@ -59,7 +59,7 @@ export class MyGarden extends CGFobject {
             for(let j=0;j<this.cols;j++){
                 this.scene.pushMatrix();
                 this.scene.translate(j*this.spaceInBetween,0,i*this.spaceInBetween);
-                this.flowers[i].display();
+                this.flowers[i*this.rows+j].display();
                 this.scene.popMatrix();
             }
         }
