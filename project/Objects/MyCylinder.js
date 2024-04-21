@@ -27,26 +27,28 @@ export class MyCylinder extends CGFobject {
 			slice.push(...vertex);
 			sliceTex.push(0.4 + 0.2*i/this.slices, z);
 			this.normals.push(Math.cos(angle ), Math.sin(angle ), 0);
-			
 		}
+		slice.push(1, 0, z);
+		sliceTex.push(0.6, z);
+		this.normals.push(1, 0, 0);
 
 		return [slice, sliceTex];
 	}
 
 	extendIndices(index) {
-		const offset = this.slices*index;
-		for (let i = 0; i < this.slices-1; i++) {
+		const offset = (this.slices+1)*index;
+		for (let i = 0; i < this.slices; i++) {
 			const start = i+offset;
-			this.indices.push(start, start+1,start+this.slices);
-			this.indices.push(start+1, start+1+this.slices, start+this.slices);
+			this.indices.push(start, start+1,start+this.slices+1);
+			this.indices.push(start+1, start+1+this.slices+1, start+this.slices+1);
 		}
 
-		const start=this.slices-1+offset;
-		const final1 = start-this.slices+1;
-		const final2 = start+this.slices;
-		const final3 = final1+this.slices;
-		this.indices.push(start, final1, final2);
-		this.indices.push(final3, final2, final1);
+		//const start=this.slices-1+offset;
+		//const final1 = start-this.slices+1;
+		//const final2 = start+this.slices;
+		//const final3 = final1+this.slices;
+		//this.indices.push(start, final1, final2);
+		//this.indices.push(final3, final2, final1);
 	}
 
 	initBuffers() {
@@ -64,7 +66,7 @@ export class MyCylinder extends CGFobject {
 		}
 		this.vertices.push(0,0,0,0,0,1);
 		this.normals.push(0,0,-1,0,0,1);
-		const bottom = this.slices*(this.stacks+1);
+		const bottom = (this.slices+1)*(this.stacks+1);
 		const top = bottom+1;
 		const offset = this.stacks*this.slices;
 		for (let i = 0; i < this.slices; i++) {
