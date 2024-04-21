@@ -10,15 +10,15 @@ import { MyLeaf } from './MyLeaf.js';
  * @param stacks - number of stacked prisms
  */
 export class MyStem extends CGFobject {
-	constructor(scene, numStems,innerRadius,outterRadius,maxLength,leafColor,objects) {
+	constructor(scene, numStems,innerRadius,outterRadius,maxLength,stemColor,leafColor,objects) {
 		super(scene);
 		this.numberOfStems=numStems;
 		this.stemApp = new CGFappearance(scene);
 		this.stemTex = new CGFtexture(this.scene, "images/stem.jpg");
 		this.stemApp.setTexture(this.stemTex);
 		this.stemApp.setTextureWrap('REPEAT', 'REPEAT');
-        this.stemApp.setAmbient(...leafColor, 1);
-        this.stemApp.setDiffuse(...leafColor, 1);
+        this.stemApp.setAmbient(...stemColor, 1);
+        this.stemApp.setDiffuse(...stemColor, 1);
         this.stemApp.setSpecular(0, 0, 0, 0);
         this.stemApp.setShininess(10);
 		//stem related attributes

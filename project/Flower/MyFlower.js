@@ -11,7 +11,7 @@ import { MyCylinder } from '../Objects/MyCylinder.js';
  * @param scene - Reference to MyScene object
  */
 export class MyFlower extends CGFobject {
-    constructor(scene, petals,stems, innerRadius, outerRadius, petalTex, receptacleColor,leafColor) {
+    constructor(scene, petals,stems, innerRadius, outerRadius, petalTex, receptacleColor,stemColor,leafColor) {
         super(scene);
         this.stacks = 20;
         this.slices = 20;
@@ -27,7 +27,7 @@ export class MyFlower extends CGFobject {
         this.receptacleApp.setShininess(10);
         this.receptacle = new MyReceptale(this.scene, innerRadius,this.objects);
         this.petal = new MyPetal(this.scene, innerRadius, outerRadius,this.objects);
-        this.stem = new MyStem(this.scene, stems,0.3,outerRadius,outerRadius+2,leafColor,this.objects);
+        this.stem = new MyStem(this.scene, stems,0.3,outerRadius,outerRadius+1,stemColor,leafColor,this.objects);
         this.angles = [];
         this.baseAngles = [];
         this.texCoords = [];
