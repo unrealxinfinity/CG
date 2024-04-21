@@ -1,4 +1,5 @@
 import {CGFappearance, CGFobject} from '../../lib/CGF.js';
+import { MyCylinder } from './MyCylinder.js';
 import { MySphere } from './MySphere.js';
 /**
  * MySphere
@@ -12,7 +13,10 @@ export class MyBee extends CGFobject {
 
         this.sin = Math.sin(Math.PI/4);
         this.cos = Math.cos(Math.PI/4);
+        this.sinThird = Math.sin(Math.PI/3);
+        this.cosThird = Math.cos(Math.PI/3);
         this.sphere = new MySphere(scene, 20, 20, false, false);
+        this.cylinder = new MyCylinder(scene, 10, 10);
 		this.initMaterial();
 	}
 
@@ -25,6 +29,21 @@ export class MyBee extends CGFobject {
 
     display() {
         this.appearance.apply();
+
+        this.scene.pushMatrix();
+        this.scene.translate(0, this.sinThird, this.cosThird);
+        this.scene.rotate(-Math.PI/3, 1, 0, 0);
+        this.scene.scale(0.1, 0.1, 0.5);
+        this.cylinder.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.translate(0, this.sinThird, -this.cosThird);
+        this.scene.rotate(-2*Math.PI/3, 1, 0, 0);
+        this.scene.scale(0.1, 0.1, 0.5);
+        this.cylinder.display();
+        this.scene.popMatrix();
+
         this.sphere.display();
         this.scene.pushMatrix();
         this.scene.translate(this.sin*this.cos, this.sin*this.sin, this.cos);
