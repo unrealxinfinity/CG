@@ -41,7 +41,7 @@ export class MyStem extends CGFobject {
 		this.minLeafLength = this.stemLength * 0.3;
 		this.leafLengths = [];
 		this.leafAnglesZ = [];
-		this.leaf = new MyLeaf(scene, slices,stacks,outterRadius-innerRadius);
+		this.leaf = new MyLeaf(scene, slices,stacks, this.stemApp);
 		this.cylinder = new MyCylinder(scene, slices, stacks);
 		this.randomize();
 		this.calculateStemEnds();

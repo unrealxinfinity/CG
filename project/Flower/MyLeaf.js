@@ -10,12 +10,13 @@ import { MyPetal } from './MyPetal.js';
  * @param stacks - number of stacked prisms
  */
 export class MyLeaf extends CGFobject {
-	constructor(scene,slices,stacks) {
+	constructor(scene,slices,stacks, stemApp) {
 		super(scene);
 		this.root = new MyCylinder(scene, slices, stacks); //cyclinder of 1 radius and 1 height
 		this.leaf = new MyTriangle(scene); //triangle of 1 height and 1 width
 		//this.flowerRadius = outerRadius;
         //this.zAngle;
+		this.stemApp = stemApp;
         this.totalLength;//hypotenuse aka leaf total length
 		//root parameters
 		this.rootPercentage;
@@ -62,6 +63,7 @@ export class MyLeaf extends CGFobject {
 		this.scene.pushMatrix();
 		this.scene.scale(this.rootRadius,this.totalLength*this.rootPercentage,this.rootRadius);
 		this.scene.rotate(-Math.PI/2,1,0,0);
+		this.stemApp.apply();
 		this.root.display();
 		this.scene.popMatrix();
 
