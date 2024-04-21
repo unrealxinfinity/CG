@@ -34,7 +34,7 @@ export class MyFlower extends CGFobject {
         this.receptacleApp.setSpecular(0, 0, 0, 0);
         this.receptacleApp.setShininess(10);
         this.receptacle = new MyReceptale(this.scene, innerRadius,this.objects);
-        this.petal = new MyPetal(this.scene, innerRadius, outerRadius,this.objects);
+        this.petal = new MyPetal(this.scene, innerRadius, outerRadius,MyFlower.generateTexCoords());
         this.stem = new MyStem(this.scene, stems,0.3,outerRadius,outerRadius+1,stemColor,leafColor,this.objects);
         this.angles = [];
         this.baseAngles = [];
@@ -46,7 +46,7 @@ export class MyFlower extends CGFobject {
         for (let i = 0; i < petals; i++) {
             this.angles.push(Math.random()*halfPi - quarterPi);
             this.baseAngles.push(Math.random()*halfPi - quarterPi);
-            this.texCoords.push(MyFlower.generateTexCoords());
+            //this.texCoords.push(MyFlower.generateTexCoords());
         }
     }
 
