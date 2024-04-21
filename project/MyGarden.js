@@ -21,8 +21,17 @@ export class MyGarden extends CGFobject {
         this.maxOutterRadius=7;
         this.minOutterRadius=3;
         this.flowers=[];
+        this.petalApperances = [];
+        this.appIndex = 0;
         this.petalTextures = [new CGFtexture(this.scene, "images/petal1.jpg"), new CGFtexture(this.scene, "images/petal2.jpg"),new CGFtexture(this.scene, "images/petal3.jpg")];
-        this.petalppearance = new CGFappearance(scene);
+
+        for (const petalTexture of this.petalTextures) {
+            const petalApp = new CGFappearance(scene);
+            petalApp.setTexture(petalTexture);
+            petalApp.setTextureWrap('REPEAT', 'REPEAT');
+            this.petalApperances.push(petalApp);
+        }
+
         this.receptacleColor;
         this.stemColor;
         this.leafColor;
@@ -33,8 +42,7 @@ export class MyGarden extends CGFobject {
         for(let i=0;i<rows;i++){
             for(let j=0;j<cols;j++){
                 this.randomize();
-                this.petalppearance.setTextureWrap('REPEAT', 'REPEAT');
-                var flower = new MyFlower(this.scene, this.petals, this.stems, this.innerRadius, this.outterRadius, this.petalppearance, this.receptacleColor, this.stemColor, this.leafColor);
+                var flower = new MyFlower(this.scene, this.petals, this.stems, this.innerRadius, this.outterRadius, this.petalApperances[this.appIndex], this.receptacleColor, this.stemColor, this.leafColor);
                 this.flowers.push(flower);
                 console.log(flower);
             }
@@ -42,7 +50,7 @@ export class MyGarden extends CGFobject {
         
     }
     randomize(){
-        this.petalppearance.setTexture(this.petalTextures[Math.floor(Math.random()*this.petalTextures.length)]);
+        this.appIndex = Math.floor(Math.random()*this.petalTextures.length);
         this.receptacleColor = [Math.random(), Math.random(), Math.random()];
         this.stemColor = [Math.random(), Math.random(), Math.random()];
         this.leafColor = [Math.random(), Math.random(), Math.random()];
