@@ -45,6 +45,8 @@ export class MyScene extends CGFscene {
     this.scaleFactor = 1;
 
     this.enableTextures(true);
+    this.petalTextures = [new CGFtexture(this, "images/petal1.jpg"), new CGFtexture(this, "images/petal2.jpg"),
+                  new CGFtexture(this, "images/petal3.jpg")];
 
     this.texture = new CGFtexture(this, "images/terrain.jpg");
     this.earth = new CGFtexture(this, "images/landscape.jpg");
@@ -57,7 +59,7 @@ export class MyScene extends CGFscene {
     this.earthppearance.setTexture(this.earth);
     this.earthppearance.setTextureWrap('REPEAT', 'REPEAT');
     this.petalppearance = new CGFappearance(this);
-    this.petalppearance.setTexture(this.petal);
+    this.petalppearance.setTexture(this.petalTextures[Math.floor(Math.random()*this.petalTextures.length)]);
     this.petalppearance.setTextureWrap('REPEAT', 'REPEAT');
     this.leafappearance = new CGFappearance(this);
     this.leafappearance.setTexture(this.leafTexture);
