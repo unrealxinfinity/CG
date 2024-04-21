@@ -8,27 +8,30 @@ import {CGFobject} from '../../lib/CGF.js';
  * @param stacks - number of stacked prisms
  */
 export class MyCylinder extends CGFobject {
-	constructor(scene, slices, stacks) {
+	constructor(scene, slices, stacks, texHeight) {
 		super(scene);
 
 		this.slices = slices;
 		this.stacks = stacks;
+		this.texHeight = texHeight;
 
 		this.initBuffers();
 	}
 	
 	constructSlice(z) {
-		const slice = []
+		const slice = [];
+		const sliceTex = [];
 		const twoPi = 2*Math.PI;
 		for (let i = 0; i < this.slices; i++) {
 			const angle = twoPi * (i/this.slices);
 			const vertex = [Math.cos(angle), Math.sin(angle), z]; 
 			slice.push(...vertex);
+			sliceTex.push(0.4 + 0.2*i/this.slices, z*this.texHeight);
 			this.normals.push(Math.cos(angle ), Math.sin(angle ), 0);
 			
 		}
 
-		return slice;
+		return [slice, sliceTex];
 	}
 
 	extendIndices(index) {
@@ -49,11 +52,15 @@ export class MyCylinder extends CGFobject {
 
 	initBuffers() {
 		this.normals = [];
-		this.vertices = this.constructSlice(0);
+		const firstSlice = this.constructSlice(0);
+		this.vertices = firstSlice[0];
+		this.texCoords = firstSlice[1];
 		this.indices = [];
 		
 		for (let i = 0; i < this.stacks; i++) {
-			this.vertices.push(...this.constructSlice((i+1)/this.stacks));
+			const slice = this.constructSlice((i+1)/this.stacks);
+			this.vertices.push(...slice[0]);
+			this.texCoords.push(...slice[1]);
 			this.extendIndices(i);
 		}
 		this.vertices.push(0,0,0,0,0,1);
