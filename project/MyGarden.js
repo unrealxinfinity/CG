@@ -15,34 +15,41 @@ export class MyGarden extends CGFobject {
         this.maxStems=10;
         this.minStems=1;
         this.innerRadius;
-        this.minInnerRadius=0.1;
-        this.maxInnerRadius=1;
+        this.minInnerRadius=0.5;
+        this.maxInnerRadius=1.2;
         this.outterRadius;
         this.maxOutterRadius=7;
         this.minOutterRadius=3;
         this.flowers=[];
+        this.petalApperances = [];
+        this.appIndex = 0;
         this.petalTextures = [new CGFtexture(this.scene, "images/petal1.jpg"), new CGFtexture(this.scene, "images/petal2.jpg"),new CGFtexture(this.scene, "images/petal3.jpg")];
-        this.petalppearance = new CGFappearance(scene);
+
+        for (const petalTexture of this.petalTextures) {
+            const petalApp = new CGFappearance(scene);
+            petalApp.setTexture(petalTexture);
+            petalApp.setTextureWrap('REPEAT', 'REPEAT');
+            this.petalApperances.push(petalApp);
+        }
+
         this.receptacleColor;
         this.stemColor;
         this.leafColor;
         this.rows=rows;
         this.cols=cols;
-        this.spaceInBetween=1;
+        this.spaceInBetween=10;
 
         for(let i=0;i<rows;i++){
             for(let j=0;j<cols;j++){
                 this.randomize();
-                this.petalppearance.setTextureWrap('REPEAT', 'REPEAT');
-                var flower = new MyFlower(this.scene, this.petals, this.stems, this.innerRadius, this.outterRadius, this.petalppearance, this.receptacleColor, this.stemColor, this.leafColor);
+                var flower = new MyFlower(this.scene, this.petals, this.stems, this.innerRadius, this.outterRadius, this.petalApperances[this.appIndex], this.receptacleColor, this.stemColor, this.leafColor);
                 this.flowers.push(flower);
-                console.log(flower);
             }
         }
         
     }
     randomize(){
-        this.petalppearance.setTexture(this.petalTextures[Math.floor(Math.random()*this.petalTextures.length)]);
+        this.appIndex = Math.floor(Math.random()*this.petalTextures.length);
         this.receptacleColor = [Math.random(), Math.random(), Math.random()];
         this.stemColor = [Math.random(), Math.random(), Math.random()];
         this.leafColor = [Math.random(), Math.random(), Math.random()];
@@ -56,9 +63,9 @@ export class MyGarden extends CGFobject {
     display() {
         for(let i=0;i<this.rows;i++){
             for(let j=0;j<this.cols;j++){
-                this.scene.pushMatrix();
+                this.scene .pushMatrix();
                 this.scene.translate(j*this.spaceInBetween,0,i*this.spaceInBetween);
-                this.flowers[i*this.cols+j].display();
+                this.flowers[i*this.rows+j].display();
                 this.scene.popMatrix();
             }
         }

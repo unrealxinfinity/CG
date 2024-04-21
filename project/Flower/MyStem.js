@@ -38,6 +38,7 @@ export class MyStem extends CGFobject {
 		this.stemEndCoords=[[0,0,0]];
 		this.stemAngles=[];
 		this.stemLengths=[];
+		this.stemYHeight=0;
 		//leaf related attributes
 		this.maxLeafAngleZ = Math.PI/1.5;
 		this.minLeafAngleZ = Math.PI/4;
@@ -79,6 +80,7 @@ export class MyStem extends CGFobject {
 			var height = Math.cos(stemAngle.z)*this.stemLengths[i] //height of the triangle projected in the plane xy formed by the stem
 			var res = [Math.cos(stemAngle.y)*hiponuse+xi,yi-height,-Math.sin(stemAngle.y)*hiponuse+zi];
 			this.stemEndCoords.push(res);
+			this.stemYHeight+=height;
 		}
 	
 	}

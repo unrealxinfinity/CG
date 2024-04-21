@@ -24,16 +24,10 @@ export class MyFlower extends CGFobject {
         this.stacks = 20;
         this.slices = 20;
         this.objects={'sphere':new MySphere(scene, this.slices, this.stacks, false, false),'triangle':new MyTriangle(scene),'cylinder':new MyCylinder(scene, this.slices, this.stacks)};
-        console.log(this.objects);
         this.innerRadius = innerRadius;
         this.outerRadius = outerRadius;
         this.petals = petals;
-        this.receptacleApp = new CGFappearance(scene);
-        this.receptacleApp.setAmbient(...receptacleColor, 1);
-        this.receptacleApp.setDiffuse(...receptacleColor, 1);
-        this.receptacleApp.setSpecular(0, 0, 0, 0);
-        this.receptacleApp.setShininess(10);
-        this.receptacle = new MyReceptale(this.scene, innerRadius,this.objects);
+        this.receptacle = new MyReceptale(this.scene, innerRadius,receptacleColor,this.objects);
         this.petal = new MyPetal(this.scene, innerRadius, outerRadius,this.objects);
         this.stem = new MyStem(this.scene, stems,0.3,outerRadius,outerRadius+1,stemColor,leafColor,this.objects);
         this.angles = [];
@@ -61,9 +55,11 @@ export class MyFlower extends CGFobject {
     }
 
     display() {
+
         const rotationStep = 2*Math.PI/this.petals;
         this.petalTex.apply();
         this.scene.pushMatrix();
+        this.scene.translate(0, this.stem.stemYHeight+this.innerRadius, 0);
         this.scene.rotate(this.receptacleAngle, 1, 0, 0);
         for (let i = 0; i < this.petals; i++) {
             this.scene.pushMatrix();
@@ -73,13 +69,13 @@ export class MyFlower extends CGFobject {
             this.petal.display(this.angles[i], this.texCoords[i]);
             this.scene.popMatrix();
         }
-        this.receptacleApp.apply();
         this.receptacle.display();
         this.scene.popMatrix();
         this.scene.pushMatrix();
-        this.scene.pushMatrix();
+        this.scene.translate(0, this.stem.stemYHeight+this.innerRadius, 0);
         this.scene.translate(0, -this.innerRadius, 0);
         this.stem.display();
         this.scene.popMatrix();
+       
     }
 }

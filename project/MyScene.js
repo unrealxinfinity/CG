@@ -37,8 +37,8 @@ export class MyScene extends CGFscene {
     //Objects connected to MyInterface
     this.displayAxis = true;
     this.scaleFactor = 1;
-    this.gardenRows = 5;
-    this.gardenCols = 5;
+    this.gardenRows = 3;
+    this.gardenCols = 3;
 
     this.enableTextures(true);
     this.petalTextures = [new CGFtexture(this, "images/petal1.jpg"), new CGFtexture(this, "images/petal2.jpg"),

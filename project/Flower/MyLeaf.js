@@ -12,7 +12,6 @@ import { MyPetal } from './MyPetal.js';
 export class MyLeaf extends CGFobject {
 	constructor(scene, stemApp,leafColor,objects) {
 		super(scene);
-		console.log(leafColor);
 		this.root = objects.cylinder; //cyclinder of 1 radius and 1 height
 		this.leaf = objects.triangle //triangle of 1 height and 1 width
 		this.texture = new CGFtexture(scene, "images/leaf.jpg");
