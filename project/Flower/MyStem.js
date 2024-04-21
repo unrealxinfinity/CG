@@ -10,7 +10,7 @@ import { MyLeaf } from './MyLeaf.js';
  * @param stacks - number of stacked prisms
  */
 export class MyStem extends CGFobject {
-	constructor(scene, slices, stacks, numStems,innerRadius,outterRadius,maxLength,leafTexture,leafColor) {
+	constructor(scene, numStems,innerRadius,outterRadius,maxLength,leafColor,objects) {
 		super(scene);
 		this.numberOfStems=numStems;
 		this.stemApp = new CGFappearance(scene);
@@ -21,7 +21,6 @@ export class MyStem extends CGFobject {
         this.stemApp.setDiffuse(...leafColor, 1);
         this.stemApp.setSpecular(0, 0, 0, 0);
         this.stemApp.setShininess(10);
-		console.log("numStems: "+numStems);
 		//stem related attributes
 		this.stemLength = maxLength;
 		this.radius = innerRadius;
@@ -37,12 +36,14 @@ export class MyStem extends CGFobject {
 		//leaf related attributes
 		this.maxLeafAngleZ = Math.PI/1.5;
 		this.minLeafAngleZ = Math.PI/4;
+		this.maxStemAngleY = 2*Math.PI;
 		this.maxLeafLength = this.stemLength * 0.7;
 		this.minLeafLength = this.stemLength * 0.3;
 		this.leafLengths = [];
 		this.leafAnglesZ = [];
-		this.leaf = new MyLeaf(scene, slices,stacks, this.stemApp);
-		this.cylinder = new MyCylinder(scene, slices, stacks);
+		this.leafAnglesY = [];
+		this.leaf = new MyLeaf(scene, this.stemApp,leafColor,objects);
+		this.cylinder = objects.cylinder;
 		this.randomize();
 		this.calculateStemEnds();
 		
@@ -58,6 +59,8 @@ export class MyStem extends CGFobject {
 			this.leafLengths.push(leafLength);
 			var leafAngleZ = Math.random() * (this.maxLeafAngleZ - this.minLeafAngleZ) + this.minLeafAngleZ;
 			this.leafAnglesZ.push(leafAngleZ);
+			var leafAngleY = Math.random() * this.maxStemAngleY;
+			this.leafAnglesY.push(leafAngleY);
 		}
 		
 	}
@@ -75,13 +78,16 @@ export class MyStem extends CGFobject {
 	
 	}
 	makeStem(i){
-		this.scene.pushMatrix();
-		this.scene.translate(this.stemEndCoords[i][0],this.stemEndCoords[i][1],this.stemEndCoords[i][2]);
-		this.scene.rotate(this.stemAngles[i].y,0,1,0);
-		this.scene.rotate(this.leafAnglesZ[i],0,0,1);
-		this.leaf.display(this.leafLengths[i]);
-		this.scene.popMatrix();
-		
+		if(i!=0){
+			//draws leaves
+			this.scene.pushMatrix();
+			this.scene.translate(this.stemEndCoords[i][0],this.stemEndCoords[i][1],this.stemEndCoords[i][2]);
+			this.scene.rotate(this.stemAngles[i].y,0,1,0);
+			this.scene.rotate(this.leafAnglesZ[i],0,0,1);
+			this.scene.rotate(this.leafAnglesY[i],0,1,0);
+			this.leaf.display(this.leafLengths[i]);
+			this.scene.popMatrix();
+			}
 		this.stemApp.apply();
 		this.scene.pushMatrix();
 		this.scene.translate(this.stemEndCoords[i][0],this.stemEndCoords[i][1],this.stemEndCoords[i][2]);

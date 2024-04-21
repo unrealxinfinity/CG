@@ -7,10 +7,10 @@ import { MySphere } from '../Objects/MySphere.js';
  * @param scene - Reference to MyScene object
  */
 export class MyReceptale extends CGFobject {
-    constructor(scene, slices, stacks, radius) {
+    constructor(scene, radius, objects) {
         super(scene);
         this.radius = radius;
-        this.sphere = new MySphere(scene, slices, stacks, false, false);
+        this.sphere = objects.sphere;
     }
 
     display() {

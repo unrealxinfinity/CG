@@ -6,12 +6,12 @@ import { MyTriangle } from '../Objects/MyTriangle.js';
  * @param scene - Reference to MyScene object
  */
 export class MyPetal extends CGFobject {
-	constructor(scene, innerRadius, outerRadius) {
+	constructor(scene, innerRadius, outerRadius,objects) {
 		super(scene);
                 this.innerRadius = innerRadius;
                 this.outerRadius = outerRadius;
                 this.diff = (this.outerRadius-this.innerRadius)/2;
-		this.triangle = new MyTriangle(scene);
+		this.triangle = objects.triangle;
 	}
 	
 	display(angle, texCoords) {

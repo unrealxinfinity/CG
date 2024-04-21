@@ -1,4 +1,4 @@
-import {CGFobject} from '../../lib/CGF.js';
+import {CGFobject,CGFappearance,CGFtexture} from '../../lib/CGF.js';
 import {MyCylinder} from '../Objects/MyCylinder.js';
 import { MyTriangle } from '../Objects/MyTriangle.js';
 import { MyPetal } from './MyPetal.js';
@@ -10,12 +10,20 @@ import { MyPetal } from './MyPetal.js';
  * @param stacks - number of stacked prisms
  */
 export class MyLeaf extends CGFobject {
-	constructor(scene,slices,stacks, stemApp) {
+	constructor(scene, stemApp,leafColor,objects) {
 		super(scene);
-		this.root = new MyCylinder(scene, slices, stacks); //cyclinder of 1 radius and 1 height
-		this.leaf = new MyTriangle(scene); //triangle of 1 height and 1 width
-		//this.flowerRadius = outerRadius;
-        //this.zAngle;
+		console.log(leafColor);
+		this.root = objects.cylinder; //cyclinder of 1 radius and 1 height
+		this.leaf = objects.triangle //triangle of 1 height and 1 width
+		this.texture = new CGFtexture(scene, "images/leaf.jpg");
+		this.leafApp = new CGFappearance(scene);
+		this.leafApp.setTexture(this.texture);
+		this.leafApp.setTextureWrap('REPEAT', 'REPEAT');
+		this.leafApp.setAmbient(...leafColor, 1);
+		this.leafApp.setDiffuse(...leafColor, 1);
+		this.leafApp.setSpecular(0, 0, 0, 0);
+		this.leafApp.setShininess(10);
+
 		this.stemApp = stemApp;
         this.totalLength;//hypotenuse aka leaf total length
 		//root parameters
@@ -46,9 +54,11 @@ export class MyLeaf extends CGFobject {
 		
 	}
 	makeLeaf(){
+		this.leafApp.apply();
 		this.scene.pushMatrix();
 		this.scene.translate(0,this.rootHeight+this.leafHeight/2-this.leafToRootOffset,0);
 		this.scene.scale(this.leafWidth,this.leafHeight/2,this.leafThickness);
+		this.leaf.updateTexCoords([0.5,1,0.5,0,0,0.5,0.5,1,0.5,0,0,0.5]);
 		this.leaf.display();
 		this.scene.popMatrix();
 
@@ -56,6 +66,7 @@ export class MyLeaf extends CGFobject {
 		this.scene.translate(0,this.rootHeight+this.leafHeight/2-this.leafToRootOffset,0);
 		this.scene.rotate(Math.PI,1,0,0)
 		this.scene.scale(this.leafWidth,this.leafHeight/2,this.leafThickness);		
+		this.leaf.updateTexCoords([0.5,1,0.5,0,1,0.5,0.5,1,0.5,0,1,0.5]);
 		this.leaf.display();
 		this.scene.popMatrix();
 	}

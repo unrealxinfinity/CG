@@ -3,14 +3,20 @@ import { MySphere } from '../Objects/MySphere.js';
 import { MyPetal } from './MyPetal.js';
 import { MyReceptale } from './MyReceptale.js';
 import { MyStem } from './MyStem.js';
+import { MyTriangle } from '../Objects/MyTriangle.js';
+import { MyCylinder } from '../Objects/MyCylinder.js';
 /**
  * MyFlower
  * @constructor
  * @param scene - Reference to MyScene object
  */
 export class MyFlower extends CGFobject {
-    constructor(scene, petals,stems, innerRadius, outerRadius, petalTex,leafText, receptacleColor,leafColor) {
+    constructor(scene, petals,stems, innerRadius, outerRadius, petalTex, receptacleColor,leafColor) {
         super(scene);
+        this.stacks = 20;
+        this.slices = 20;
+        this.objects={'sphere':new MySphere(scene, this.slices, this.stacks, false, false),'triangle':new MyTriangle(scene),'cylinder':new MyCylinder(scene, this.slices, this.stacks)};
+        console.log(this.objects);
         this.innerRadius = innerRadius;
         this.outerRadius = outerRadius;
         this.petals = petals;
@@ -19,9 +25,9 @@ export class MyFlower extends CGFobject {
         this.receptacleApp.setDiffuse(...receptacleColor, 1);
         this.receptacleApp.setSpecular(0, 0, 0, 0);
         this.receptacleApp.setShininess(10);
-        this.receptacle = new MyReceptale(this.scene, 20, 20, innerRadius);
-        this.petal = new MyPetal(this.scene, innerRadius, outerRadius);
-        this.stem = new MyStem(this.scene, 10, 10,stems,0.3,outerRadius,outerRadius+2,this.leafTexture,leafColor);
+        this.receptacle = new MyReceptale(this.scene, innerRadius,this.objects);
+        this.petal = new MyPetal(this.scene, innerRadius, outerRadius,this.objects);
+        this.stem = new MyStem(this.scene, stems,0.3,outerRadius,outerRadius+2,leafColor,this.objects);
         this.angles = [];
         this.baseAngles = [];
         this.texCoords = [];
