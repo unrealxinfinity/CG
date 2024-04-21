@@ -26,6 +26,7 @@ export class MyFlower extends CGFobject {
         this.baseAngles = [];
         this.texCoords = [];
         this.petalTex = petalTex;
+        this.receptacleAngle = Math.random()*Math.PI/2 + Math.PI/4; 
         const halfPi = Math.PI/2;
         const quarterPi = Math.PI/4;
         for (let i = 0; i < petals; i++) {
@@ -48,6 +49,8 @@ export class MyFlower extends CGFobject {
     display() {
         const rotationStep = 2*Math.PI/this.petals;
         this.petalTex.apply();
+        this.scene.pushMatrix();
+        this.scene.rotate(this.receptacleAngle, 1, 0, 0);
         for (let i = 0; i < this.petals; i++) {
             this.scene.pushMatrix();
             this.scene.rotate(rotationStep*i, 0, 0, 1);
@@ -58,6 +61,7 @@ export class MyFlower extends CGFobject {
         }
         this.receptacleApp.apply();
         this.receptacle.display();
+        this.scene.popMatrix();
         this.scene.pushMatrix();
         this.scene.pushMatrix();
         this.scene.translate(0, -this.innerRadius, 0);
