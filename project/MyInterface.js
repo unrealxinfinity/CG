@@ -22,6 +22,10 @@ export class MyInterface extends CGFinterface {
 
         //Slider element in GUI
         this.gui.add(this.scene, 'scaleFactor', 0.1, 5).name('Scale Factor');
+        //TextBox for number of rows in the garden
+        this.gui.add(this.scene, 'gardenRows', 1, 10).step(1).name('Garden Rows');
+        //TextBox for number of columns in the garden
+        this.gui.add(this.scene, 'gardenCols', 1, 10).step(1).name('Garden Columns');
 
         return true;
     }

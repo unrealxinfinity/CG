@@ -9,6 +9,14 @@ import { MyCylinder } from '../Objects/MyCylinder.js';
  * MyFlower
  * @constructor
  * @param scene - Reference to MyScene object
+ * @param petals - number of petals
+ * @param stems - number of stems
+ * @param innerRadius - inner radius of the flower
+ * @param outerRadius - outer radius of the flower
+ * @param petalTex - petal texture
+ * @param receptacleColor - color of the receptacle
+ * @param stemColor - color of the stem
+ * @param leafColor - color of the leaf
  */
 export class MyFlower extends CGFobject {
     constructor(scene, petals,stems, innerRadius, outerRadius, petalTex, receptacleColor,stemColor,leafColor) {

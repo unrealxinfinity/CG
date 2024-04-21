@@ -6,8 +6,8 @@ import { MyPetal } from './MyPetal.js';
  * MyLeaf
  * @constructor
  * @param scene - Reference to MyScene object
- * @param slices - number of faces
- * @param stacks - number of stacked prisms
+ * @param stemApp - CGFappearance for the stem
+ * @param  leafColor- color of the leaf
  */
 export class MyLeaf extends CGFobject {
 	constructor(scene, stemApp,leafColor,objects) {

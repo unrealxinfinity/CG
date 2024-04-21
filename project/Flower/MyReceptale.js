@@ -2,9 +2,11 @@ import {CGFobject} from '../../lib/CGF.js';
 import { MySphere } from '../Objects/MySphere.js';
 
 /**
- * MyStem
+ * MyReceptale
  * @constructor
  * @param scene - Reference to MyScene object
+ * @param radius - radius of the receptacle
+ * @param objects - objects to be used in the receptacle
  */
 export class MyReceptale extends CGFobject {
     constructor(scene, radius, objects) {

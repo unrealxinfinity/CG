@@ -6,8 +6,13 @@ import { MyLeaf } from './MyLeaf.js';
  * MyCylinder
  * @constructor
  * @param scene - Reference to MyScene object
- * @param slices - number of faces
- * @param stacks - number of stacked prisms
+ * @param numStems - number of stems to be created
+ * @innerRadius - inner radius of the stem
+ * @outterRadius - outter radius of the flower
+ * @maxLength - maximum length of the stem, > outterRadius
+ * @stemColor - color of the stem
+ * @leafColor - color of the leaf
+ * @objects - objects to be used in the stem
  */
 export class MyStem extends CGFobject {
 	constructor(scene, numStems,innerRadius,outterRadius,maxLength,stemColor,leafColor,objects) {

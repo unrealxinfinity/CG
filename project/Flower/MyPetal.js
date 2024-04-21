@@ -4,6 +4,9 @@ import { MyTriangle } from '../Objects/MyTriangle.js';
  * MyPetale
  * @constructor
  * @param scene - Reference to MyScene object
+ * @param innerRadius - inner radius of the flower
+ * @param outerRadius - outer radius of the flower
+ * @param objects - objects to be used in the petal
  */
 export class MyPetal extends CGFobject {
 	constructor(scene, innerRadius, outerRadius,objects) {

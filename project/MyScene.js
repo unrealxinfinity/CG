@@ -1,12 +1,9 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
 import { MyPlane } from "./MyPlane.js";
-import { MyPetal } from "./Flower/MyPetal.js";
-import { MyReceptale } from "./Flower/MyReceptale.js";
-import { MyStem } from "./Flower/MyStem.js";
 import { MySphere } from "./Objects/MySphere.js";
 import { MyPanorama } from "./Objects/MyPanorama.js";
 import { MyFlower } from "./Flower/MyFlower.js";
-import { MyLeaf } from "./Flower/MyLeaf.js";
+import { MyGarden } from "./MyGarden.js";
 
 /**
  * MyScene
@@ -40,6 +37,8 @@ export class MyScene extends CGFscene {
     //Objects connected to MyInterface
     this.displayAxis = true;
     this.scaleFactor = 1;
+    this.gardenRows = 5;
+    this.gardenCols = 5;
 
     this.enableTextures(true);
     this.petalTextures = [new CGFtexture(this, "images/petal1.jpg"), new CGFtexture(this, "images/petal2.jpg"),
@@ -59,6 +58,7 @@ export class MyScene extends CGFscene {
     this.panorama = new MyPanorama(this, this.earth);
 
     this.flower = new MyFlower(this, 16,4, 2, 8, this.petalppearance, [0.5, 0.17, 0], [0.6, 1,0.4],[0.6, 1,0.4]);
+    this.garden = new MyGarden(this,this.gardenRows,this.gardenCols);
 
 
   }
@@ -93,16 +93,16 @@ export class MyScene extends CGFscene {
     this.loadIdentity();
     // Apply transformations corresponding to the camera position relative to the origin
     this.applyViewMatrix();
-
     // Draw axis
     if (this.displayAxis) this.axis.display();
 
     // ---- BEGIN Primitive drawing section
-    this.flower.display();
+    //this.flower.display();
     //this.petalTest.display(Math.PI/4, [0, 1]);
     /*this.receptale.display();*/
     //this.stem.display();
     //this.myLeaf.display(Math.PI/4);
+    this.garden.display(this.gardenRows,this.gardenCols);
     this.pushMatrix();
     this.panorama.display(this.camera.position);
     /*this.appearance.apply();
