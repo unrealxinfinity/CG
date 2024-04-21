@@ -1,4 +1,4 @@
-import {CGFobject,CGFappearance} from '../../lib/CGF.js';
+import {CGFobject,CGFappearance, CGFtexture} from '../../lib/CGF.js';
 import {MyCylinder} from '../Objects/MyCylinder.js';
 import { MyLeaf } from './MyLeaf.js';
 
@@ -13,11 +13,14 @@ export class MyStem extends CGFobject {
 	constructor(scene, slices, stacks, numStems,innerRadius,outterRadius,maxLength,leafTexture,leafColor) {
 		super(scene);
 		this.numberOfStems=numStems;
-		this.leafApp = new CGFappearance(scene);
-        this.leafApp.setAmbient(...leafColor, 1);
-        this.leafApp.setDiffuse(...leafColor, 1);
-        this.leafApp.setSpecular(0, 0, 0, 0);
-        this.leafApp.setShininess(10);
+		this.stemApp = new CGFappearance(scene);
+		this.stemTex = new CGFtexture(this.scene, "images/stem.jpg");
+		this.stemApp.setTexture(this.stemTex);
+		this.stemApp.setTextureWrap('REPEAT', 'REPEAT');
+        this.stemApp.setAmbient(...leafColor, 1);
+        this.stemApp.setDiffuse(...leafColor, 1);
+        this.stemApp.setSpecular(0, 0, 0, 0);
+        this.stemApp.setShininess(10);
 		console.log("numStems: "+numStems);
 		//stem related attributes
 		this.stemLength = maxLength;
@@ -72,7 +75,6 @@ export class MyStem extends CGFobject {
 	
 	}
 	makeStem(i){
-		this.leafApp.apply();
 		this.scene.pushMatrix();
 		this.scene.translate(this.stemEndCoords[i][0],this.stemEndCoords[i][1],this.stemEndCoords[i][2]);
 		this.scene.rotate(this.stemAngles[i].y,0,1,0);
@@ -80,6 +82,7 @@ export class MyStem extends CGFobject {
 		this.leaf.display(this.leafLengths[i]);
 		this.scene.popMatrix();
 		
+		this.stemApp.apply();
 		this.scene.pushMatrix();
 		this.scene.translate(this.stemEndCoords[i][0],this.stemEndCoords[i][1],this.stemEndCoords[i][2]);
 		this.scene.rotate(this.stemAngles[i].y,0,1,0);

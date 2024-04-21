@@ -8,12 +8,11 @@ import {CGFobject} from '../../lib/CGF.js';
  * @param stacks - number of stacked prisms
  */
 export class MyCylinder extends CGFobject {
-	constructor(scene, slices, stacks, texHeight) {
+	constructor(scene, slices, stacks) {
 		super(scene);
 
 		this.slices = slices;
 		this.stacks = stacks;
-		this.texHeight = texHeight;
 
 		this.initBuffers();
 	}
@@ -26,7 +25,7 @@ export class MyCylinder extends CGFobject {
 			const angle = twoPi * (i/this.slices);
 			const vertex = [Math.cos(angle), Math.sin(angle), z]; 
 			slice.push(...vertex);
-			sliceTex.push(0.4 + 0.2*i/this.slices, z*this.texHeight);
+			sliceTex.push(0.4 + 0.2*i/this.slices, z);
 			this.normals.push(Math.cos(angle ), Math.sin(angle ), 0);
 			
 		}
