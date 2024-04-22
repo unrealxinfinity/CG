@@ -39,7 +39,7 @@ export class MyScene extends CGFscene {
     this.scaleFactor = 1;
     this.gardenRows = 3;
     this.gardenCols = 3;
-
+    
     this.enableTextures(true);
     this.petalTextures = [new CGFtexture(this, "images/petal1.jpg"), new CGFtexture(this, "images/petal2.jpg"),
                   new CGFtexture(this, "images/petal3.jpg")];
@@ -102,6 +102,9 @@ export class MyScene extends CGFscene {
     /*this.receptale.display();*/
     //this.stem.display();
     //this.myLeaf.display(Math.PI/4);
+    //console.log(this.gardenRows,this.gardenCols);    this.garden.updateGarden(this.gardenRows,this.gardenCols);
+    //this.garden.updateGarden(this.gardenRows,this.gardenCols);
+
     this.garden.display(this.gardenRows,this.gardenCols);
     this.pushMatrix();
     this.panorama.display(this.camera.position);

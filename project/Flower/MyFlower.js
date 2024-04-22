@@ -53,7 +53,7 @@ export class MyFlower extends CGFobject {
         texCoordsB.push(...texCoordsB);
         return [texCoordsA, texCoordsB];
     }
-
+    
     display() {
 
         const rotationStep = 2*Math.PI/this.petals;

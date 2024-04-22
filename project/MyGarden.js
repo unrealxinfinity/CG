@@ -38,14 +38,8 @@ export class MyGarden extends CGFobject {
         this.rows=rows;
         this.cols=cols;
         this.spaceInBetween=10;
-
-        for(let i=0;i<rows;i++){
-            for(let j=0;j<cols;j++){
-                this.randomize();
-                var flower = new MyFlower(this.scene, this.petals, this.stems, this.innerRadius, this.outterRadius, this.petalApperances[this.appIndex], this.receptacleColor, this.stemColor, this.leafColor);
-                this.flowers.push(flower);
-            }
-        }
+        this.updateGarden(this.rows,this.cols);
+       
         
     }
     randomize(){
@@ -59,7 +53,17 @@ export class MyGarden extends CGFobject {
         this.stems = Math.floor(Math.random()*(this.maxStems-this.minStems)+this.minStems);
 
     }
-
+    updateGarden(rows,cols){
+        for(let i=0;i<rows;i++){
+            for(let j=0;j<cols;j++){
+                this.cols=rows;
+                this.rows=cols;
+                this.randomize();
+                var flower = new MyFlower(this.scene, this.petals, this.stems, this.innerRadius, this.outterRadius, this.petalApperances[this.appIndex], this.receptacleColor, this.stemColor, this.leafColor);
+                this.flowers.push(flower);
+            }
+        }
+    }
     display() {
         for(let i=0;i<this.rows;i++){
             for(let j=0;j<this.cols;j++){
