@@ -1,6 +1,7 @@
 import {CGFobject} from '../../lib/CGF.js';
 /**
  * MyTriangle
+ * Has unit size 1 (edge) with base at origin and top at (0,1,0)
  * @constructor
  * @param scene - Reference to MyScene object
  */
@@ -29,6 +30,14 @@ export class MyTriangle extends CGFobject {
 		this.indices = [
 			2,1,0,
 			5,3,4,
+		];
+		this.normals = [
+			0,0,1,
+			0,0,1,
+			0,0,1,
+			0,0,-1,
+			0,0,-1,
+			0,0,-1,
 		];
 
 		this.normals = [

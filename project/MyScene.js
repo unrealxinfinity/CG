@@ -1,15 +1,11 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
 import { MyPlane } from "./MyPlane.js";
-import { MyPetal } from "./Flower/MyPetal.js";
-import { MyReceptale } from "./Flower/MyReceptale.js";
-import { MyStem } from "./Flower/MyStem.js";
 import { MySphere } from "./Objects/MySphere.js";
 import { MyPanorama } from "./Objects/MyPanorama.js";
 import { MyFlower } from "./Flower/MyFlower.js";
-import { MyRock } from "./Objects/MyRock.js";
-import { MyBee } from "./Objects/MyBee.js";
+import { MyGarden } from "./MyGarden.js";
 import { MyRockSet } from "./Objects/MyRockSet.js";
-
+import {MyBee} from "./Objects/MyBee.js";
 /**
  * MyScene
  * @constructor
@@ -37,14 +33,15 @@ export class MyScene extends CGFscene {
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
-    this.receptale = new MyReceptale(this, 10, 10, 1);
-    this.stem = new MyStem(this, 10, 10);
     this.sphere = new MySphere(this, 50, 50, true, 1);
+    
     
 
     //Objects connected to MyInterface
     this.displayAxis = true;
     this.scaleFactor = 1;
+    this.gardenRows = 3;
+    this.gardenCols = 3;
 
     this.enableTextures(true);
     this.petalTextures = [new CGFtexture(this, "images/petal1.jpg"), new CGFtexture(this, "images/petal2.jpg"),
@@ -64,13 +61,13 @@ export class MyScene extends CGFscene {
     this.petalppearance.setTextureWrap('REPEAT', 'REPEAT');
     this.petalppearance.setSpecular(0,0,0,1);
     this.panorama = new MyPanorama(this, this.earth);
-    this.flower = new MyFlower(this, 16, 4, 8, this.petalppearance, [0.5, 0.17, 0]);
-    this.rock = new MyRock(this, 3, null, null);
     this.rockSet = new MyRockSet(this, 1, 4);
     this.bee = new MyBee(this);
 
     this.flatShader = new CGFshader(this.gl, "shaders/flat.vert", "shaders/flat.frag");
     this.rockShader = new CGFshader(this.gl, "shaders/uScale.vert", "shaders/uScale.frag");
+    this.garden = new MyGarden(this,this.gardenRows,this.gardenCols);
+
 
   }
   initLights() {
@@ -104,12 +101,13 @@ export class MyScene extends CGFscene {
     this.loadIdentity();
     // Apply transformations corresponding to the camera position relative to the origin
     this.applyViewMatrix();
-
     // Draw axis
     if (this.displayAxis) this.axis.display();
 
     // ---- BEGIN Primitive drawing section
-    //this.flower.display();
+    this.bee.display();
+    this.rockSet.display();
+    this.garden.display();
     /*this.receptale.display();
     this.stem.display();*/
     this.pushMatrix();
