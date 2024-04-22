@@ -12,21 +12,10 @@ export class MyRock extends CGFobject {
 
         this.radius = radius;
         this.sphere = new MySphere(scene, 10, 10, false, true, 2);
-		this.initMaterial();
         if (scales) this.scales = scales;
         if (angles) this.angles = angles;
         this.initParams();
 	}
-
-    initMaterial() {
-        this.appearance = new CGFappearance(this.scene);
-        const texture = new CGFtexture(this.scene, "images/rock.jpg");
-        this.appearance.setTexture(texture);
-        this.appearance.setTextureWrap('REPEAT', 'REPEAT');
-        this.appearance.setAmbient(0.75,0.75,0.75,1);
-        this.appearance.setDiffuse(0.75,0.75,0.75,1);
-        this.appearance.setSpecular(0,0,0,1);
-    }
 
     initParams() {
         this.scales = [];
@@ -40,7 +29,6 @@ export class MyRock extends CGFobject {
     display(scales, angles) {
         if (!angles) angles = this.angles;
         if (!scales) scales = this.scales;
-        this.appearance.apply();
         this.scene.pushMatrix();
         this.scene.scale(...scales);
         this.scene.rotate(...angles);

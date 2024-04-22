@@ -1,4 +1,4 @@
-import {CGFappearance, CGFobject} from '../../lib/CGF.js';
+import {CGFappearance, CGFobject, CGFtexture} from '../../lib/CGF.js';
 import { MyRock } from './MyRock.js';
 import { MySphere } from './MySphere.js';
 /**
@@ -25,7 +25,18 @@ export class MyRockSet extends CGFobject {
         //this.rock = new MyRock(scene, radius, null, null);
         
         this.initParams();
+        this.initMaterial();
 	}
+
+    initMaterial() {
+        this.appearance = new CGFappearance(this.scene);
+        const texture = new CGFtexture(this.scene, "images/rock.jpg");
+        this.appearance.setTexture(texture);
+        this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+        this.appearance.setAmbient(0.75,0.75,0.75,1);
+        this.appearance.setDiffuse(0.75,0.75,0.75,1);
+        this.appearance.setSpecular(0,0,0,1);
+    }
 
     initParams() {
         this.scales = [];
@@ -39,6 +50,7 @@ export class MyRockSet extends CGFobject {
     }
 
     display() {
+        this.appearance.apply();
         this.scene.pushMatrix();
         this.scene.translate(0, (this.stages-1)*this.radius, 0);
         let rockIndex = 0;
