@@ -43,11 +43,22 @@ export class MyBee extends CGFobject {
         this.eyeApp.setDiffuse(0.75,0.75,0.75,1);
         this.eyeApp.setSpecular(0,0,0,1);
         this.eyeApp.setTextureWrap('REPEAT', 'REPEAT');
+
+        this.headApp = new CGFappearance(this.scene);
+        this.headApp.setAmbient(1,1,0.06,1);
+        this.headApp.setDiffuse(1,1,0.06,1);
+        this.headApp.setSpecular(0,0,0,1);
+
+        this.legApp = new CGFappearance(this.scene);
+        this.legApp.setAmbient(0.1,0.1,0.1,1);
+        this.legApp.setDiffuse(0.1,0.1,0.1,1);
+        this.legApp.setSpecular(0,0,0,1);
     }
 
     display() {
         this.appearance.apply();
 
+        this.legApp.apply();
         this.scene.pushMatrix(); //BEGIN ANTENNAE
         this.scene.translate(0, 0.95*this.sinThird, 0.95*this.cosThird);
         this.scene.rotate(-Math.PI/3, 1, 0, 0);
@@ -62,6 +73,7 @@ export class MyBee extends CGFobject {
         this.cylinder.display();
         this.scene.popMatrix(); //END ANTENNAE
 
+        this.headApp.apply();
         this.sphere.display();
         this.scene.pushMatrix();
         this.scene.translate(0.95*this.sin*this.cos, 0.95*this.sin*this.sin, 0.95*this.cos);
@@ -97,6 +109,7 @@ export class MyBee extends CGFobject {
         this.sphere.display();
 
         // BEGIN LEGS
+        this.legApp.apply();
         for (let i = 0; i < 3; i++) {
             const phi = ((8+i)*Math.PI)/6;
             const cosPhi = Math.cos(phi);
