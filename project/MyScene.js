@@ -37,7 +37,7 @@ export class MyScene extends CGFscene {
     this.plane = new MyPlane(this,30);
     this.receptale = new MyReceptale(this, 10, 10, 1);
     this.stem = new MyStem(this, 10, 10);
-    this.sphere = new MySphere(this, 50, 50, true);
+    this.sphere = new MySphere(this, 50, 50, true, 1);
     
 
     //Objects connected to MyInterface
@@ -45,7 +45,8 @@ export class MyScene extends CGFscene {
     this.scaleFactor = 1;
 
     this.enableTextures(true);
-    this.petalTextures = [new CGFtexture(this, "images/petal1.jpg"), new CGFtexture(this, "images/petal2.jpg")];
+    this.petalTextures = [new CGFtexture(this, "images/petal1.jpg"), new CGFtexture(this, "images/petal2.jpg"),
+                  new CGFtexture(this, "images/petal3.jpg")];
 
     this.texture = new CGFtexture(this, "images/terrain.jpg");
     this.earth = new CGFtexture(this, "images/landscape.jpg");
@@ -107,7 +108,7 @@ export class MyScene extends CGFscene {
 
     // ---- BEGIN Primitive drawing section
     //this.flower.display();
-    this.rockSet.display();
+    this.bee.display();
     /*this.receptale.display();
     this.stem.display();*/
     this.pushMatrix();

@@ -1,4 +1,4 @@
-import {CGFappearance, CGFobject} from '../../lib/CGF.js';
+import {CGFappearance, CGFobject, CGFtexture} from '../../lib/CGF.js';
 import { MySphere } from './MySphere.js';
 /**
  * MySphere
@@ -11,19 +11,11 @@ export class MyRock extends CGFobject {
 		super(scene);
 
         this.radius = radius;
-        this.sphere = new MySphere(scene, 10, 10, false, true);
-		this.initMaterial();
+        this.sphere = new MySphere(scene, 10, 10, false, true, 2);
         if (scales) this.scales = scales;
         if (angles) this.angles = angles;
         this.initParams();
 	}
-
-    initMaterial() {
-        this.appearance = new CGFappearance(this.scene);
-        this.appearance.setAmbient(0.25,0.25,0.25,1);
-        this.appearance.setDiffuse(0.25,0.25,0.25,1);
-        this.appearance.setSpecular(0,0,0,1);
-    }
 
     initParams() {
         this.scales = [];
@@ -37,10 +29,9 @@ export class MyRock extends CGFobject {
     display(scales, angles) {
         if (!angles) angles = this.angles;
         if (!scales) scales = this.scales;
-        this.appearance.apply();
         this.scene.pushMatrix();
         this.scene.scale(...scales);
-        this.scene.rotate(Math.PI/2, ...angles);
+        this.scene.rotate(...angles);
         this.sphere.display();
         this.scene.popMatrix();
     }
