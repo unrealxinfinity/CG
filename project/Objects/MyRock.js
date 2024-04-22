@@ -43,7 +43,7 @@ export class MyRock extends CGFobject {
         this.appearance.apply();
         this.scene.pushMatrix();
         this.scene.scale(...scales);
-        this.scene.rotate(Math.PI/2, ...angles);
+        this.scene.rotate(...angles);
         this.sphere.display();
         this.scene.popMatrix();
     }

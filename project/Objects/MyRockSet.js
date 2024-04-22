@@ -26,12 +26,12 @@ export class MyRockSet extends CGFobject {
     initParams() {
         this.scales = [];
         this.angles = [];
+        const twoPi = 2*Math.PI;
         for (let i = 0; i < this.rocks; i++) {
-            this.scales.push([Math.random()*0.3 + 0.8, Math.random()*0.3 + 0.8, Math.random()*0.3 + 0.8]);
-            this.angles.push([Math.random(), Math.random(), Math.random()]);
+            this.scales.push([Math.random()*0.5 + 0.6, Math.random()*0.5 + 0.6, Math.random()*0.5 + 0.6]);
+            this.angles.push([Math.random() * twoPi, Math.random(), Math.random(), Math.random()]);
             
         }
-        console.log(this.scales);
     }
 
     display() {
