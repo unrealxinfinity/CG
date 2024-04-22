@@ -53,6 +53,13 @@ export class MyBee extends CGFobject {
         this.legApp.setAmbient(0.1,0.1,0.1,1);
         this.legApp.setDiffuse(0.1,0.1,0.1,1);
         this.legApp.setSpecular(0,0,0,1);
+
+        this.wingApp = new CGFappearance(this.scene);
+        this.wingApp.setAmbient(0.66,1,1,0.05);
+        this.wingApp.setDiffuse(0.66,1,1,0.05);
+        this.wingApp.setSpecular(0.66,1,1,0.2);
+        const emission = this.wingApp.emission;
+        //this.wingApp.setEmission(emission[0],emission[1],emission[2],0);
     }
 
     display() {
@@ -89,6 +96,8 @@ export class MyBee extends CGFobject {
         this.scene.pushMatrix();
         this.scene.translate(-1.1, 0, 0);
         this.appearance.apply();
+
+        this.wingApp.apply();
         this.scene.pushMatrix(); //START WINGS
 
         this.scene.pushMatrix();
@@ -106,6 +115,7 @@ export class MyBee extends CGFobject {
 
         this.scene.popMatrix(); //END WINGS
         this.scene.scale(1.1, 1.1, 1.1);
+        this.appearance.apply();
         this.sphere.display();
 
         // BEGIN LEGS
