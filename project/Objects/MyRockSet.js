@@ -1,4 +1,4 @@
-import {CGFappearance, CGFobject} from '../../lib/CGF.js';
+import {CGFappearance, CGFobject, CGFtexture} from '../../lib/CGF.js';
 import { MyRock } from './MyRock.js';
 import { MySphere } from './MySphere.js';
 /**
@@ -18,23 +18,39 @@ export class MyRockSet extends CGFobject {
         }
         this.stages = stages;
         this.radius = radius;
-        this.rock = new MyRock(scene, radius, null, null);
+        this.rockObjs = [];
+        for (let i = 0; i < this.rocks; i++) {
+            this.rockObjs.push(new MyRock(scene, radius, null, null));
+        }
+        //this.rock = new MyRock(scene, radius, null, null);
         
         this.initParams();
+        this.initMaterial();
 	}
+
+    initMaterial() {
+        this.appearance = new CGFappearance(this.scene);
+        const texture = new CGFtexture(this.scene, "images/rock.jpg");
+        this.appearance.setTexture(texture);
+        this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+        this.appearance.setAmbient(0.75,0.75,0.75,1);
+        this.appearance.setDiffuse(0.75,0.75,0.75,1);
+        this.appearance.setSpecular(0,0,0,1);
+    }
 
     initParams() {
         this.scales = [];
         this.angles = [];
+        const twoPi = 2*Math.PI;
         for (let i = 0; i < this.rocks; i++) {
-            this.scales.push([Math.random()*0.3 + 0.8, Math.random()*0.3 + 0.8, Math.random()*0.3 + 0.8]);
-            this.angles.push([Math.random(), Math.random(), Math.random()]);
+            this.scales.push([Math.random()*0.5 + 0.6, Math.random()*0.5 + 0.6, Math.random()*0.5 + 0.6]);
+            this.angles.push([Math.random() * twoPi, Math.random(), Math.random(), Math.random()]);
             
         }
-        console.log(this.scales);
     }
 
     display() {
+        this.appearance.apply();
         this.scene.pushMatrix();
         this.scene.translate(0, (this.stages-1)*this.radius, 0);
         let rockIndex = 0;
@@ -46,7 +62,7 @@ export class MyRockSet extends CGFobject {
                 for (let y = 0; y < len; y++) {
                     this.scene.pushMatrix();
                     this.scene.translate(x*this.radius, 0, y*this.radius);
-                    this.rock.display(this.scales[rockIndex], this.angles[rockIndex]);
+                    this.rockObjs[rockIndex].display(this.scales[rockIndex], this.angles[rockIndex]);
                     rockIndex++;
                     this.scene.popMatrix();
                 }

@@ -4,7 +4,8 @@ import { MySphere } from "./Objects/MySphere.js";
 import { MyPanorama } from "./Objects/MyPanorama.js";
 import { MyFlower } from "./Flower/MyFlower.js";
 import { MyGarden } from "./MyGarden.js";
-
+import { MyRockSet } from "./Objects/MyRockSet.js";
+import {MyBee} from "./Objects/MyBee.js";
 /**
  * MyScene
  * @constructor
@@ -29,8 +30,8 @@ export class MyScene extends CGFscene {
 
     //Initialize scene objects
     this.axis = new CGFaxis(this);
-    this.plane = new MyPlane(this,30);    
-    this.sphere = new MySphere(this, 50, 50, true);
+    this.plane = new MyPlane(this,30);
+    this.sphere = new MySphere(this, 50, 50, true, 1);
     
     
 
@@ -46,6 +47,7 @@ export class MyScene extends CGFscene {
 
     this.texture = new CGFtexture(this, "images/terrain.jpg");
     this.earth = new CGFtexture(this, "images/landscape.jpg");
+    this.petal = new CGFtexture(this, "images/petal.jpg");
     this.appearance = new CGFappearance(this);
     this.appearance.setTexture(this.texture);
     this.appearance.setTextureWrap('REPEAT', 'REPEAT');
@@ -55,8 +57,13 @@ export class MyScene extends CGFscene {
     this.petalppearance = new CGFappearance(this);
     this.petalppearance.setTexture(this.petalTextures[Math.floor(Math.random()*this.petalTextures.length)]);
     this.petalppearance.setTextureWrap('REPEAT', 'REPEAT');
+    this.petalppearance.setSpecular(0,0,0,1);
     this.panorama = new MyPanorama(this, this.earth);
+    this.rockSet = new MyRockSet(this, 1, 4);
+    this.bee = new MyBee(this);
 
+    this.flatShader = new CGFshader(this.gl, "shaders/flat.vert", "shaders/flat.frag");
+    this.rockShader = new CGFshader(this.gl, "shaders/uScale.vert", "shaders/uScale.frag");
     this.garden = new MyGarden(this,this.gardenRows,this.gardenCols);
 
 
@@ -96,15 +103,11 @@ export class MyScene extends CGFscene {
     if (this.displayAxis) this.axis.display();
 
     // ---- BEGIN Primitive drawing section
-    //this.flower.display();
-    //this.petalTest.display(Math.PI/4, [0, 1]);
-    /*this.receptale.display();*/
-    //this.stem.display();
-    //this.myLeaf.display(Math.PI/4);
-    //console.log(this.gardenRows,this.gardenCols);    this.garden.updateGarden(this.gardenRows,this.gardenCols);
-    //this.garden.updateGarden(this.gardenRows,this.gardenCols);
-
-    this.garden.display(this.gardenRows,this.gardenCols);
+    this.bee.display();
+    this.rockSet.display();
+    this.garden.display();
+    /*this.receptale.display();
+    this.stem.display();*/
     this.pushMatrix();
     this.panorama.display(this.camera.position);
     /*this.appearance.apply();
