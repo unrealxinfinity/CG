@@ -1,4 +1,5 @@
 import {CGFappearance, CGFobject} from '../../lib/CGF.js';
+import { MyCylinder } from './MyCylinder.js';
 import { MySphere } from './MySphere.js';
 /**
  * MySphere
@@ -13,6 +14,11 @@ export class MyBee extends CGFobject {
         this.sin = Math.sin(Math.PI/4);
         this.cos = Math.cos(Math.PI/4);
         this.sphere = new MySphere(scene, 20, 20, false, false, 1);
+        this.sinThird = Math.sin(Math.PI/3);
+        this.cosThird = Math.cos(Math.PI/3);
+        this.cosThetaLeg = Math.cos(3*Math.PI/4);
+        this.sinThetaLeg = Math.sin(3*Math.PI/4);
+        this.cylinder = new MyCylinder(scene, 10, 10);
 		this.initMaterial();
 	}
 
@@ -25,6 +31,21 @@ export class MyBee extends CGFobject {
 
     display() {
         this.appearance.apply();
+
+        this.scene.pushMatrix(); //BEGIN ANTENNAE
+        this.scene.translate(0, 0.95*this.sinThird, 0.95*this.cosThird);
+        this.scene.rotate(-Math.PI/3, 1, 0, 0);
+        this.scene.scale(0.1, 0.1, 0.5);
+        this.cylinder.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.translate(0, 0.95*this.sinThird, -0.95*this.cosThird);
+        this.scene.rotate(-2*Math.PI/3, 1, 0, 0);
+        this.scene.scale(0.1, 0.1, 0.5);
+        this.cylinder.display();
+        this.scene.popMatrix(); //END ANTENNAE
+
         this.sphere.display();
         this.scene.pushMatrix();
         this.scene.translate(this.sin*this.cos, this.sin*this.sin, this.cos);
@@ -56,6 +77,28 @@ export class MyBee extends CGFobject {
         this.scene.popMatrix(); //END WINGS
         this.scene.scale(1.1, 1.1, 1.1);
         this.sphere.display();
+
+        // BEGIN LEGS
+        for (let i = 0; i < 3; i++) {
+            const phi = ((8+i)*Math.PI)/6;
+            const cosPhi = Math.cos(phi);
+            const sinPhi = Math.sin(phi);
+            this.scene.pushMatrix();
+            this.scene.translate(0.9*this.sinThetaLeg*cosPhi, 0.9*this.sinThetaLeg*sinPhi, 0.9*this.cosThetaLeg);
+            this.scene.rotate(-5*Math.PI/4, 1, 0, 0);
+            this.scene.scale(0.1, 0.1, 0.5);
+            this.cylinder.display();
+            this.scene.popMatrix();
+
+            this.scene.pushMatrix();
+            this.scene.translate(0.9*this.sinThetaLeg*cosPhi, 0.9*this.sinThetaLeg*sinPhi, -0.9*this.cosThetaLeg);
+            this.scene.rotate(Math.PI/4, 1, 0, 0);
+            this.scene.scale(0.1, 0.1, 0.5);
+            this.cylinder.display();
+            this.scene.popMatrix();
+        }
+        //END LEGS
+
         this.scene.popMatrix();
         this.scene.pushMatrix();
         this.scene.translate(-3,-1,0);
