@@ -108,7 +108,7 @@ export class MyScene extends CGFscene {
 
     // ---- BEGIN Primitive drawing section
     //this.flower.display();
-    this.rockSet.display();
+    this.bee.display();
     /*this.receptale.display();
     this.stem.display();*/
     this.pushMatrix();

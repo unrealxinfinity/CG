@@ -1,4 +1,4 @@
-import {CGFappearance, CGFobject} from '../../lib/CGF.js';
+import {CGFappearance, CGFobject, CGFtexture} from '../../lib/CGF.js';
 import { MyCylinder } from './MyCylinder.js';
 import { MySphere } from './MySphere.js';
 /**
@@ -19,14 +19,30 @@ export class MyBee extends CGFobject {
         this.cosThetaLeg = Math.cos(3*Math.PI/4);
         this.sinThetaLeg = Math.sin(3*Math.PI/4);
         this.cylinder = new MyCylinder(scene, 10, 10);
-		this.initMaterial();
+		this.initMaterials();
 	}
 
-    initMaterial() {
+    initMaterials() {
         this.appearance = new CGFappearance(this.scene);
         this.appearance.setAmbient(0.25,0.25,0.25,1);
         this.appearance.setDiffuse(0.25,0.25,0.25,1);
         this.appearance.setSpecular(0,0,0,1);
+
+        this.stripedApp = new CGFappearance(this.scene);
+        this.stripedTex = new CGFtexture(this.scene, "images/beestripe.jpg");
+        this.stripedApp.setTexture(this.stripedTex);
+        this.stripedApp.setAmbient(0.75,0.75,0.75,1);
+        this.stripedApp.setDiffuse(0.75,0.75,0.75,1);
+        this.stripedApp.setSpecular(0,0,0,1);
+        this.stripedApp.setTextureWrap('REPEAT', 'REPEAT');
+
+        this.eyeApp = new CGFappearance(this.scene);
+        this.eyeTex = new CGFtexture(this.scene, "images/beeeye.jpg");
+        this.eyeApp.setTexture(this.eyeTex);
+        this.eyeApp.setAmbient(0.75,0.75,0.75,1);
+        this.eyeApp.setDiffuse(0.75,0.75,0.75,1);
+        this.eyeApp.setSpecular(0,0,0,1);
+        this.eyeApp.setTextureWrap('REPEAT', 'REPEAT');
     }
 
     display() {
@@ -48,17 +64,19 @@ export class MyBee extends CGFobject {
 
         this.sphere.display();
         this.scene.pushMatrix();
-        this.scene.translate(this.sin*this.cos, this.sin*this.sin, this.cos);
+        this.scene.translate(0.95*this.sin*this.cos, 0.95*this.sin*this.sin, 0.95*this.cos);
         this.scene.scale(0.1,0.1,0.1);
+        this.eyeApp.apply();
         this.sphere.display();
         this.scene.popMatrix();
         this.scene.pushMatrix();
-        this.scene.translate(this.sin*this.cos, this.sin*this.sin, -this.cos);
+        this.scene.translate(0.95*this.sin*this.cos, 0.95*this.sin*this.sin, -0.95*this.cos);
         this.scene.scale(0.1,0.1,0.1);
         this.sphere.display();
         this.scene.popMatrix();
         this.scene.pushMatrix();
         this.scene.translate(-1.1, 0, 0);
+        this.appearance.apply();
         this.scene.pushMatrix(); //START WINGS
 
         this.scene.pushMatrix();
@@ -102,8 +120,9 @@ export class MyBee extends CGFobject {
         this.scene.popMatrix();
         this.scene.pushMatrix();
         this.scene.translate(-3,-1,0);
-        this.scene.rotate(Math.PI/4, 0, 0, 1);
-        this.scene.scale(2, 1, 1);
+        this.scene.rotate(-Math.PI/4, 0, 0, 1);
+        this.scene.scale(1, 2, 1);
+        this.stripedApp.apply();
         this.sphere.display();
         this.scene.popMatrix();
     }
