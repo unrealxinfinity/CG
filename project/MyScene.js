@@ -69,7 +69,7 @@ export class MyScene extends CGFscene {
     this.beeShader = new CGFshader(this.gl, "shaders/beeAnimation.vert", "shaders/beeAnimation.frag");
     this.garden = new MyGarden(this,this.gardenRows,this.gardenCols);
     this.beeShader.setUniformsValues({uSampler: 0, timeFactor: 0,normScale:1,transitionSpeed:1,flyOffset:1});
-    this.setUpdatePeriod(60);
+    this.setUpdatePeriod(1000/60);
 
   }
   initLights() {
@@ -99,7 +99,7 @@ export class MyScene extends CGFscene {
 			// Doing the modulus (%) by 100 makes the timeFactor loop between 0 and 99
 			// ( so the loop period of timeFactor is 100 times 100 ms = 10s ; the actual animation loop depends on how timeFactor is used in the shader )
 			//this.beeShader.setUniformsValues({ timeFactor: t / 400 % 100 });
-      this.bee.animate(t,3,0.005,1);
+      this.bee.animate(t,3,0.005,0.06);
 
 	}
   display() {
