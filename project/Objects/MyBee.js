@@ -55,11 +55,11 @@ export class MyBee extends CGFobject {
         this.legApp.setSpecular(0,0,0,1);
 
         this.wingApp = new CGFappearance(this.scene);
-        this.wingApp.setAmbient(0.66,1,1,0.05);
-        this.wingApp.setDiffuse(0.66,1,1,0.05);
-        this.wingApp.setSpecular(0.66,1,1,0.2);
+        this.wingApp.setAmbient(0.66,1,1,0.1);
+        this.wingApp.setDiffuse(0.66,1,1,0.1);
+        this.wingApp.setSpecular(0.66,1,1,0.6);
         const emission = this.wingApp.emission;
-        //this.wingApp.setEmission(emission[0],emission[1],emission[2],0);
+        this.wingApp.setEmission(emission[0],emission[1],emission[2],0);
     }
 
     display() {
@@ -104,25 +104,9 @@ export class MyBee extends CGFobject {
 
         this.scene.pushMatrix();
         this.scene.translate(-1.1, 0, 0);
+        this.scene.pushMatrix();
         this.appearance.apply();
-
-        this.wingApp.apply();
-        this.scene.pushMatrix(); //START WINGS
-
-        this.scene.pushMatrix();
-        this.scene.translate(0, 1.1*this.sin, 1.1*this.cos + 1.5);
-        this.scene.scale(0.5, 0.1, 2);
-        this.sphere.display();
-        this.scene.popMatrix();
-        this.scene.pushMatrix();
-        this.scene.rotate(Math.PI, 0, 1, 0);
-        this.scene.translate(0, 1.1*this.sin, 1.1*this.cos + 1.5);
-        this.scene.scale(0.5, 0.1, 2);
-        this.sphere.display();
-        this.scene.popMatrix();
-
-
-        this.scene.popMatrix(); //END WINGS
+        
         this.scene.scale(1.1, 1.1, 1.1);
         this.appearance.apply();
         this.sphere.display();
@@ -148,6 +132,25 @@ export class MyBee extends CGFobject {
             this.scene.popMatrix();
         }
         //END LEGS
+
+        this.scene.popMatrix();
+        this.scene.pushMatrix(); //START WINGS
+
+        this.wingApp.apply();
+        this.scene.pushMatrix();
+        this.scene.translate(0, 1.1*this.sin, 1.1*this.cos + 1.5);
+        this.scene.scale(0.5, 0.1, 2);
+        this.sphere.display();
+        this.scene.popMatrix();
+        this.scene.pushMatrix();
+        this.scene.rotate(Math.PI, 0, 1, 0);
+        this.scene.translate(0, 1.1*this.sin, 1.1*this.cos + 1.5);
+        this.scene.scale(0.5, 0.1, 2);
+        this.sphere.display();
+        this.scene.popMatrix();
+
+
+        this.scene.popMatrix(); //END WINGS
 
         this.scene.popMatrix();
     }

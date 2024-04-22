@@ -31,6 +31,8 @@ export class MyScene extends CGFscene {
     this.gl.enable(this.gl.DEPTH_TEST);
     this.gl.enable(this.gl.CULL_FACE);
     this.gl.depthFunc(this.gl.LEQUAL);
+    this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
+    this.gl.enable(this.gl.BLEND);
 
     //Initialize scene objects
     this.axis = new CGFaxis(this);
@@ -108,11 +110,11 @@ export class MyScene extends CGFscene {
 
     // ---- BEGIN Primitive drawing section
     //this.flower.display();
-    this.bee.display();
     /*this.receptale.display();
     this.stem.display();*/
     this.pushMatrix();
     this.panorama.display(this.camera.position);
+    this.bee.display();
     /*this.appearance.apply();
     this.translate(0,-100,0);
     this.scale(400,400,400);
