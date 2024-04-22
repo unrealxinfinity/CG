@@ -105,14 +105,14 @@ export class MyScene extends CGFscene {
     if (this.displayAxis) this.axis.display();
 
     // ---- BEGIN Primitive drawing section
-    this.bee.display();
-    this.rockSet.display();
+    //this.bee.display();
+    //this.rockSet.display();
     this.garden.display();
     /*this.receptale.display();
     this.stem.display();*/
     this.pushMatrix();
     this.panorama.display(this.camera.position);
-    this.bee.display();
+    //this.bee.display();
     /*this.appearance.apply();
     this.translate(0,-100,0);
     this.scale(400,400,400);
