@@ -93,6 +93,15 @@ export class MyBee extends CGFobject {
         this.scene.scale(0.1,0.1,0.1);
         this.sphere.display();
         this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.translate(-3,-1,0);
+        this.scene.rotate(-Math.PI/4, 0, 0, 1);
+        this.scene.scale(1, 2, 1);
+        this.stripedApp.apply();
+        this.sphere.display();
+        this.scene.popMatrix();
+
         this.scene.pushMatrix();
         this.scene.translate(-1.1, 0, 0);
         this.appearance.apply();
@@ -140,13 +149,6 @@ export class MyBee extends CGFobject {
         }
         //END LEGS
 
-        this.scene.popMatrix();
-        this.scene.pushMatrix();
-        this.scene.translate(-3,-1,0);
-        this.scene.rotate(-Math.PI/4, 0, 0, 1);
-        this.scene.scale(1, 2, 1);
-        this.stripedApp.apply();
-        this.sphere.display();
         this.scene.popMatrix();
     }
 
