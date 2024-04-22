@@ -39,8 +39,8 @@ export class MyBee extends CGFobject {
         this.stripedApp = new CGFappearance(this.scene);
         this.stripedTex = new CGFtexture(this.scene, "images/beestripe.jpg");
         this.stripedApp.setTexture(this.stripedTex);
-        this.stripedApp.setAmbient(0.75,0.75,0.75,1);
-        this.stripedApp.setDiffuse(0.75,0.75,0.75,1);
+        this.stripedApp.setAmbient(1,1,1,1);
+        this.stripedApp.setDiffuse(1,1,1,1);
         this.stripedApp.setSpecular(0,0,0,1);
         this.stripedApp.setTextureWrap('REPEAT', 'REPEAT');
 
