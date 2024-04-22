@@ -8,7 +8,7 @@ import { MySphere } from '../Objects/MySphere.js';
  * @param radius - radius of the receptacle
  * @param objects - objects to be used in the receptacle
  */
-export class MyReceptale extends CGFobject {
+export class MyReceptacle extends CGFobject {
     constructor(scene, radius,receptaleColor, objects,textures) {
         super(scene);
         this.radius = radius;

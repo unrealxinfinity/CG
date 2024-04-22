@@ -1,7 +1,7 @@
 import {CGFappearance, CGFobject} from '../../lib/CGF.js';
 import { MySphere } from '../Objects/MySphere.js';
 import { MyPetal } from './MyPetal.js';
-import { MyReceptale } from './MyReceptacle.js';
+import { MyReceptacle } from './MyReceptacle.js';
 import { MyStem } from './MyStem.js';
 import { MyTriangle } from '../Objects/MyTriangle.js';
 import { MyCylinder } from '../Objects/MyCylinder.js';
@@ -27,7 +27,7 @@ export class MyFlower extends CGFobject {
         this.innerRadius = innerRadius;
         this.outerRadius = outerRadius;
         this.petals = petals;
-        this.receptacle = new MyReceptale(this.scene, innerRadius,receptacleColor,this.objects,textures);
+        this.receptacle = new MyReceptacle(this.scene, innerRadius,receptacleColor,this.objects,textures);
         this.petal = new MyPetal(this.scene, innerRadius, outerRadius,MyFlower.generateTexCoords());
         this.stem = new MyStem(this.scene, stems,0.3,outerRadius,outerRadius+1,stemColor,leafColor,this.objects,textures);
         this.angles = [];
