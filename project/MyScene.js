@@ -37,7 +37,7 @@ export class MyScene extends CGFscene {
     this.plane = new MyPlane(this,30);
     this.receptale = new MyReceptale(this, 10, 10, 1);
     this.stem = new MyStem(this, 10, 10);
-    this.sphere = new MySphere(this, 50, 50, true);
+    this.sphere = new MySphere(this, 50, 50, true, 1);
     
 
     //Objects connected to MyInterface

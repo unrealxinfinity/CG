@@ -7,11 +7,12 @@ import {CGFobject} from '../../lib/CGF.js';
  * @param stacks - number of stacked prisms
  */
 export class MySphere extends CGFobject {
-	constructor(scene, slices, stacks, inverted, perturb) {
+	constructor(scene, slices, stacks, inverted, perturb, xTexOffset) {
 		super(scene);
 
         this.perturb = perturb;
 		this.slices = slices;
+        this.xTexOffset = xTexOffset;
 		this.stacks = stacks;
         this.inverted = inverted;
 
@@ -37,7 +38,7 @@ export class MySphere extends CGFobject {
                     this.normals.push(-vertex[0], -vertex[1], -vertex[2]);
                 else
                     this.normals.push(...vertex);
-                this.texCoords.push(i/this.slices, j/this.stacks);
+                this.texCoords.push(this.xTexOffset*i/this.slices, j/this.stacks);
             }
         }
         const phi = 0;
@@ -55,7 +56,7 @@ export class MySphere extends CGFobject {
                 this.normals.push(...vertex);
             //this.vertices.push(Math.sin(theta)*Math.sin(phi),Math.cos(theta),Math.sin(theta)*Math.cos(phi));
             //this.normals.push(Math.sin(theta)*Math.sin(phi),Math.cos(theta),Math.sin(theta)*Math.cos(phi));
-            this.texCoords.push(1, j/this.stacks);
+            this.texCoords.push(this.xTexOffset*1, j/this.stacks);
         }
         const topPerturb = Math.random()*0.3+0.85;
         const bottomPerturb = Math.random()*0.3+0.85;
@@ -68,7 +69,7 @@ export class MySphere extends CGFobject {
                 this.normals.push(0,-1,0);
             else 
                 this.normals.push(0,1,0);
-            this.texCoords.push((i+0.5)/this.slices, 0);
+            this.texCoords.push(this.xTexOffset*(i+0.5)/this.slices, 0);
         }
         for (let i = 0; i < this.slices; i++) {
             if (this.perturb)
@@ -79,7 +80,7 @@ export class MySphere extends CGFobject {
                 this.normals.push(0,1,0);
             else
                 this.normals.push(0,-1,0);
-            this.texCoords.push((i+0.5)/this.slices, 1);
+            this.texCoords.push(this.xTexOffset*(i+0.5)/this.slices, 1);
         }
     }
 

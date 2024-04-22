@@ -12,7 +12,7 @@ export class MyBee extends CGFobject {
 
         this.sin = Math.sin(Math.PI/4);
         this.cos = Math.cos(Math.PI/4);
-        this.sphere = new MySphere(scene, 20, 20, false, false);
+        this.sphere = new MySphere(scene, 20, 20, false, false, 1);
 		this.initMaterial();
 	}
 
