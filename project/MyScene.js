@@ -99,7 +99,7 @@ export class MyScene extends CGFscene {
 			// Doing the modulus (%) by 100 makes the timeFactor loop between 0 and 99
 			// ( so the loop period of timeFactor is 100 times 100 ms = 10s ; the actual animation loop depends on how timeFactor is used in the shader )
 			//this.beeShader.setUniformsValues({ timeFactor: t / 400 % 100 });
-      this.bee.animate(t,3,0.1,1)
+      this.bee.animate(t,3,0.005,1);
 
 	}
   display() {
