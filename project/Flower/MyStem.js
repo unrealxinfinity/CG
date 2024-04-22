@@ -15,11 +15,11 @@ import { MyLeaf } from './MyLeaf.js';
  * @objects - objects to be used in the stem
  */
 export class MyStem extends CGFobject {
-	constructor(scene, numStems,innerRadius,outterRadius,maxLength,stemColor,leafColor,objects) {
+	constructor(scene, numStems,innerRadius,outterRadius,maxLength,stemColor,leafColor,objects,textures) {
 		super(scene);
 		this.numberOfStems=numStems;
 		this.stemApp = new CGFappearance(scene);
-		this.stemTex = new CGFtexture(this.scene, "images/stem.jpg");
+		this.stemTex = textures.stemTexture;
 		this.stemApp.setTexture(this.stemTex);
 		this.stemApp.setTextureWrap('REPEAT', 'REPEAT');
         this.stemApp.setAmbient(...stemColor, 1);
@@ -48,7 +48,7 @@ export class MyStem extends CGFobject {
 		this.leafLengths = [];
 		this.leafAnglesZ = [];
 		this.leafAnglesY = [];
-		this.leaf = new MyLeaf(scene, this.stemApp,leafColor,objects);
+		this.leaf = new MyLeaf(scene, this.stemApp,leafColor,objects,textures);
 		this.cylinder = objects.cylinder;
 		this.randomize();
 		this.calculateStemEnds();

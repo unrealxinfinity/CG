@@ -23,9 +23,15 @@ export class MyGarden extends CGFobject {
         this.flowers=[];
         this.petalApperances = [];
         this.appIndex = 0;
-        this.petalTextures = [new CGFtexture(this.scene, "images/petal1.jpg"), new CGFtexture(this.scene, "images/petal2.jpg"),new CGFtexture(this.scene, "images/petal3.jpg")];
-
-        for (const petalTexture of this.petalTextures) {
+        this.textures = {
+            'petalTextures': [new CGFtexture(this.scene, "images/petal1.jpg"), new CGFtexture(this.scene, "images/petal2.jpg"),new CGFtexture(this.scene, "images/petal3.jpg")],
+            'leafTexture':new CGFtexture(this.scene, "images/leaf.jpg"),
+            'receptaleTexture':new CGFtexture(this.scene, "images/receptacle.jpg"),
+            'stemTexture': new CGFtexture(this.scene, "images/stem.jpg"),
+            'leafTexture':new CGFtexture(this.scene, "images/leaf.jpg")
+            };
+        console.log(this.textures  );
+        for (const petalTexture of this.textures.petalTextures) {
             const petalApp = new CGFappearance(scene);
             petalApp.setTexture(petalTexture);
             petalApp.setTextureWrap('REPEAT', 'REPEAT');
@@ -39,11 +45,12 @@ export class MyGarden extends CGFobject {
         this.cols=cols;
         this.spaceInBetween=10;
         this.updateGarden(this.rows,this.cols);
-       
+        console.log(this.textures);
+
         
     }
     randomize(){
-        this.appIndex = Math.floor(Math.random()*this.petalTextures.length);
+        this.appIndex = Math.floor(Math.random()*this.textures.petalTextures.length);
         this.receptacleColor = [Math.random(), Math.random(), Math.random()];
         this.stemColor = [Math.random(), Math.random(), Math.random()];
         this.leafColor = [Math.random(), Math.random(), Math.random()];
@@ -59,7 +66,7 @@ export class MyGarden extends CGFobject {
                 this.cols=rows;
                 this.rows=cols;
                 this.randomize();
-                var flower = new MyFlower(this.scene, this.petals, this.stems, this.innerRadius, this.outterRadius, this.petalApperances[this.appIndex], this.receptacleColor, this.stemColor, this.leafColor);
+                var flower = new MyFlower(this.scene, this.petals, this.stems, this.innerRadius, this.outterRadius, this.petalApperances[this.appIndex], this.receptacleColor, this.stemColor, this.leafColor,this.textures);
                 this.flowers.push(flower);
             }
         }

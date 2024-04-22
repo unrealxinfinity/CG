@@ -10,11 +10,11 @@ import { MyPetal } from './MyPetal.js';
  * @param  leafColor- color of the leaf
  */
 export class MyLeaf extends CGFobject {
-	constructor(scene, stemApp,leafColor,objects) {
+	constructor(scene, stemApp,leafColor,objects,textures) {
 		super(scene);
 		this.root = objects.cylinder; //cyclinder of 1 radius and 1 height
 		this.leaf = objects.triangle //triangle of 1 height and 1 width
-		this.texture = new CGFtexture(scene, "images/leaf.jpg");
+		this.texture = textures.leafTexture;
 		this.leafApp = new CGFappearance(scene);
 		this.leafApp.setTexture(this.texture);
 		this.leafApp.setTextureWrap('REPEAT', 'REPEAT');

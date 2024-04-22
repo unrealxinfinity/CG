@@ -9,11 +9,11 @@ import { MySphere } from '../Objects/MySphere.js';
  * @param objects - objects to be used in the receptacle
  */
 export class MyReceptale extends CGFobject {
-    constructor(scene, radius,receptaleColor, objects) {
+    constructor(scene, radius,receptaleColor, objects,textures) {
         super(scene);
         this.radius = radius;
         this.sphere = objects.sphere;
-        this.texture = new CGFtexture(scene, "images/receptale.jpg");
+        this.texture = textures.receptaleTexture;
 		this.receptaleApp = new CGFappearance(scene);
 		this.receptaleApp.setTexture(this.texture);
 		this.receptaleApp.setTextureWrap('REPEAT', 'REPEAT');

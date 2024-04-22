@@ -19,7 +19,7 @@ import { MyCylinder } from '../Objects/MyCylinder.js';
  * @param leafColor - color of the leaf
  */
 export class MyFlower extends CGFobject {
-    constructor(scene, petals,stems, innerRadius, outerRadius, petalTex, receptacleColor,stemColor,leafColor) {
+    constructor(scene, petals,stems, innerRadius, outerRadius, petalTex, receptacleColor,stemColor,leafColor,textures) {
         super(scene);
         this.stacks = 20;
         this.slices = 20;
@@ -27,9 +27,9 @@ export class MyFlower extends CGFobject {
         this.innerRadius = innerRadius;
         this.outerRadius = outerRadius;
         this.petals = petals;
-        this.receptacle = new MyReceptale(this.scene, innerRadius,receptacleColor,this.objects);
+        this.receptacle = new MyReceptale(this.scene, innerRadius,receptacleColor,this.objects,textures);
         this.petal = new MyPetal(this.scene, innerRadius, outerRadius,MyFlower.generateTexCoords());
-        this.stem = new MyStem(this.scene, stems,0.3,outerRadius,outerRadius+1,stemColor,leafColor,this.objects);
+        this.stem = new MyStem(this.scene, stems,0.3,outerRadius,outerRadius+1,stemColor,leafColor,this.objects,textures);
         this.angles = [];
         this.baseAngles = [];
         this.texCoords = [];
