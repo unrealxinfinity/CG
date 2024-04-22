@@ -61,7 +61,7 @@ export class MyScene extends CGFscene {
     this.petalppearance.setTextureWrap('REPEAT', 'REPEAT');
     this.petalppearance.setSpecular(0,0,0,1);
     this.panorama = new MyPanorama(this, this.earth);
-    this.rockSet = new MyRockSet(this, 1, 4);
+    this.rockSet = new MyRockSet(this, 1, 1);
     this.bee = new MyBee(this);
 
     this.flatShader = new CGFshader(this.gl, "shaders/flat.vert", "shaders/flat.frag");
@@ -106,8 +106,8 @@ export class MyScene extends CGFscene {
 
     // ---- BEGIN Primitive drawing section
     //this.bee.display();
-    //this.rockSet.display();
-    this.garden.display();
+    this.rockSet.display();
+    //this.garden.display();
     /*this.receptale.display();
     this.stem.display();*/
     this.pushMatrix();
