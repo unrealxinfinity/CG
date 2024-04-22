@@ -19,6 +19,9 @@ export class MyBee extends CGFobject {
         this.cosThetaLeg = Math.cos(3*Math.PI/4);
         this.sinThetaLeg = Math.sin(3*Math.PI/4);
         this.cylinder = new MyCylinder(scene, 10, 10);
+        this.wingRotationY = -Math.PI/6;
+        this.wingRotationZ = 0;
+        this.yAllocation = 0;
 		this.initMaterials();
 	}
 
@@ -63,10 +66,13 @@ export class MyBee extends CGFobject {
     }
 
     display() {
+        this.scene.pushMatrix();//BEGIN ANIMATE Y
+        this.scene.translate(0, this.yAllocation, 0);
         this.appearance.apply();
 
         this.legApp.apply();
         this.scene.pushMatrix(); //BEGIN ANTENNAE
+
         this.scene.translate(0, 0.95*this.sinThird, 0.95*this.cosThird);
         this.scene.rotate(-Math.PI/3, 1, 0, 0);
         this.scene.scale(0.1, 0.1, 0.5);
@@ -139,7 +145,8 @@ export class MyBee extends CGFobject {
         this.wingApp.apply();
         this.scene.pushMatrix();
         this.scene.translate(0, 1.1*this.sin, 1.1*this.cos);
-        this.scene.rotate(-Math.PI/6, 0, 1, 0);
+        this.scene.rotate(this.wingRotationZ, 0, 0, 1);
+        this.scene.rotate(this.wingRotationY, 0, 1, 0);
         this.scene.translate(0,0,1.5);
         this.scene.scale(0.5, 0.1, 2);
         this.sphere.display();
@@ -147,7 +154,8 @@ export class MyBee extends CGFobject {
         this.scene.pushMatrix();
         this.scene.scale(1,1,-1);
         this.scene.translate(0, 1.1*this.sin, 1.1*this.cos);
-        this.scene.rotate(-Math.PI/6, 0, 1, 0);
+        this.scene.rotate(this.wingRotationZ, 0, 0, 1);
+        this.scene.rotate(this.wingRotationY, 0, 1, 0);
         this.scene.translate(0,0,1.5);
         this.scene.scale(0.5, 0.1, 2);
         this.sphere.display();
@@ -157,6 +165,20 @@ export class MyBee extends CGFobject {
         this.scene.popMatrix(); //END WINGS
 
         this.scene.popMatrix();
+
+        this.scene.popMatrix(); //END ANIMATE Y
+
+    }
+    animate(t,flyOffset,transitionSpeed,wingFlapSpeed){
+        this.wingRotationZ = Math.sin(t*wingFlapSpeed)*Math.PI/6;
+        let progress = (Math.sin(t * transitionSpeed) + 1) / 2;
+
+        if (progress < 0.5) {
+            this.yAllocation = 4 * progress * progress * progress * flyOffset;
+        } else {
+            progress = progress - 1;
+            this.yAllocation = (4 * progress * progress * progress + 1) * flyOffset;
+        }
     }
 
 }

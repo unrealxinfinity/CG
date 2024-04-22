@@ -66,8 +66,10 @@ export class MyScene extends CGFscene {
 
     this.flatShader = new CGFshader(this.gl, "shaders/flat.vert", "shaders/flat.frag");
     this.rockShader = new CGFshader(this.gl, "shaders/uScale.vert", "shaders/uScale.frag");
+    this.beeShader = new CGFshader(this.gl, "shaders/beeAnimation.vert", "shaders/beeAnimation.frag");
     this.garden = new MyGarden(this,this.gardenRows,this.gardenCols);
-
+    this.beeShader.setUniformsValues({uSampler: 0, timeFactor: 0,normScale:1,transitionSpeed:1,flyOffset:1});
+    this.setUpdatePeriod(60);
 
   }
   initLights() {
@@ -91,6 +93,15 @@ export class MyScene extends CGFscene {
     this.setSpecular(0.2, 0.4, 0.8, 1.0);
     this.setShininess(10.0);
   }
+  update(t) {
+		// only shader 6 is using time factor
+			// Dividing the time by 100 "slows down" the variation (i.e. in 100 ms timeFactor increases 1 unit).
+			// Doing the modulus (%) by 100 makes the timeFactor loop between 0 and 99
+			// ( so the loop period of timeFactor is 100 times 100 ms = 10s ; the actual animation loop depends on how timeFactor is used in the shader )
+			//this.beeShader.setUniformsValues({ timeFactor: t / 400 % 100 });
+      this.bee.animate(t,3,0.1,1)
+
+	}
   display() {
     // ---- BEGIN Background, camera and axis setup
     // Clear image and depth buffer everytime we update the scene
@@ -106,19 +117,28 @@ export class MyScene extends CGFscene {
 
     // ---- BEGIN Primitive drawing section
     //this.bee.display();
-    this.rockSet.display();
+
+    //this.rockSet.display();
     //this.garden.display();
     /*this.receptale.display();
     this.stem.display();*/
     this.pushMatrix();
     this.panorama.display(this.camera.position);
-    //this.bee.display();
+    this.popMatrix();
+    
+    this.pushMatrix();
+    this.translate(0,3,0);
+    //this.setActiveShader(this.beeShader);
+    this.bee.display();
+    //this.setActiveShaderSimple(this.defaultShader);
+    this.popMatrix();
+
     /*this.appearance.apply();
     this.translate(0,-100,0);
     this.scale(400,400,400);
     this.rotate(-Math.PI/2.0,1,0,0);
     this.plane.display();*/
-    this.popMatrix();
+
 
     // ---- END Primitive drawing section
   }
