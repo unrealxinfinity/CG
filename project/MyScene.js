@@ -20,6 +20,7 @@ export class MyScene extends CGFscene {
     this.initCameras();
     this.initLights();
 
+
     //Background color
     this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
@@ -34,15 +35,14 @@ export class MyScene extends CGFscene {
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
     this.sphere = new MySphere(this, 50, 50, true, 1);
-    
-    
+    //this.gui.initKeys();
 
     //Objects connected to MyInterface
     this.displayAxis = true;
     this.scaleFactor = 1;
     this.gardenRows = 3;
     this.gardenCols = 3;
-
+    this.lastTime=0;
     this.enableTextures(true);
     this.petalTextures = [new CGFtexture(this, "images/petal1.jpg"), new CGFtexture(this, "images/petal2.jpg"),
                   new CGFtexture(this, "images/petal3.jpg")];
@@ -99,9 +99,60 @@ export class MyScene extends CGFscene {
 			// Doing the modulus (%) by 100 makes the timeFactor loop between 0 and 99
 			// ( so the loop period of timeFactor is 100 times 100 ms = 10s ; the actual animation loop depends on how timeFactor is used in the shader )
 			//this.beeShader.setUniformsValues({ timeFactor: t / 400 % 100 });
+      let deltaTime = 0;
+      if(this.lastTime!=0){
+        deltaTime = t-this.lastTime;
+      }
+      this.lastTime = t;
+      this.checkKeys();
+      this.bee.update(deltaTime);
+
       this.bee.animate(t,3,0.005,1);
 
 	}
+  checkKeys() {
+      let tempVel = [0,0,0];
+      var text="Keys pressed: ";
+      var keysPressed=false;
+      // Check for key codes e.g. in https://keycode.info/
+      if (this.gui.isKeyPressed('KeyW')) {
+
+              text+=" W ";
+              tempVel[0]+=0.01;
+              keysPressed=true;
+      }
+
+
+      if (this.gui.isKeyPressed("KeyS"))        {
+
+              text+=" S ";
+              tempVel[0]-=0.01;
+              keysPressed=true;
+
+      }
+      if (this.gui.isKeyPressed("KeyA"))        {
+
+              text+=" A ";
+              tempVel[2]-=0.01;
+              keysPressed=true;
+
+      }
+      if (this.gui.isKeyPressed("KeyD"))        {
+
+              text+=" D ";
+              tempVel[2]+=0.01;
+              keysPressed=true;
+
+      }
+      if (keysPressed){
+          console.log(text);
+          this.bee.move(tempVel);
+      }
+      else{
+        this.bee.move([0,0,0]);
+      }
+
+  }
   display() {
     // ---- BEGIN Background, camera and axis setup
     // Clear image and depth buffer everytime we update the scene
@@ -142,4 +193,5 @@ export class MyScene extends CGFscene {
 
     // ---- END Primitive drawing section
   }
+
 }
