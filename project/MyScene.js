@@ -49,17 +49,13 @@ export class MyScene extends CGFscene {
 
     this.texture = new CGFtexture(this, "images/terrain.jpg");
     this.earth = new CGFtexture(this, "images/landscape.jpg");
-    this.petal = new CGFtexture(this, "images/petal.jpg");
     this.appearance = new CGFappearance(this);
     this.appearance.setTexture(this.texture);
     this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     this.earthppearance = new CGFappearance(this);
     this.earthppearance.setTexture(this.earth);
     this.earthppearance.setTextureWrap('REPEAT', 'REPEAT');
-    this.petalppearance = new CGFappearance(this);
-    this.petalppearance.setTexture(this.petalTextures[Math.floor(Math.random()*this.petalTextures.length)]);
-    this.petalppearance.setTextureWrap('REPEAT', 'REPEAT');
-    this.petalppearance.setSpecular(0,0,0,1);
+   
     this.panorama = new MyPanorama(this, this.earth);
     this.rockSet = new MyRockSet(this, 1, 1);
     this.bee = new MyBee(this);
@@ -111,13 +107,13 @@ export class MyScene extends CGFscene {
 	}
   checkKeys() {
       let tempVel = [0,0,0];
-      var text="Keys pressed: ";
-      var keysPressed=false;
+      let text="Keys pressed: ";
+      let keysPressed=false;
       // Check for key codes e.g. in https://keycode.info/
       if (this.gui.isKeyPressed('KeyW')) {
 
               text+=" W ";
-              tempVel[0]+=0.01;
+              this.bee.accelerate(0.01);
               keysPressed=true;
       }
 
@@ -125,31 +121,31 @@ export class MyScene extends CGFscene {
       if (this.gui.isKeyPressed("KeyS"))        {
 
               text+=" S ";
-              tempVel[0]-=0.01;
+              this.bee.accelerate(-0.01);
               keysPressed=true;
 
       }
       if (this.gui.isKeyPressed("KeyA"))        {
 
               text+=" A ";
-              tempVel[2]-=0.01;
+              this.bee.turn(Math.PI/10)
               keysPressed=true;
 
       }
       if (this.gui.isKeyPressed("KeyD"))        {
 
               text+=" D ";
-              tempVel[2]+=0.01;
+              this.bee.turn(-Math.PI/10)
               keysPressed=true;
 
       }
       if (keysPressed){
           console.log(text);
-          this.bee.move(tempVel);
       }
       else{
-        this.bee.move([0,0,0]);
+        this.bee.accelerate(0);
       }
+      
 
   }
   display() {
@@ -169,7 +165,7 @@ export class MyScene extends CGFscene {
     //this.bee.display();
 
     //this.rockSet.display();
-    //this.garden.display();
+    this.garden.display();
     /*this.receptale.display();
     this.stem.display();*/
     this.pushMatrix();

@@ -24,8 +24,9 @@ export class MyBee extends CGFobject {
         this.yAllocation = 0;
 
         this.position=[0,0,0];
-        this.velocity=[0,0,0];
-        this.orientation = 0;
+        this.velocity = 0;
+        this.orientation = [0,0,0];
+        this.angle = 0;
 		this.initMaterials();
 	}
 
@@ -72,6 +73,8 @@ export class MyBee extends CGFobject {
     display() {
         this.scene.pushMatrix();//BEGIN ANIMATE Y
         this.scene.translate(this.position[0], this.position[1], this.position[2]);
+        this.scene.rotate(this.angle, 0, 1, 0);
+
         this.scene.translate(0, this.yAllocation, 0);
         this.appearance.apply();
 
@@ -175,13 +178,19 @@ export class MyBee extends CGFobject {
 
     }
     update(deltaTime){
-        this.position[0] += this.velocity[0]*deltaTime;
-        this.position[1] += this.velocity[1]*deltaTime;
-        this.position[2] += this.velocity[2]*deltaTime;
-        this.orientation = Math.atan2(this.velocity[2],this.velocity[0]);
+        this.position[0] += this.orientation[0]*this.velocity*deltaTime;
+        this.position[1] += this.orientation[1]*this.velocity*deltaTime;
+        this.position[2] += this.orientation[2]*this.velocity*deltaTime;
     }
-    move(velocity){
-        this.velocity = velocity;
+    
+    turn(a){
+       this.angle += a;
+        let orientationX = Math.cos(this.angle);
+        let orientationZ = Math.sin(this.angle);
+        this.orientation = [orientationX,0,-orientationZ];
+    }
+    accelerate(v){
+      this.velocity += v;
     }
     animate(t,flyOffset,transitionSpeed,wingFlapSpeed){
         this.wingRotationZ = Math.sin(t*wingFlapSpeed)*Math.PI/6;
