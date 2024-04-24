@@ -14,6 +14,7 @@ export class MyBee extends CGFobject {
         this.sin = Math.sin(Math.PI/4);
         this.cos = Math.cos(Math.PI/4);
         this.sphere = new MySphere(scene, 20, 20, false, false, 1);
+        this.torax = new MySphere(scene, 20, 20, false, false, 2);
         this.sinThird = Math.sin(Math.PI/3);
         this.cosThird = Math.cos(Math.PI/3);
         this.cosThetaLeg = Math.cos(3*Math.PI/4);
@@ -40,8 +41,8 @@ export class MyBee extends CGFobject {
         this.stripedApp = new CGFappearance(this.scene);
         this.stripedTex = new CGFtexture(this.scene, "images/beestripe.jpg");
         this.stripedApp.setTexture(this.stripedTex);
-        this.stripedApp.setAmbient(0.75,0.75,0.75,1);
-        this.stripedApp.setDiffuse(0.75,0.75,0.75,1);
+        this.stripedApp.setAmbient(1,1,1,1);
+        this.stripedApp.setDiffuse(1,1,1,1);
         this.stripedApp.setSpecular(0,0,0,1);
         this.stripedApp.setTextureWrap('REPEAT', 'REPEAT');
 
@@ -52,6 +53,14 @@ export class MyBee extends CGFobject {
         this.eyeApp.setDiffuse(0.75,0.75,0.75,1);
         this.eyeApp.setSpecular(0,0,0,1);
         this.eyeApp.setTextureWrap('REPEAT', 'REPEAT');
+
+        this.toraxApp = new CGFappearance(this.scene);
+        this.toraxTex = new CGFtexture(this.scene, "images/beetorax.jpg");
+        this.toraxApp.setTexture(this.toraxTex);
+        this.toraxApp.setAmbient(0.9,0.9,0,1);
+        this.toraxApp.setDiffuse(0.9,0.9,0,1);
+        this.toraxApp.setSpecular(0,0,0,1);
+        this.toraxApp.setTextureWrap('REPEAT', 'REPEAT');
 
         this.headApp = new CGFappearance(this.scene);
         this.headApp.setAmbient(1,1,0.06,1);
@@ -124,8 +133,11 @@ export class MyBee extends CGFobject {
         this.appearance.apply();
         
         this.scene.scale(1.1, 1.1, 1.1);
-        this.appearance.apply();
-        this.sphere.display();
+        this.scene.pushMatrix();
+        this.scene.rotate(Math.PI/2, 0, 0, 1);
+        this.toraxApp.apply();
+        this.torax.display();
+        this.scene.popMatrix();
 
         // BEGIN LEGS
         this.legApp.apply();
