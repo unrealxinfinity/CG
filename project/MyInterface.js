@@ -33,6 +33,8 @@ export class MyInterface extends CGFinterface {
             this.scene.garden.updateGarden(this.scene.gardenRows,cols);
 
         });
+        this.gui.add(this.scene,'speedFactor',0.1,3).name('Speed Factor');
+        this.gui.add(this.scene,'scaleFactor',0.5,3).name('Scale Factor');
         this.initKeys();
         return true;
     }

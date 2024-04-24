@@ -43,6 +43,8 @@ export class MyScene extends CGFscene {
     this.gardenRows = 3;
     this.gardenCols = 3;
     this.lastTime=0;
+    this.scaleFactor=1;
+    this.speedFactor = 0.1;
     this.enableTextures(true);
     this.petalTextures = [new CGFtexture(this, "images/petal1.jpg"), new CGFtexture(this, "images/petal2.jpg"),
                   new CGFtexture(this, "images/petal3.jpg")];
@@ -103,17 +105,17 @@ export class MyScene extends CGFscene {
       this.checkKeys();
       this.bee.update(deltaTime);
       this.bee.animate(t,3,0.005,0.06);
+      this.bee.scale(this.scaleFactor);
 
 	}
   checkKeys() {
-      let tempVel = [0,0,0];
       let text="Keys pressed: ";
       let keysPressed=false;
       // Check for key codes e.g. in https://keycode.info/
       if (this.gui.isKeyPressed('KeyW')) {
 
               text+=" W ";
-              this.bee.accelerate(0.01);
+              this.bee.accelerate(0.005*this.speedFactor);
               keysPressed=true;
       }
 
@@ -121,23 +123,28 @@ export class MyScene extends CGFscene {
       if (this.gui.isKeyPressed("KeyS"))        {
 
               text+=" S ";
-              this.bee.accelerate(-0.01);
+              this.bee.accelerate(-0.005*this.speedFactor);
               keysPressed=true;
 
       }
       if (this.gui.isKeyPressed("KeyA"))        {
 
               text+=" A ";
-              this.bee.turn(Math.PI/10)
+              this.bee.turn(Math.PI/12*this.speedFactor)
               keysPressed=true;
 
       }
       if (this.gui.isKeyPressed("KeyD"))        {
 
               text+=" D ";
-              this.bee.turn(-Math.PI/10)
+              this.bee.turn(-Math.PI/12*this.speedFactor);
               keysPressed=true;
 
+      }
+      if (this.gui.isKeyPressed("KeyR")){
+          text+=" R ";
+          this.bee.reset();
+          keysPressed=true;
       }
       if (keysPressed){
           console.log(text);
