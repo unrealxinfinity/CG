@@ -14,11 +14,21 @@ export class MyBee extends CGFobject {
         this.sin = Math.sin(Math.PI/4);
         this.cos = Math.cos(Math.PI/4);
         this.sphere = new MySphere(scene, 20, 20, false, false, 1);
+        this.torax = new MySphere(scene, 20, 20, false, false, 2);
         this.sinThird = Math.sin(Math.PI/3);
         this.cosThird = Math.cos(Math.PI/3);
         this.cosThetaLeg = Math.cos(3*Math.PI/4);
         this.sinThetaLeg = Math.sin(3*Math.PI/4);
         this.cylinder = new MyCylinder(scene, 10, 10);
+        this.wingRotationY = -Math.PI/6;
+        this.wingRotationZ = 0;
+        this.yAllocation = 0;
+
+        this.position=[0,0,0];
+        this.velocity = 0;
+        this.orientation = [0,0,0];
+        this.angle = 0;
+        this.scaleFactor=1;
 		this.initMaterials();
 	}
 
@@ -31,8 +41,8 @@ export class MyBee extends CGFobject {
         this.stripedApp = new CGFappearance(this.scene);
         this.stripedTex = new CGFtexture(this.scene, "images/beestripe.jpg");
         this.stripedApp.setTexture(this.stripedTex);
-        this.stripedApp.setAmbient(0.75,0.75,0.75,1);
-        this.stripedApp.setDiffuse(0.75,0.75,0.75,1);
+        this.stripedApp.setAmbient(1,1,1,1);
+        this.stripedApp.setDiffuse(1,1,1,1);
         this.stripedApp.setSpecular(0,0,0,1);
         this.stripedApp.setTextureWrap('REPEAT', 'REPEAT');
 
@@ -43,6 +53,14 @@ export class MyBee extends CGFobject {
         this.eyeApp.setDiffuse(0.75,0.75,0.75,1);
         this.eyeApp.setSpecular(0,0,0,1);
         this.eyeApp.setTextureWrap('REPEAT', 'REPEAT');
+
+        this.toraxApp = new CGFappearance(this.scene);
+        this.toraxTex = new CGFtexture(this.scene, "images/beetorax.jpg");
+        this.toraxApp.setTexture(this.toraxTex);
+        this.toraxApp.setAmbient(0.9,0.9,0,1);
+        this.toraxApp.setDiffuse(0.9,0.9,0,1);
+        this.toraxApp.setSpecular(0,0,0,1);
+        this.toraxApp.setTextureWrap('REPEAT', 'REPEAT');
 
         this.headApp = new CGFappearance(this.scene);
         this.headApp.setAmbient(1,1,0.06,1);
@@ -63,10 +81,17 @@ export class MyBee extends CGFobject {
     }
 
     display() {
+        this.scene.pushMatrix();//BEGIN ANIMATE Y
+        this.scene.translate(this.position[0], this.position[1], this.position[2]); //update bee position
+        this.scene.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);// update bee scale
+        this.scene.rotate(this.angle, 0, 1, 0); // update bee orientation
+
+        this.scene.translate(0, this.yAllocation, 0);
         this.appearance.apply();
 
         this.legApp.apply();
         this.scene.pushMatrix(); //BEGIN ANTENNAE
+
         this.scene.translate(0, 0.95*this.sinThird, 0.95*this.cosThird);
         this.scene.rotate(-Math.PI/3, 1, 0, 0);
         this.scene.scale(0.1, 0.1, 0.5);
@@ -108,8 +133,11 @@ export class MyBee extends CGFobject {
         this.appearance.apply();
         
         this.scene.scale(1.1, 1.1, 1.1);
-        this.appearance.apply();
-        this.sphere.display();
+        this.scene.pushMatrix();
+        this.scene.rotate(Math.PI/2, 0, 0, 1);
+        this.toraxApp.apply();
+        this.torax.display();
+        this.scene.popMatrix();
 
         // BEGIN LEGS
         this.legApp.apply();
@@ -139,16 +167,18 @@ export class MyBee extends CGFobject {
         this.wingApp.apply();
         this.scene.pushMatrix();
         this.scene.translate(0, 1.1*this.sin, 1.1*this.cos);
-        this.scene.rotate(-Math.PI/6, 0, 1, 0);
-        this.scene.translate(0,0,1.5);
+        this.scene.rotate(this.wingRotationZ, 0, 0, 1);
+        this.scene.rotate(this.wingRotationY, 0, 1, 0);
+        this.scene.translate(0,0,2);
         this.scene.scale(0.5, 0.1, 2);
         this.sphere.display();
         this.scene.popMatrix();
         this.scene.pushMatrix();
         this.scene.scale(1,1,-1);
         this.scene.translate(0, 1.1*this.sin, 1.1*this.cos);
-        this.scene.rotate(-Math.PI/6, 0, 1, 0);
-        this.scene.translate(0,0,1.5);
+        this.scene.rotate(this.wingRotationZ, 0, 0, 1);
+        this.scene.rotate(this.wingRotationY, 0, 1, 0);
+        this.scene.translate(0,0,2);
         this.scene.scale(0.5, 0.1, 2);
         this.sphere.display();
         this.scene.popMatrix();
@@ -157,6 +187,44 @@ export class MyBee extends CGFobject {
         this.scene.popMatrix(); //END WINGS
 
         this.scene.popMatrix();
+
+        this.scene.popMatrix(); //END ANIMATE Y
+
     }
+    update(deltaTime){
+        this.position[0] += this.orientation[0]*this.velocity*deltaTime;
+        this.position[1] += this.orientation[1]*this.velocity*deltaTime;
+        this.position[2] += this.orientation[2]*this.velocity*deltaTime;
+    }
+    
+    turn(a){
+       this.angle += a;
+        let orientationX = Math.cos(this.angle);
+        let orientationZ = Math.sin(this.angle);
+        this.orientation = [orientationX,0,-orientationZ];
+    }
+    accelerate(v){
+      this.velocity += v;
+    }
+    reset(){
+        this.position=[0,0,0];
+        this.velocity = 0;
+        this.orientation = [0,0,0];
+        this.angle = 0;
+    }
+    scale(s){
+        this.scaleFactor = s;
+    }
+    animate(t,flyOffset,transitionSpeed,wingFlapSpeed){
+        this.wingRotationZ = Math.sin(t*wingFlapSpeed)*Math.PI/6;
+        let progress = (Math.sin(t * transitionSpeed) + 1) / 2;
+        if (progress < 0.5) {
+            this.yAllocation = 4 * progress * progress * progress * flyOffset;
+        } else {
+            progress = progress - 1;
+            this.yAllocation = (4 * progress * progress * progress + 1) * flyOffset;
+        }
+    }
+
 
 }
