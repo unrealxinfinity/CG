@@ -172,7 +172,7 @@ export class MyScene extends CGFscene {
     //this.bee.display();
 
     //this.rockSet.display();
-    this.garden.display();
+    //this.garden.display();
     /*this.receptale.display();
     this.stem.display();*/
     this.pushMatrix();
