@@ -31,7 +31,7 @@ export class MySphere extends CGFobject {
             for (let j = 1; j < this.stacks; j++) {
                 const theta = jPart*j;
                 const thetaSin = Math.sin(theta);
-                const eggOffset = Math.cos(theta) > 0 ? topOffset : bottomOffset;
+                const eggOffset = Math.cos(theta) > 0 ? this.topOffset : this.bottomOffset;
                 let vertex = [thetaSin*Math.sin(phi), Math.cos(theta) * eggOffset, thetaSin*Math.cos(phi)];
                 if (this.perturb) {
                     const random = i == 0 ? firstLastPerturb : Math.random()*0.3+0.85;
@@ -49,7 +49,8 @@ export class MySphere extends CGFobject {
         for (let j = 1; j < this.stacks; j++) {
             const theta = jPart*j;
             const thetaSin = Math.sin(theta);
-            let vertex = [thetaSin*Math.sin(phi), Math.cos(theta), thetaSin*Math.cos(phi)];
+            const eggOffset = Math.cos(theta) > 0 ? this.topOffset : this.bottomOffset;
+            let vertex = [thetaSin*Math.sin(phi), Math.cos(theta)*eggOffset, thetaSin*Math.cos(phi)];
             if (this.perturb) {
                 vertex = vertex.map(v => firstLastPerturb*v);
             }
@@ -68,7 +69,7 @@ export class MySphere extends CGFobject {
             if (this.perturb)
                 this.vertices.push(0,topPerturb*this.topOffset,0);
             else
-                this.vertices.push(0,1,0);
+                this.vertices.push(0,this.topOffset,0);
             if (this.inverted)
                 this.normals.push(0,-1,0);
             else 
@@ -79,7 +80,7 @@ export class MySphere extends CGFobject {
             if (this.perturb)
                 this.vertices.push(0,-bottomPerturb*this.bottomOffset,0);
             else
-                this.vertices.push(0,-1,0);
+                this.vertices.push(0,-this.bottomOffset,0);
             if (this.inverted)
                 this.normals.push(0,1,0);
             else
