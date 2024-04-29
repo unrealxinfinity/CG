@@ -1,6 +1,7 @@
 import {CGFappearance, CGFobject, CGFtexture} from '../../lib/CGF.js';
 import { MyCylinder } from './MyCylinder.js';
 import { MySphere } from './MySphere.js';
+import { MyCone } from './MyCone.js';
 /**
  * MySphere
  * @constructor
@@ -20,6 +21,7 @@ export class MyBee extends CGFobject {
         this.cosThetaLeg = Math.cos(3*Math.PI/4);
         this.sinThetaLeg = Math.sin(3*Math.PI/4);
         this.cylinder = new MyCylinder(scene, 10, 10);
+        this.cone = new MyCone(scene, 10, 10);
         this.wingRotationY = -Math.PI/6;
         this.wingRotationZ = 0;
         this.yAllocation = 0;
@@ -78,6 +80,12 @@ export class MyBee extends CGFobject {
         this.wingApp.setSpecular(0.66,1,1,0.6);
         const emission = this.wingApp.emission;
         this.wingApp.setEmission(emission[0],emission[1],emission[2],0);
+
+        this.needleApp = new CGFappearance(this.scene);
+        this.needleApp.setAmbient(0.8,0.82,0.83,1); //206,211,212
+        this.needleApp.setDiffuse(0.8,0.82,0.83,1,1); //206,211,212
+        this.needleApp.setSpecular(0,0,0,1);
+        
     }
 
     display() {
@@ -125,6 +133,12 @@ export class MyBee extends CGFobject {
         this.scene.scale(1, 2, 1);
         this.stripedApp.apply();
         this.sphere.display();
+        this.scene.pushMatrix(); //BEGIN NEEDLE
+        this.scene.translate(0,-0.8,0);
+        this.scene.rotate(Math.PI, 0, 0, 1);
+        this.scene.scale(0.2,0.5,0.2);
+        this.cone.display();
+        this.scene.popMatrix(); //END NEEDLE
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
@@ -185,9 +199,10 @@ export class MyBee extends CGFobject {
 
 
         this.scene.popMatrix(); //END WINGS
-
-        this.scene.popMatrix();
-
+        
+        this.scene.popMatrix()
+        this.needleApp.apply();
+        
         this.scene.popMatrix(); //END ANIMATE Y
 
     }
