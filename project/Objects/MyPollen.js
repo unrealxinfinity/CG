@@ -13,7 +13,7 @@ export class MyPollen extends CGFobject {
         this.sphere = new MySphere(scene, 10, 10, false, false, 1, 1.5, 1);
 	}
 
-    display(scales, angles) {
+    display() {
         this.scene.pushMatrix();
         this.sphere.display();
         this.scene.popMatrix();
