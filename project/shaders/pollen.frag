@@ -1,15 +1,24 @@
-#ifdef GL_ES
+#version 300 es
 precision highp float;
-#endif
 
-varying vec2 fragTextureCoord;
+in vec4 vFinalColor;
+in vec2 vTextureCoord;
+
+out vec4 fragColor;
 
 uniform sampler2D uSampler;
-uniform sampler2D uSampler2;
+
+uniform bool uUseTexture;
 
 void main() {
-	vec4 color = texture2D(uSampler, fragTextureCoord);
-	vec4 color2 = texture2D(uSampler, fragTextureCoord);
+	// Branching should be reduced to a minimal. 
+	// When based on a non-changing uniform, it is usually optimized.
+	if (uUseTexture)
+	{
+		vec4 textureColor = texture(uSampler, vTextureCoord);
+		fragColor = textureColor * vFinalColor;
+	}
+	else
+		fragColor = vFinalColor;
 
-	gl_FragColor = vec4((color.r+color2.r)/2.0, (color.g+color2.g)/2.0, (color.b+color2.b)/2.0, 1.0);
 }
