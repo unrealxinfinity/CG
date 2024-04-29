@@ -8,13 +8,15 @@ import {CGFobject} from '../../lib/CGF.js';
  * @param stacks - number of stacked prisms
  */
 export class MySphere extends CGFobject {
-	constructor(scene, slices, stacks, inverted, perturb, xTexOffset) {
+	constructor(scene, slices, stacks, inverted, perturb, xTexOffset, bottomOffset=1.0, topOffset=1.0) {
 		super(scene);
 
         this.perturb = perturb;
 		this.slices = slices;
         this.xTexOffset = xTexOffset;
 		this.stacks = stacks;
+        this.topOffset = topOffset;
+        this.bottomOffset = bottomOffset;
         this.inverted = inverted;
 
 		this.initBuffers();
@@ -29,7 +31,8 @@ export class MySphere extends CGFobject {
             for (let j = 1; j < this.stacks; j++) {
                 const theta = jPart*j;
                 const thetaSin = Math.sin(theta);
-                let vertex = [thetaSin*Math.sin(phi), Math.cos(theta), thetaSin*Math.cos(phi)];
+                const eggOffset = Math.cos(theta) > 0 ? topOffset : bottomOffset;
+                let vertex = [thetaSin*Math.sin(phi), Math.cos(theta) * eggOffset, thetaSin*Math.cos(phi)];
                 if (this.perturb) {
                     const random = i == 0 ? firstLastPerturb : Math.random()*0.3+0.85;
                     vertex = vertex.map(v => random*v);
@@ -63,7 +66,7 @@ export class MySphere extends CGFobject {
         const bottomPerturb = Math.random()*0.3+0.85;
         for (let i = 0; i < this.slices; i++) {
             if (this.perturb)
-                this.vertices.push(0,topPerturb,0);
+                this.vertices.push(0,topPerturb*this.topOffset,0);
             else
                 this.vertices.push(0,1,0);
             if (this.inverted)
@@ -74,7 +77,7 @@ export class MySphere extends CGFobject {
         }
         for (let i = 0; i < this.slices; i++) {
             if (this.perturb)
-                this.vertices.push(0,-topPerturb,0);
+                this.vertices.push(0,-bottomPerturb*this.bottomOffset,0);
             else
                 this.vertices.push(0,-1,0);
             if (this.inverted)
