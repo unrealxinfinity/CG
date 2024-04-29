@@ -1,4 +1,4 @@
-import { CGFappearance, CGFobject, CGFtexture } from '../../lib/CGF.js';
+import { CGFappearance, CGFobject, CGFtexture, CGFshader } from '../../lib/CGF.js';
 import { MySphere } from './MySphere.js';
 /**
  * MySphere
@@ -10,8 +10,9 @@ export class MyPollen extends CGFobject {
 	constructor(scene) {
 		super(scene);
 
-        this.sphere = new MySphere(scene, 10, 10, false, false, 1, 1.5, 1);
+        this.sphere = new MySphere(scene, 40, 40, false, false, 1, 1.5, 1);
         this.initMaterial();
+        this.initShader();
 	}
 
     initMaterial() {
@@ -22,12 +23,22 @@ export class MyPollen extends CGFobject {
         this.appearance.setAmbient(1,1,1,1);
         this.appearance.setDiffuse(1,1,1,1);
         this.appearance.setSpecular(0,0,0,1);
+
+        this.texture = new CGFtexture(this.scene, "images/pollenMap.jpg");
+    }
+
+    initShader() {
+        this.shader = new CGFshader(this.scene.gl, "shaders/pollen.vert", "shaders/pollen.frag");
+        this.shader.setUniformsValues({'uSampler2': 1});
     }
 
     display() {
         this.scene.pushMatrix();
         this.appearance.apply();
+        this.texture.bind(1);
+        this.scene.setActiveShader(this.shader);
         this.sphere.display();
+        this.scene.setActiveShader(this.scene.defaultShader);
         this.scene.popMatrix();
     }
 
