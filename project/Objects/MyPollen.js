@@ -1,4 +1,4 @@
-import {CGFappearance, CGFobject, CGFtexture} from '../../lib/CGF.js';
+import { CGFobject } from '../../lib/CGF.js';
 import { MySphere } from './MySphere.js';
 /**
  * MySphere
@@ -7,7 +7,7 @@ import { MySphere } from './MySphere.js';
  * @param texture - texture to apply
  */
 export class MyPollen extends CGFobject {
-	constructor(scene, radius) {
+	constructor(scene) {
 		super(scene);
 
         this.sphere = new MySphere(scene, 10, 10, false, false, 1, 1.5, 1);
