@@ -28,7 +28,7 @@ export class MyBee extends CGFobject {
 
         this.position=[0,0,0];
         this.velocity = 0;
-        this.orientation = [0,0,0];
+        this.orientation = [1,0,0];
         this.angle = 0;
         this.scaleFactor=1;
 		this.initMaterials();
@@ -220,6 +220,11 @@ export class MyBee extends CGFobject {
     }
     accelerate(v){
       this.velocity += v;
+      if(this.velocity < 0){
+          this.velocity = 0;
+      }
+      
+        
     }
     reset(){
         this.position=[0,0,0];
