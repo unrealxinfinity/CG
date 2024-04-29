@@ -71,9 +71,9 @@ export class MySphere extends CGFobject {
             else
                 this.vertices.push(0,this.topOffset,0);
             if (this.inverted)
-                this.normals.push(0,-1,0);
+                this.normals.push(0,-this.topOffset,0);
             else 
-                this.normals.push(0,1,0);
+                this.normals.push(0,this.topOffset,0);
             this.texCoords.push(this.xTexOffset*(i+0.5)/this.slices, 0);
         }
         for (let i = 0; i < this.slices; i++) {
@@ -82,9 +82,9 @@ export class MySphere extends CGFobject {
             else
                 this.vertices.push(0,-this.bottomOffset,0);
             if (this.inverted)
-                this.normals.push(0,1,0);
+                this.normals.push(0,this.bottomOffset,0);
             else
-                this.normals.push(0,-1,0);
+                this.normals.push(0,-this.bottomOffset,0);
             this.texCoords.push(this.xTexOffset*(i+0.5)/this.slices, 1);
         }
     }
