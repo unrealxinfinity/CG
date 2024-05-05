@@ -44,7 +44,6 @@ export class MyGarden extends CGFobject {
         this.rows=rows;
         this.cols=cols;
         this.spaceInBetween=10;
-        this.pollens = [];
         this.pollen = new MyPollen(this.scene);
         this.updateGarden(this.rows,this.cols);
 
@@ -65,14 +64,14 @@ export class MyGarden extends CGFobject {
 
     }
     updateGarden(rows,cols){
-        this.pollens = Array.from({length: rows*cols}, () => Math.random() >= 0.5);
+        
         for(let i=0;i<rows;i++){
             for(let j=0;j<cols;j++){
                 this.cols=rows;
                 this.rows=cols;
                 this.randomize();
                 var flower;
-                if(this.pollens[i*rows+j]){
+                if(Math.random() >= 0.5){
                     flower = new MyFlower(this.scene, this.petals, this.stems, this.innerRadius, this.outterRadius, this.petalApperances[this.appIndex], this.receptacleColor, this.stemColor, this.leafColor,this.textures,this.pollen);
                 }
                 else{
