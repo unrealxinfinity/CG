@@ -19,7 +19,7 @@ import { MyCylinder } from '../Objects/MyCylinder.js';
  * @param leafColor - color of the leaf
  */
 export class MyFlower extends CGFobject {
-    constructor(scene, petals,stems, innerRadius, outerRadius, petalTex, receptacleColor,stemColor,leafColor,textures) {
+    constructor(scene, petals,stems, innerRadius, outerRadius, petalTex, receptacleColor,stemColor,leafColor,textures,pollen) {
         super(scene);
         this.stacks = 20;
         this.slices = 20;
@@ -27,6 +27,7 @@ export class MyFlower extends CGFobject {
         this.innerRadius = innerRadius;
         this.outerRadius = outerRadius;
         this.petals = petals;
+        this.pollen = pollen;
         this.receptacle = new MyReceptacle(this.scene, innerRadius,receptacleColor,this.objects,textures);
         this.petal = new MyPetal(this.scene, innerRadius, outerRadius,MyFlower.generateTexCoords());
         this.stem = new MyStem(this.scene, stems,0.3,outerRadius,outerRadius+1,stemColor,leafColor,this.objects,textures);
@@ -42,6 +43,10 @@ export class MyFlower extends CGFobject {
             this.baseAngles.push(Math.random()*halfPi - quarterPi);
             //this.texCoords.push(MyFlower.generateTexCoords());
         }
+    }
+
+    removePollen() {
+        this.pollen = null;
     }
 
     static generateTexCoords() {
@@ -70,6 +75,12 @@ export class MyFlower extends CGFobject {
             this.scene.popMatrix();
         }
         this.receptacle.display();
+        if (this.pollen) {
+            this.scene.rotate(this.angles[0], 0, 0, 1);
+            this.scene.translate(0, 0, -this.innerRadius-0.1);
+            this.scene.scale(0.2,0.2,0.2)
+            this.pollen.display();
+        }
         this.scene.popMatrix();
         this.scene.pushMatrix();
         this.scene.translate(0, this.stem.stemYHeight+this.innerRadius, 0);

@@ -1,5 +1,6 @@
 import { MyFlower } from "./Flower/MyFlower.js";
 import { CGFobject,CGFtexture,CGFappearance} from "../lib/CGF.js";
+import { MyPollen } from "./Objects/MyPollen.js";
 /**
  * MyGarden
  * @constructor
@@ -44,7 +45,10 @@ export class MyGarden extends CGFobject {
         this.rows=rows;
         this.cols=cols;
         this.spaceInBetween=10;
+
+        this.pollen = new MyPollen(this.scene);
         this.updateGarden(this.rows,this.cols);
+
         console.log(this.textures);
 
         
@@ -66,7 +70,7 @@ export class MyGarden extends CGFobject {
                 this.cols=rows;
                 this.rows=cols;
                 this.randomize();
-                var flower = new MyFlower(this.scene, this.petals, this.stems, this.innerRadius, this.outterRadius, this.petalApperances[this.appIndex], this.receptacleColor, this.stemColor, this.leafColor,this.textures);
+                var flower = new MyFlower(this.scene, this.petals, this.stems, this.innerRadius, this.outterRadius, this.petalApperances[this.appIndex], this.receptacleColor, this.stemColor, this.leafColor,this.textures,this.pollen);
                 this.flowers.push(flower);
             }
         }
