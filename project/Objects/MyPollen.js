@@ -23,7 +23,7 @@ export class MyPollen extends CGFobject {
         this.appearance.setAmbient(1,1,1,1);
         this.appearance.setDiffuse(1,1,1,1);
         this.appearance.setSpecular(0,0,0,1);
-
+        
         this.texture = new CGFtexture(this.scene, "images/pollenMap.jpg");
     }
 

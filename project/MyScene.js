@@ -7,6 +7,7 @@ import { MyGarden } from "./MyGarden.js";
 import { MyRockSet } from "./Objects/MyRockSet.js";
 import {MyBee} from "./Objects/MyBee.js";
 import {MyHive} from "./Objects/MyHive.js";
+import {MyPollen} from "./Objects/MyPollen.js";
 /**
  * MyScene
  * @constructor
@@ -60,10 +61,10 @@ export class MyScene extends CGFscene {
     this.earthppearance.setTextureWrap('REPEAT', 'REPEAT');
    
     this.panorama = new MyPanorama(this, this.earth);
-    this.rockSet = new MyRockSet(this, 1, 2);
+    this.rockSet = new MyRockSet(this, 1 , 3, 8);
     this.bee = new MyBee(this);
     this.hive = new MyHive(this);
-
+    this.pollen = new MyPollen(this);
     this.flatShader = new CGFshader(this.gl, "shaders/flat.vert", "shaders/flat.frag");
     this.rockShader = new CGFshader(this.gl, "shaders/uScale.vert", "shaders/uScale.frag");
     this.beeShader = new CGFshader(this.gl, "shaders/beeAnimation.vert", "shaders/beeAnimation.frag");
@@ -173,24 +174,29 @@ export class MyScene extends CGFscene {
     // ---- BEGIN Primitive drawing section
     //this.bee.display();
 
-    //this.garden.display();
+    this.garden.display();
     /*this.receptale.display();
     this.stem.display();*/
     this.pushMatrix();
     this.panorama.display(this.camera.position);
     this.popMatrix();
-    
     this.pushMatrix();
-    this.translate(0,3,0);
+    this.translate(-10,0,0);
+    this.pushMatrix();
+    this.translate(0,14,0);
     //this.setActiveShader(this.beeShader);
-    //this.bee.display();
+    this.bee.display();
     //this.rockSet.display();
-    //this.rockSet.display();
-
     //this.setActiveShaderSimple(this.defaultShader);
     this.popMatrix();
     this.pushMatrix();
+    this.translate(0,6,0);
     this.hive.display();
+    this.popMatrix();
+    this.pushMatrix();
+    this.rockSet.display(4);
+    //this.pollen.display();
+    this.popMatrix();
     this.popMatrix();
     /*this.appearance.apply();
     this.translate(0,-100,0);

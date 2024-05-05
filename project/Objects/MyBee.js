@@ -197,7 +197,7 @@ export class MyBee extends CGFobject {
         this.sphere.display();
         this.scene.popMatrix();
 
-
+        
         this.scene.popMatrix(); //END WINGS
         
         this.scene.popMatrix()
@@ -225,6 +225,9 @@ export class MyBee extends CGFobject {
       }
       
         
+    }
+    getPolen(){
+
     }
     reset(){
         this.position=[0,0,0];

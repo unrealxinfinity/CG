@@ -8,9 +8,9 @@ import { MySphere } from './MySphere.js';
  * @param texture - texture to apply
  */
 export class MyRockSet extends CGFobject {
-	constructor(scene, radius, stages) {
+	constructor(scene, radius,startStage, stages) {
 		super(scene);
-
+    
         this.rocks = 0;
         for (let stage = 0; stage < stages; stage++) {
             const len = 1 + stage*2;
@@ -18,6 +18,7 @@ export class MyRockSet extends CGFobject {
         }
         this.stages = stages;
         this.radius = radius;
+        this.startStage=startStage;
         this.rockObjs = [];
         for (let i = 0; i < this.rocks; i++) {
             this.rockObjs.push(new MyRock(scene, radius, null, null));
@@ -54,7 +55,7 @@ export class MyRockSet extends CGFobject {
         this.scene.pushMatrix();
         this.scene.translate(0, (this.stages-1)*this.radius, 0);
         let rockIndex = 0;
-        for (let i = 0; i < this.stages; i++) {
+        for (let i = this.startStage; i < this.stages; i++) {
             const len = 1 + 2*i;
             this.scene.pushMatrix();
             this.scene.translate(Math.ceil(-len/2)*this.radius, -i*this.radius, Math.ceil(-len/2)*this.radius);

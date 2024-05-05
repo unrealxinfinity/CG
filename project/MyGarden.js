@@ -30,7 +30,6 @@ export class MyGarden extends CGFobject {
             'stemTexture': new CGFtexture(this.scene, "images/stem.jpg"),
             'leafTexture':new CGFtexture(this.scene, "images/leaf.jpg")
             };
-        console.log(this.textures  );
         for (const petalTexture of this.textures.petalTextures) {
             const petalApp = new CGFappearance(scene);
             petalApp.setTexture(petalTexture);
@@ -44,6 +43,7 @@ export class MyGarden extends CGFobject {
         this.rows=rows;
         this.cols=cols;
         this.spaceInBetween=10;
+        this.pollens = [];
         this.updateGarden(this.rows,this.cols);
         console.log(this.textures);
 
@@ -58,6 +58,7 @@ export class MyGarden extends CGFobject {
         this.innerRadius = Math.random()*(this.maxInnerRadius-this.minInnerRadius)+this.minInnerRadius;
         this.petals = Math.floor(Math.random()*(this.maxPetals-this.minPetals)+this.minPetals);
         this.stems = Math.floor(Math.random()*(this.maxStems-this.minStems)+this.minStems);
+    
 
     }
     updateGarden(rows,cols){
