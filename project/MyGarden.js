@@ -71,14 +71,13 @@ export class MyGarden extends CGFobject {
                 this.rows=cols;
                 this.randomize();
                 var flower;
-                if(Math.random() >= 0.5){
+                if(Math.random()<=0.5){
                     flower = new MyFlower(this.scene, this.petals, this.stems, this.innerRadius, this.outterRadius, this.petalApperances[this.appIndex], this.receptacleColor, this.stemColor, this.leafColor,this.textures,this.pollen);
                 }
                 else{
                     flower = new MyFlower(this.scene, this.petals, this.stems, this.innerRadius, this.outterRadius, this.petalApperances[this.appIndex], this.receptacleColor, this.stemColor, this.leafColor,this.textures,this.pollen);
                 }
-                flower.setPosition(j*this.spaceInBetween,0,i*this.spaceInBetween);
-                console.log(flower);
+                flower.setPosition(j*this.spaceInBetween,flower.getHeight(),i*this.spaceInBetween);
                 this.flowers.push(flower);
                 
             }
@@ -90,7 +89,7 @@ export class MyGarden extends CGFobject {
                 this.scene .pushMatrix();
                 this.scene.translate(j*this.spaceInBetween,0,i*this.spaceInBetween);
                 if(translation){
-                    this.flowers[i*this.rows+j].setPosition(j*this.spaceInBetween+translation[0],0+translation[1],i*this.spaceInBetween+translation[2]);
+                    this.flowers[i*this.rows+j].setPosition(j*this.spaceInBetween+translation[0],flowers[i*this.rows+j].getHeight()+translation[1],i*this.spaceInBetween+translation[2]);
                 }
                 this.flowers[i*this.rows+j].display();
                 this.scene.popMatrix();

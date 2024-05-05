@@ -27,12 +27,14 @@ export class MyBee extends CGFobject {
         this.wingRotationZ = 0;
         this.yAllocation = 0;
         this.pollen =null
-        this.position=[0,0,0];
+        this.position=[0,30,0];
+        this.initialHeight=30;
         this.velocity = 0;
-        this.tempVelocity = 0;
+        this.tempVelocity = null;
         this.orientation = [1,0,0];
         this.angle = 0;
         this.scaleFactor=1;
+        this.detected=false;
 		this.initMaterials();
 	}
 
@@ -217,7 +219,13 @@ export class MyBee extends CGFobject {
     }
     update(deltaTime){
         this.position[0] += this.orientation[0]*this.velocity*deltaTime;
-        this.position[1] += this.orientation[1]*this.velocity*deltaTime;
+        let y = this.orientation[1]*this.velocity*deltaTime;
+        if(this.position[1] + y < this.initialHeight){
+            this.position[1] += this.orientation[1]*this.velocity*deltaTime;
+        }
+        else{
+            this.position[1] = this.initialHeight;
+        }
         this.position[2] += this.orientation[2]*this.velocity*deltaTime;
     }
     
@@ -225,7 +233,7 @@ export class MyBee extends CGFobject {
        this.angle += a;
         let orientationX = Math.cos(this.angle);
         let orientationZ = Math.sin(this.angle);
-        this.orientation = [orientationX,0,-orientationZ];
+        this.orientation = [orientationX,this.orientation[1],-orientationZ];
     }
     accelerate(v){
       this.velocity += v;
@@ -235,29 +243,45 @@ export class MyBee extends CGFobject {
       
         
     }
+    detectPollen(garden){
+        let flowers = garden.getFlowers();
+        for(let i=0; i<flowers.length;i++){
+            if(this.getPollen(flowers[i])) return true;
+        }
+        return false;
+    }
     getPollen(flower){
-        if(this.detectCollision(flower)){
+        if(this.detectCollision(flower) && flower.getPollen()){
             this.tempVelocity = this.velocity;
+            console.log(this.tempVelocity);
+
             this.velocity = 0;
-            console.log(flower);
             this.pollen = flower.getPollen();
             flower.removePollen();
+            return true;
         }
+        return false;
     }
-    descend(garden){
-       this.orientation[1] = -1;
-       let flowers = garden.getFlowers();
-       for(let i=0; i<flowers.length;i++){
-            this.getPollen(flowers[i]);
-       }
+    descend(){
+        this.orientation[1] = -1;
     }
     ascend(){
-        
+        if(this.tempVelocity){
+            console.log(this.tempVelocity);
+            this.velocity = this.tempVelocity;
+            this.tempVelocity = null;
+        }
+        if(this.position[1] < this.initialHeight){
+            this.orientation[1] = 1;
+        }
+        else{
+            this.orientation[1] = 0;
+        }
     }
     reset(){
-        this.position=[0,0,0];
+        this.position=[0,this.initialHeight,0];
         this.velocity = 0;
-        this.orientation = [0,0,0];
+        this.orientation = [1,0,0];
         this.angle = 0;
     }
     scale(s){
@@ -276,10 +300,12 @@ export class MyBee extends CGFobject {
     detectCollision(flower){
         let x = this.position[0];
         let z = this.position[2];
+        let y = this.position[1];
         let x1 = flower.position[0];
+        let y1 = flower.position[1];
         let z1 = flower.position[2];
-        let distance = Math.sqrt((x-x1)*(x-x1) + (z-z1)*(z-z1));
-        if(distance <= flower.getInnerRadius()*2){
+        let distance = Math.sqrt((x-x1)*(x-x1) +(y-y1)*(y-y1)+(z-z1)*(z-z1));
+        if(distance <= flower.getInnerRadius()*3){
             return true;
         }
         return false;

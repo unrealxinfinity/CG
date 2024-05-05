@@ -48,6 +48,7 @@ export class MyScene extends CGFscene {
     this.scaleFactor=1;
     this.speedFactor = 0.1;
     this.enableTextures(true);
+    this.descending=false;
     this.petalTextures = [new CGFtexture(this, "images/petal1.jpg"), new CGFtexture(this, "images/petal2.jpg"),
                   new CGFtexture(this, "images/petal3.jpg")];
 
@@ -109,7 +110,12 @@ export class MyScene extends CGFscene {
       this.bee.update(deltaTime);
       this.bee.animate(t,3,0.005,0.06);
       this.bee.scale(this.scaleFactor);
-
+      if(this.descending){
+        if(this.bee.detectPollen(this.garden)){
+          this.descending=false;
+          console.log("Pollen detected");
+        };
+      }
 	}
   checkKeys() {
       let text="Keys pressed: ";
@@ -148,14 +154,17 @@ export class MyScene extends CGFscene {
           text+=" R ";
           this.bee.reset();
           keysPressed=true;
+          this.descending=false;
       }
       if(this.gui.isKeyPressed("KeyF")){
           text+=" F ";
-          this.bee.descend(this.garden);
+          this.bee.descend();
+          this.descending=true;
           keysPressed=true;
       }
       if (this.gui.isKeyPressed("KeyP")){
           text+=" P ";
+          this.descending=false;
           this.bee.ascend();
           keysPressed=true;
       }
@@ -180,9 +189,9 @@ export class MyScene extends CGFscene {
     this.applyViewMatrix();
     // Draw axis
     if (this.displayAxis) this.axis.display();
-
+    
     // ---- BEGIN Primitive drawing section
-    //this.bee.display();
+    this.bee.display();
     this.garden.display();
     /*this.receptale.display();
     this.stem.display();*/
@@ -190,11 +199,8 @@ export class MyScene extends CGFscene {
     this.panorama.display(this.camera.position);
     this.popMatrix();
     this.pushMatrix();
-    this.translate(-10,0,0);
-    this.pushMatrix();
     this.translate(0,14,0);
     //this.setActiveShader(this.beeShader);
-    this.bee.display();
     //this.rockSet.display();
     //this.setActiveShaderSimple(this.defaultShader);
     this.popMatrix();
@@ -205,7 +211,6 @@ export class MyScene extends CGFscene {
     this.pushMatrix();
     this.rockSet.display(4);
     //this.pollen.display();
-    this.popMatrix();
     this.popMatrix();
     /*this.appearance.apply();
     this.translate(0,-100,0);

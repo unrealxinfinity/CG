@@ -73,6 +73,9 @@ export class MyFlower extends CGFobject {
     getPosition(){  
         return this.position;
     }
+    getHeight(){
+        return this.stem.stemYHeight+this.innerRadius;
+    }
     display() {
 
         const rotationStep = 2*Math.PI/this.petals;
