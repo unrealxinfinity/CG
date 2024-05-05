@@ -184,12 +184,14 @@ export class MyScene extends CGFscene {
     this.translate(0,3,0);
     //this.setActiveShader(this.beeShader);
     //this.bee.display();
-    this.hive.display();    //this.rockSet.display();
+    //this.rockSet.display();
     //this.rockSet.display();
 
     //this.setActiveShaderSimple(this.defaultShader);
     this.popMatrix();
-
+    this.pushMatrix();
+    this.hive.display();
+    this.popMatrix();
     /*this.appearance.apply();
     this.translate(0,-100,0);
     this.scale(400,400,400);
