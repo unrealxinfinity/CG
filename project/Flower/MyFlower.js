@@ -19,14 +19,16 @@ import { MyCylinder } from '../Objects/MyCylinder.js';
  * @param leafColor - color of the leaf
  */
 export class MyFlower extends CGFobject {
-    constructor(scene, petals,stems, innerRadius, outerRadius, petalTex, receptacleColor,stemColor,leafColor,textures) {
+    constructor(scene, petals,stems, innerRadius, outerRadius, petalTex, receptacleColor,stemColor,leafColor,textures,pollen) {
         super(scene);
         this.stacks = 20;
         this.slices = 20;
+        this.position=[];
         this.objects={'sphere':new MySphere(scene, this.slices, this.stacks, false, false,2),'triangle':new MyTriangle(scene),'cylinder':new MyCylinder(scene, this.slices, this.stacks)};
         this.innerRadius = innerRadius;
         this.outerRadius = outerRadius;
         this.petals = petals;
+        this.pollen = pollen;
         this.receptacle = new MyReceptacle(this.scene, innerRadius,receptacleColor,this.objects,textures);
         this.petal = new MyPetal(this.scene, innerRadius, outerRadius,MyFlower.generateTexCoords());
         this.stem = new MyStem(this.scene, stems,0.3,outerRadius,outerRadius+1,stemColor,leafColor,this.objects,textures);
@@ -44,6 +46,12 @@ export class MyFlower extends CGFobject {
         }
     }
 
+    removePollen() {
+        this.pollen = null;
+    }
+    setPosition(x,y,z){
+        this.position=[x,y,z];
+    }
     static generateTexCoords() {
         const x = Math.random()*0.85;
         const y = Math.random()*Math.sqrt(3)/20;
@@ -53,7 +61,18 @@ export class MyFlower extends CGFobject {
         texCoordsB.push(...texCoordsB);
         return [texCoordsA, texCoordsB];
     }
-    
+    getOutterRadius() {
+        return this.outerRadius;
+    }
+    getInnerRadius() {  
+        return this.innerRadius;
+    }
+    getPollen(){
+        return this.pollen;
+    }
+    getPosition(){  
+        return this.position;
+    }
     display() {
 
         const rotationStep = 2*Math.PI/this.petals;
@@ -70,6 +89,12 @@ export class MyFlower extends CGFobject {
             this.scene.popMatrix();
         }
         this.receptacle.display();
+        if (this.pollen) {
+            this.scene.rotate(this.angles[0], 0, 0, 1);
+            this.scene.translate(0, 0, -this.innerRadius-0.1);
+            this.scene.scale(0.2,0.2,0.2)
+            this.pollen.display();
+        }
         this.scene.popMatrix();
         this.scene.pushMatrix();
         this.scene.translate(0, this.stem.stemYHeight+this.innerRadius, 0);

@@ -149,6 +149,16 @@ export class MyScene extends CGFscene {
           this.bee.reset();
           keysPressed=true;
       }
+      if(this.gui.isKeyPressed("KeyF")){
+          text+=" F ";
+          this.bee.descend(this.garden);
+          keysPressed=true;
+      }
+      if (this.gui.isKeyPressed("KeyP")){
+          text+=" P ";
+          this.bee.ascend();
+          keysPressed=true;
+      }
       if (keysPressed){
           console.log(text);
       }
@@ -173,7 +183,6 @@ export class MyScene extends CGFscene {
 
     // ---- BEGIN Primitive drawing section
     //this.bee.display();
-
     this.garden.display();
     /*this.receptale.display();
     this.stem.display();*/

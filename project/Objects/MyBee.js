@@ -2,6 +2,7 @@ import {CGFappearance, CGFobject, CGFtexture} from '../../lib/CGF.js';
 import { MyCylinder } from './MyCylinder.js';
 import { MySphere } from './MySphere.js';
 import { MyCone } from './MyCone.js';
+import { MyPollen } from './MyPollen.js';
 /**
  * MySphere
  * @constructor
@@ -25,9 +26,10 @@ export class MyBee extends CGFobject {
         this.wingRotationY = -Math.PI/6;
         this.wingRotationZ = 0;
         this.yAllocation = 0;
-
+        this.pollen =null
         this.position=[0,0,0];
         this.velocity = 0;
+        this.tempVelocity = 0;
         this.orientation = [1,0,0];
         this.angle = 0;
         this.scaleFactor=1;
@@ -174,6 +176,13 @@ export class MyBee extends CGFobject {
             this.scene.popMatrix();
         }
         //END LEGS
+        this.scene.pushMatrix();//BEGIN POLLEN
+        if(this.pollen){
+            this.scene.translate(0, -1,0);
+            this.scene.scale(0.2,0.2,0.2)
+            this.pollen.display();
+        }
+        this.scene.popMatrix();//END POLLEN
 
         this.scene.popMatrix();
         this.scene.pushMatrix(); //START WINGS
@@ -226,8 +235,24 @@ export class MyBee extends CGFobject {
       
         
     }
-    getPolen(){
-
+    getPollen(flower){
+        if(this.detectCollision(flower)){
+            this.tempVelocity = this.velocity;
+            this.velocity = 0;
+            console.log(flower);
+            this.pollen = flower.getPollen();
+            flower.removePollen();
+        }
+    }
+    descend(garden){
+       this.orientation[1] = -1;
+       let flowers = garden.getFlowers();
+       for(let i=0; i<flowers.length;i++){
+            this.getPollen(flowers[i]);
+       }
+    }
+    ascend(){
+        
     }
     reset(){
         this.position=[0,0,0];
@@ -247,6 +272,17 @@ export class MyBee extends CGFobject {
             progress = progress - 1;
             this.yAllocation = (4 * progress * progress * progress + 1) * flyOffset;
         }
+    }
+    detectCollision(flower){
+        let x = this.position[0];
+        let z = this.position[2];
+        let x1 = flower.position[0];
+        let z1 = flower.position[2];
+        let distance = Math.sqrt((x-x1)*(x-x1) + (z-z1)*(z-z1));
+        if(distance <= flower.getInnerRadius()*2){
+            return true;
+        }
+        return false;
     }
 
 

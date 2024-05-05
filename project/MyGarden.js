@@ -1,5 +1,6 @@
 import { MyFlower } from "./Flower/MyFlower.js";
 import { CGFobject,CGFtexture,CGFappearance} from "../lib/CGF.js";
+import { MyPollen } from "./Objects/MyPollen.js";
 /**
  * MyGarden
  * @constructor
@@ -44,7 +45,9 @@ export class MyGarden extends CGFobject {
         this.cols=cols;
         this.spaceInBetween=10;
         this.pollens = [];
+        this.pollen = new MyPollen(this.scene);
         this.updateGarden(this.rows,this.cols);
+
         console.log(this.textures);
 
         
@@ -62,24 +65,40 @@ export class MyGarden extends CGFobject {
 
     }
     updateGarden(rows,cols){
+        this.pollens = Array.from({length: rows*cols}, () => Math.random() >= 0.5);
         for(let i=0;i<rows;i++){
             for(let j=0;j<cols;j++){
                 this.cols=rows;
                 this.rows=cols;
                 this.randomize();
-                var flower = new MyFlower(this.scene, this.petals, this.stems, this.innerRadius, this.outterRadius, this.petalApperances[this.appIndex], this.receptacleColor, this.stemColor, this.leafColor,this.textures);
+                var flower;
+                if(this.pollens[i*rows+j]){
+                    flower = new MyFlower(this.scene, this.petals, this.stems, this.innerRadius, this.outterRadius, this.petalApperances[this.appIndex], this.receptacleColor, this.stemColor, this.leafColor,this.textures,this.pollen);
+                }
+                else{
+                    flower = new MyFlower(this.scene, this.petals, this.stems, this.innerRadius, this.outterRadius, this.petalApperances[this.appIndex], this.receptacleColor, this.stemColor, this.leafColor,this.textures,this.pollen);
+                }
+                flower.setPosition(j*this.spaceInBetween,0,i*this.spaceInBetween);
+                console.log(flower);
                 this.flowers.push(flower);
+                
             }
         }
     }
-    display() {
+    display(translation) {
         for(let i=0;i<this.rows;i++){
             for(let j=0;j<this.cols;j++){
                 this.scene .pushMatrix();
                 this.scene.translate(j*this.spaceInBetween,0,i*this.spaceInBetween);
+                if(translation){
+                    this.flowers[i*this.rows+j].setPosition(j*this.spaceInBetween+translation[0],0+translation[1],i*this.spaceInBetween+translation[2]);
+                }
                 this.flowers[i*this.rows+j].display();
                 this.scene.popMatrix();
             }
         }
+    }
+    getFlowers(){
+        return this.flowers;
     }
 }

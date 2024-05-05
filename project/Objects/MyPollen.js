@@ -36,9 +36,9 @@ export class MyPollen extends CGFobject {
         this.scene.pushMatrix();
         this.appearance.apply();
         this.texture.bind(1);
-        this.scene.setActiveShader(this.shader);
+        //this.scene.setActiveShader(this.shader);
         this.sphere.display();
-        this.scene.setActiveShader(this.scene.defaultShader);
+        //this.scene.setActiveShader(this.scene.defaultShader);
         this.scene.popMatrix();
     }
 
