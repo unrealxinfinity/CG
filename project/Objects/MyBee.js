@@ -28,6 +28,7 @@ export class MyBee extends CGFobject {
         this.yAllocation = 0;
         this.pollen =null
         this.position=[0,30,0];
+        this.hivePosition=[-20,0,-20];
         this.initialHeight=30;
         this.velocity = 0;
         this.tempVelocity = null;
@@ -229,7 +230,7 @@ export class MyBee extends CGFobject {
     }
     update(deltaTime){
         this.position[0] += this.orientation[0]*this.velocity*deltaTime;
-        let y = this.orientation[1]*this.velocity*deltaTime;
+        let y = this.orientation[1]*this.yVelocity*deltaTime;
         if(this.position[1] + y < this.initialHeight){
             this.position[1] += this.orientation[1]*this.yVelocity*deltaTime;
         }
@@ -306,6 +307,21 @@ export class MyBee extends CGFobject {
             this.orientation[1] = 0;
         }
     }
+
+    returnHome() {
+        //if (!this.pollen || this.stopped == true) return;
+        this.stopped = true;
+        const hiveVector = [this.hivePosition[0]-this.position[0], this.hivePosition[2]-this.position[2]];
+        const magnitude = Math.sqrt(hiveVector[0]*hiveVector[0] + hiveVector[1]*hiveVector[1]);
+        this.orientation = [hiveVector[0]/magnitude, 0, hiveVector[1]/magnitude];
+        console.log(hiveVector);
+        console.log(this.hivePosition);
+        console.log(this.position);
+        console.log(this.orientation);
+        this.angle = Math.PI + Math.atan2(hiveVector[1], -hiveVector[0]);
+        console.log(this.angle);
+    }
+
     reset(){
         this.position=[0,this.initialHeight,0];
         this.velocity = 0;

@@ -168,6 +168,11 @@ export class MyScene extends CGFscene {
           this.bee.ascend();
           keysPressed=true;
       }
+      if (this.gui.isKeyPressed("KeyO")){
+        text+=" O ";
+        this.bee.returnHome();
+        keysPressed=true;
+    }
       if (keysPressed){
           console.log(text);
       }
