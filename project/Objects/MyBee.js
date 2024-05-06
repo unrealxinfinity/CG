@@ -35,6 +35,7 @@ export class MyBee extends CGFobject {
         this.angle = 0;
         this.scaleFactor=1;
         this.detected=false;
+        this.caughtPollen = false;
 		this.initMaterials();
 	}
 
@@ -99,7 +100,7 @@ export class MyBee extends CGFobject {
         this.scene.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);// update bee scale
         this.scene.rotate(this.angle, 0, 1, 0); // update bee orientation
 
-        this.scene.translate(0, this.yAllocation, 0);
+        if (!this.caughtPollen) this.scene.translate(0, this.yAllocation, 0);
         this.appearance.apply();
 
         this.legApp.apply();
@@ -259,6 +260,8 @@ export class MyBee extends CGFobject {
             this.velocity = 0;
             this.pollen = flower.getPollen();
             flower.removePollen();
+            this.position = [flower.position[0], flower.position[1]+flower.getInnerRadius()*2, flower.position[2]]
+            this.caughtPollen = true;
             return true;
         }
         return false;
