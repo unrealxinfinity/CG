@@ -230,7 +230,7 @@ export class MyBee extends CGFobject {
         this.position[0] += this.orientation[0]*this.velocity*deltaTime;
         let y = this.orientation[1]*this.velocity*deltaTime;
         if(this.position[1] + y < this.initialHeight){
-            this.position[1] += this.orientation[1]*this.velocity*deltaTime;
+            this.position[1] += this.orientation[1]*0.005*deltaTime;
         }
         else{
             this.position[1] = this.initialHeight;
