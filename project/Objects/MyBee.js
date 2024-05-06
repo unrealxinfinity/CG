@@ -31,6 +31,7 @@ export class MyBee extends CGFobject {
         this.initialHeight=30;
         this.velocity = 0;
         this.tempVelocity = null;
+        this.yVelocity = 0.01;
         this.orientation = [1,0,0];
         this.angle = 0;
         this.scaleFactor=1;
@@ -230,16 +231,19 @@ export class MyBee extends CGFobject {
         this.position[0] += this.orientation[0]*this.velocity*deltaTime;
         let y = this.orientation[1]*this.velocity*deltaTime;
         if(this.position[1] + y < this.initialHeight){
-            this.position[1] += this.orientation[1]*0.005*deltaTime;
+            this.position[1] += this.orientation[1]*this.yVelocity*deltaTime;
         }
         else{
             this.position[1] = this.initialHeight;
         }
         this.position[2] += this.orientation[2]*this.velocity*deltaTime;
 
-        if (this.position[1] < 0.55) {
+        if (this.stopped == false && this.position[1] < 0.55) {
             this.position[1] = 0.55;
+            this.orientation[1] = 0;
             this.stopped = true;
+            this.tempVelocity = this.velocity;
+            console.log(this.tempVelocity);
             this.velocity = 0;
             this.landed = true;
         }
@@ -276,6 +280,7 @@ export class MyBee extends CGFobject {
             this.velocity = 0;
             this.pollen = flower.getPollen();
             flower.removePollen();
+            this.orientation[1] = 0;
             this.position = [flower.position[0], flower.position[1]+flower.getInnerRadius()*2, flower.position[2]]
             this.stopped = true;
             return true;
@@ -286,6 +291,9 @@ export class MyBee extends CGFobject {
         this.orientation[1] = -1;
     }
     ascend(){
+        if (!this.stopped) return;
+        this.stopped = false;
+        this.landed = false;
         if(this.tempVelocity){
             console.log(this.tempVelocity);
             this.velocity = this.tempVelocity;
