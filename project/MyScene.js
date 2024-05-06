@@ -205,6 +205,8 @@ export class MyScene extends CGFscene {
     //this.setActiveShaderSimple(this.defaultShader);
     this.popMatrix();
     this.pushMatrix();
+    this.translate(-20,0,-20);
+    this.pushMatrix();
     this.translate(0,6,0);
     this.hive.display();
     this.popMatrix();
@@ -212,11 +214,11 @@ export class MyScene extends CGFscene {
     this.rockSet.display(4);
     //this.pollen.display();
     this.popMatrix();
-    /*this.appearance.apply();
-    this.translate(0,-100,0);
+    this.popMatrix();
+    this.appearance.apply();
     this.scale(400,400,400);
     this.rotate(-Math.PI/2.0,1,0,0);
-    this.plane.display();*/
+    this.plane.display();
 
 
     // ---- END Primitive drawing section

@@ -95,6 +95,7 @@ export class MyBee extends CGFobject {
     display() {
         this.scene.pushMatrix();//BEGIN ANIMATE Y
         this.scene.translate(this.position[0], this.position[1], this.position[2]); //update bee position
+        this.scene.scale(0.5, 0.5, 0.5);
         this.scene.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);// update bee scale
         this.scene.rotate(this.angle, 0, 1, 0); // update bee orientation
 
@@ -212,7 +213,6 @@ export class MyBee extends CGFobject {
         this.scene.popMatrix(); //END WINGS
         
         this.scene.popMatrix()
-        this.needleApp.apply();
         
         this.scene.popMatrix(); //END ANIMATE Y
 

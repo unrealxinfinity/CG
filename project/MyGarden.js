@@ -22,6 +22,7 @@ export class MyGarden extends CGFobject {
         this.maxOutterRadius=7;
         this.minOutterRadius=3;
         this.flowers=[];
+        this.offsets = [];
         this.petalApperances = [];
         this.appIndex = 0;
         this.textures = {
@@ -43,7 +44,7 @@ export class MyGarden extends CGFobject {
         this.leafColor;
         this.rows=rows;
         this.cols=cols;
-        this.spaceInBetween=10;
+        this.spaceInBetween=20;
         this.pollen = new MyPollen(this.scene);
         this.updateGarden(this.rows,this.cols);
 
@@ -77,21 +78,24 @@ export class MyGarden extends CGFobject {
                 else{
                     flower = new MyFlower(this.scene, this.petals, this.stems, this.innerRadius, this.outterRadius, this.petalApperances[this.appIndex], this.receptacleColor, this.stemColor, this.leafColor,this.textures,this.pollen);
                 }
-                flower.setPosition(j*this.spaceInBetween,flower.getHeight(),i*this.spaceInBetween);
+                const offset = [Math.random()*(this.spaceInBetween-2)+1, Math.random()*(this.spaceInBetween-2)+1]
+                this.offsets.push(offset)
+                flower.setPosition(j*this.spaceInBetween+offset[0],flower.getHeight(),i*this.spaceInBetween+offset[1]);
                 this.flowers.push(flower);
-                
             }
         }
     }
     display(translation) {
         for(let i=0;i<this.rows;i++){
             for(let j=0;j<this.cols;j++){
+                const flowerIndex = i*this.rows + j;
                 this.scene .pushMatrix();
-                this.scene.translate(j*this.spaceInBetween,0,i*this.spaceInBetween);
+                //this.scene.translate(j*this.spaceInBetween,0,i*this.spaceInBetween);
+                this.scene.translate(j*this.spaceInBetween+this.offsets[flowerIndex][0],0,i*this.spaceInBetween+this.offsets[flowerIndex][1]);
                 if(translation){
-                    this.flowers[i*this.rows+j].setPosition(j*this.spaceInBetween+translation[0],flowers[i*this.rows+j].getHeight()+translation[1],i*this.spaceInBetween+translation[2]);
+                    this.flowers[flowerIndex].setPosition(j*this.spaceInBetween+translation[0],flowers[flowerIndex].getHeight()+translation[1],i*this.spaceInBetween+translation[2]);
                 }
-                this.flowers[i*this.rows+j].display();
+                this.flowers[flowerIndex].display();
                 this.scene.popMatrix();
             }
         }
