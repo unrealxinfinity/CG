@@ -232,12 +232,14 @@ export class MyBee extends CGFobject {
     }
     
     turn(a){
+       if (this.caughtPollen) return;
        this.angle += a;
         let orientationX = Math.cos(this.angle);
         let orientationZ = Math.sin(this.angle);
         this.orientation = [orientationX,this.orientation[1],-orientationZ];
     }
     accelerate(v){
+      if (this.caughtPollen) return;
       this.velocity += v;
       if(this.velocity < 0){
           this.velocity = 0;
