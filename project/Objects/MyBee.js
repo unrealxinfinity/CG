@@ -35,7 +35,8 @@ export class MyBee extends CGFobject {
         this.angle = 0;
         this.scaleFactor=1;
         this.detected=false;
-        this.caughtPollen = false;
+        this.stopped = false;
+        this.landed = false;
 		this.initMaterials();
 	}
 
@@ -100,7 +101,7 @@ export class MyBee extends CGFobject {
         this.scene.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);// update bee scale
         this.scene.rotate(this.angle, 0, 1, 0); // update bee orientation
 
-        if (!this.caughtPollen) this.scene.translate(0, this.yAllocation, 0);
+        if (!this.stopped) this.scene.translate(0, this.yAllocation, 0);
         this.appearance.apply();
 
         this.legApp.apply();
@@ -134,8 +135,14 @@ export class MyBee extends CGFobject {
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(-3,-1,0);
-        this.scene.rotate(-Math.PI/4, 0, 0, 1);
+        if (!this.landed) {
+            this.scene.translate(-3,-1,0);
+            this.scene.rotate(-Math.PI/4, 0, 0, 1);
+        }
+        else {
+            this.scene.translate(-3,0,0);
+            this.scene.rotate(-Math.PI/2, 0, 0, 1);
+        }
         this.scene.scale(1, 2, 1);
         this.stripedApp.apply();
         this.sphere.display();
@@ -229,17 +236,24 @@ export class MyBee extends CGFobject {
             this.position[1] = this.initialHeight;
         }
         this.position[2] += this.orientation[2]*this.velocity*deltaTime;
+
+        if (this.position[1] < 0.55) {
+            this.position[1] = 0.55;
+            this.stopped = true;
+            this.velocity = 0;
+            this.landed = true;
+        }
     }
     
     turn(a){
-       if (this.caughtPollen) return;
+       if (this.stopped) return;
        this.angle += a;
         let orientationX = Math.cos(this.angle);
         let orientationZ = Math.sin(this.angle);
         this.orientation = [orientationX,this.orientation[1],-orientationZ];
     }
     accelerate(v){
-      if (this.caughtPollen) return;
+      if (this.stopped) return;
       this.velocity += v;
       if(this.velocity < 0){
           this.velocity = 0;
@@ -263,7 +277,7 @@ export class MyBee extends CGFobject {
             this.pollen = flower.getPollen();
             flower.removePollen();
             this.position = [flower.position[0], flower.position[1]+flower.getInnerRadius()*2, flower.position[2]]
-            this.caughtPollen = true;
+            this.stopped = true;
             return true;
         }
         return false;
