@@ -28,7 +28,7 @@ export class MyBee extends CGFobject {
         this.yAllocation = 0;
         this.pollen =null
         this.position=[0,30,0];
-        this.hivePosition=[-20,0,-20];
+        this.hivePosition=[-20,12,-20];
         this.initialHeight=30;
         this.velocity = 0;
         this.tempVelocity = null;
@@ -38,6 +38,7 @@ export class MyBee extends CGFobject {
         this.scaleFactor=1;
         this.detected=false;
         this.stopped = false;
+        this.returning = false;
         this.landed = false;
 		this.initMaterials();
 	}
@@ -229,15 +230,30 @@ export class MyBee extends CGFobject {
 
     }
     update(deltaTime){
-        this.position[0] += this.orientation[0]*this.velocity*deltaTime;
+        const deltax = this.orientation[0]*this.velocity*deltaTime;
+        const deltaz = this.orientation[2]*this.velocity*deltaTime;
+        this.position[0] += deltax;
         let y = this.orientation[1]*this.yVelocity*deltaTime;
-        if(this.position[1] + y < this.initialHeight){
+        if (this.returning) {
+            const proportion = this.currMagnitude/this.returnMagnitude;
+            if (proportion >= 1) {
+                this.returning = false;
+                this.velocity = 0;
+                this.stopped = true;
+                this.landed = true;
+                this.pollen = null;
+            }
+            this.currMagnitude += Math.sqrt(deltax*deltax + deltaz*deltaz);
+            console.log(this.currMagnitude);
+            this.position[1] = this.initialHeight - (this.initialHeight - this.hivePosition[1])*proportion;
+        }
+        else if(this.position[1] + y < this.initialHeight){
             this.position[1] += this.orientation[1]*this.yVelocity*deltaTime;
         }
         else{
             this.position[1] = this.initialHeight;
         }
-        this.position[2] += this.orientation[2]*this.velocity*deltaTime;
+        this.position[2] += deltaz;
 
         if (this.stopped == false && this.position[1] < 0.55) {
             this.position[1] = 0.55;
@@ -251,14 +267,14 @@ export class MyBee extends CGFobject {
     }
     
     turn(a){
-       if (this.stopped) return;
+       if (this.stopped || this.returning) return;
        this.angle += a;
         let orientationX = Math.cos(this.angle);
         let orientationZ = Math.sin(this.angle);
         this.orientation = [orientationX,this.orientation[1],-orientationZ];
     }
     accelerate(v){
-      if (this.stopped) return;
+      if (this.stopped || this.returning) return;
       this.velocity += v;
       if(this.velocity < 0){
           this.velocity = 0;
@@ -289,10 +305,11 @@ export class MyBee extends CGFobject {
         return false;
     }
     descend(){
+        if (this.returning || this.stopped) return;
         this.orientation[1] = -1;
     }
     ascend(){
-        if (!this.stopped) return;
+        if (!this.stopped || this.returning) return;
         this.stopped = false;
         this.landed = false;
         if(this.tempVelocity){
@@ -309,17 +326,16 @@ export class MyBee extends CGFobject {
     }
 
     returnHome() {
-        //if (!this.pollen || this.stopped == true) return;
-        this.stopped = true;
+        if (!this.pollen || this.stopped == true || this.returning == true) return;
+        this.returnHeight = this.position[0];
         const hiveVector = [this.hivePosition[0]-this.position[0], this.hivePosition[2]-this.position[2]];
-        const magnitude = Math.sqrt(hiveVector[0]*hiveVector[0] + hiveVector[1]*hiveVector[1]);
-        this.orientation = [hiveVector[0]/magnitude, 0, hiveVector[1]/magnitude];
-        console.log(hiveVector);
-        console.log(this.hivePosition);
-        console.log(this.position);
-        console.log(this.orientation);
+        this.returnMagnitude = Math.sqrt(hiveVector[0]*hiveVector[0] + hiveVector[1]*hiveVector[1]);
+        console.log(this.returnMagnitude);
+        this.currMagnitude = 0;
+        this.orientation = [hiveVector[0]/this.returnMagnitude, 0, hiveVector[1]/this.returnMagnitude];
         this.angle = Math.PI + Math.atan2(hiveVector[1], -hiveVector[0]);
-        console.log(this.angle);
+        this.returning = true;
+        this.velocity=0.02;
     }
 
     reset(){
