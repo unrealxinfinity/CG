@@ -20,6 +20,8 @@ export class MyGrassBlade extends CGFobject {
         this.direction = Math.floor(Math.random()*2);
         if (this.direction == 0) this.direction = -1;
 
+        const totalVertices = 2*this.slices+1;
+
         this.vertices.push(-0.25,0,0,0.25,0,0);
         this.normals.push(0,0,1,0,0,1);
         let center = 0;
@@ -33,13 +35,22 @@ export class MyGrassBlade extends CGFobject {
             this.vertices.push(center-amplitude,y,0,center+amplitude,y,0);
             this.normals.push(0,0,1,0,0,1);
             this.indices.push(currIndex,currIndex+1,currIndex+2,currIndex+2,currIndex+1,currIndex+3);
+            this.indices.push(currIndex+1+totalVertices,currIndex+totalVertices,currIndex+2+totalVertices,currIndex+1+totalVertices,currIndex+2+totalVertices,currIndex+3+totalVertices);
+            this.indices.push()
             currIndex += 2;
             this.offset *= this.offsetDecay;
         }
 
         this.vertices.push(center,1,0);
         this.normals.push(0,0,1);
-        this.indices.push(currIndex,currIndex+1,currIndex+2);
+        this.indices.push(currIndex,currIndex+1,currIndex+2,currIndex+1+totalVertices,currIndex+totalVertices,currIndex+2+totalVertices);
+
+        const len = this.vertices.length;
+
+        this.vertices.push(...this.vertices);
+        for (let i = 0; i < len; i++) {
+            this.normals.push(-this.normals[i])
+        }
 
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
