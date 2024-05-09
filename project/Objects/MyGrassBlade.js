@@ -11,6 +11,9 @@ export class MyGrassBlade extends CGFobject {
         this.slices = slices;
         this.offsetDecay = 0.9;
         this.offset = 0.1;
+        const sixthPi = Math.PI/6;
+        this.initialAngle = Math.random()*sixthPi*2.5 + sixthPi;
+        this.angleAmplitude = Math.PI/2 - this.initialAngle;
         this.initBuffers();
         this.initShader();
     }
@@ -20,7 +23,8 @@ export class MyGrassBlade extends CGFobject {
     }
 
     update(t) {
-        this.shader.setUniformsValues({'timeFactor': t});
+        const angle = Math.cos(0.01*t)*this.angleAmplitude;
+        this.shader.setUniformsValues({'angle': angle});
     }
 
     initBuffers() {
