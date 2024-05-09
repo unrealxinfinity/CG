@@ -6,25 +6,26 @@ import {CGFobject, CGFshader} from '../../lib/CGF.js';
  * @param slices - number of divisions around the Y axis
 */
 export class MyGrassBlade extends CGFobject {
-    constructor(scene, slices) {
+    constructor(scene, slices, material) {
         super(scene);
         this.slices = slices;
         this.offsetDecay = 0.9;
         this.offset = 0.1;
+        this.material = material;
         const sixthPi = Math.PI/6;
-        this.initialAngle = Math.random()*sixthPi*2.5 + sixthPi;
-        this.angleAmplitude = Math.PI/2 - this.initialAngle;
+        this.angle = Math.random()*sixthPi*2.5 + sixthPi;
+        this.angleAmplitude = Math.PI/2 - this.angle;
         this.initBuffers();
-        this.initShader();
-    }
-
-    initShader() {
-        this.shader = new CGFshader(this.scene.gl, "shaders/grass.vert", "shaders/pollen.frag");
     }
 
     update(t) {
-        const angle = Math.cos(0.01*t)*this.angleAmplitude;
-        this.shader.setUniformsValues({'angle': angle});
+        this.angle = Math.cos(0.01*t)*this.angleAmplitude;
+        
+    }
+
+    apply(shader) {
+        this.material.apply();
+        shader.setUniformsValues({'angle': this.angle});
     }
 
     initBuffers() {
