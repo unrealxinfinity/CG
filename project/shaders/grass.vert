@@ -6,7 +6,7 @@ in vec3 aVertexNormal;
 in vec2 aTextureCoord;
 
 uniform bool uUseTexture;
-uniform float timeFactor;
+uniform float angle;
 
 struct lightProperties {
     vec4 position;                  // Default: (0, 0, 1, 0)
@@ -110,11 +110,11 @@ vec4 lighting(vec4 vertex, vec3 E, vec3 N) {
 
 void main() {
 
-    float cosR = cos(timeFactor);
-    float sinR = sin(timeFactor);
+    float cosR = cos(angle);
+    float sinR = sin(angle);
 
-    mat4 rotationMat = mat4(cosR, sinR, 0.0, aVertexPosition.x*(1.0-cosR),
-                        -sinR, cosR, 0.0, sinR*cosR,
+    mat4 rotationMat = mat4(cosR, -sinR, 0.0, aVertexPosition.x*(1.0-cosR),
+                        sinR, cosR, 0.0, -sinR*aVertexPosition.x,
                         0.0,0.0,1.0,0.0,
                         0.0,0.0,0.0,1.0);
 
