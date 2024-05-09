@@ -31,7 +31,6 @@ export class MyGrassSet extends CGFobject {
         for (let x = 0; x < cols; x++) {
             for (let y = 0; y < rows; y++) {
                 this.blades.push(new MyGrassBlade(this.scene, 4, this.materials[Math.floor(Math.random()*2)]));
-                console.log(this.blades[x*rows + y]);
             }
         }
         
@@ -49,16 +48,17 @@ export class MyGrassSet extends CGFobject {
     }
 
     display() {
-        //this.scene.setActiveShader(this.shader);
+        this.scene.setActiveShader(this.shader);
+        
         for (let x = 0; x < this.cols; x++) {
             for (let y = 0; y < this.rows; y++) {
                 this.scene.pushMatrix();
-                //this.scene.translate(x, 0, y);
+                this.scene.translate(x, 0, y);
                 this.blades[x*this.rows + y].apply(this.shader);
                 this.blades[x*this.rows + y].display();
                 this.scene.popMatrix();
             }
         }
-        //this.scene.setActiveShader(this.scene.defaultShader);
+        this.scene.setActiveShader(this.scene.defaultShader);
     }
 }
