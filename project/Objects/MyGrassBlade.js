@@ -31,12 +31,14 @@ export class MyGrassBlade extends CGFobject {
         this.vertices = [];
         this.indices = [];
         this.normals = [];
+        this.texCoords = [];
         this.direction = Math.floor(Math.random()*2);
         if (this.direction == 0) this.direction = -1;
 
         const totalVertices = 2*this.slices+1;
 
         this.vertices.push(0,0,-0.25,0,0,0.25);
+        this.texCoords.push(0,1,1,1);
         this.normals.push(1,0,0,1,0,0);
         let center = 0;
         let amplitude = 0.25;
@@ -47,6 +49,7 @@ export class MyGrassBlade extends CGFobject {
             amplitude *= 0.75;
             const y = i/this.slices;
             this.vertices.push(0,y,center-amplitude,0,y,center+amplitude);
+            this.texCoords.push(0, 1 - y, 1, 1 - y);
             this.normals.push(1,0,0,1,0,0);
             this.indices.push(currIndex,currIndex+1,currIndex+2,currIndex+2,currIndex+1,currIndex+3);
             this.indices.push(currIndex+1+totalVertices,currIndex+totalVertices,currIndex+2+totalVertices,currIndex+1+totalVertices,currIndex+2+totalVertices,currIndex+3+totalVertices);
@@ -56,12 +59,14 @@ export class MyGrassBlade extends CGFobject {
         }
 
         this.vertices.push(0,1,center);
+        this.texCoords.push(0.5,0);
         this.normals.push(1,0,0);
         this.indices.push(currIndex,currIndex+1,currIndex+2,currIndex+1+totalVertices,currIndex+totalVertices,currIndex+2+totalVertices);
 
         const len = this.vertices.length;
 
         this.vertices.push(...this.vertices);
+        this.texCoords.push(...this.texCoords);
         for (let i = 0; i < len; i++) {
             this.normals.push(-this.normals[i])
         }
