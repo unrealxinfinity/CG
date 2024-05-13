@@ -17,9 +17,16 @@ export class MyHive extends CGFobject {
         this.stackHeight=1;
         this.stackWidth=6; 
         this.topWidth=8;
+        this.pollens = [];
         
 
     }
+
+    addPollen(pollen) {
+        this.pollens.push(pollen);
+        console.log("added pollen");
+    }
+
     display(){
         //BOTTOM BEGIN
         this.scene.pushMatrix();
@@ -56,7 +63,7 @@ export class MyHive extends CGFobject {
         this.scene.translate(0,height,0);
         this.scene.translate(0,0.5,0)
         this.scene.scale(this.topWidth,1,this.topWidth);
-        this.hive.display();
+        //this.hive.display();
         this.scene.popMatrix();
         //TOP END
     }   

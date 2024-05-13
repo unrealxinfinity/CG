@@ -10,11 +10,12 @@ import { MyPollen } from './MyPollen.js';
  * @param texture - texture to apply
  */
 export class MyBee extends CGFobject {
-	constructor(scene) {
+	constructor(scene, hive) {
 		super(scene);
 
         this.sin = Math.sin(Math.PI/4);
         this.cos = Math.cos(Math.PI/4);
+        this.hive = hive;
         this.sphere = new MySphere(scene, 20, 20, false, false, 1);
         this.torax = new MySphere(scene, 20, 20, false, false, 2);
         this.sinThird = Math.sin(Math.PI/3);
@@ -241,6 +242,7 @@ export class MyBee extends CGFobject {
                 this.velocity = 0;
                 this.stopped = true;
                 this.landed = true;
+                this.hive.addPollen(this.pollen);
                 this.pollen = null;
             }
             this.currMagnitude += Math.sqrt(deltax*deltax + deltaz*deltaz);

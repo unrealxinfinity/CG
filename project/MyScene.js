@@ -67,8 +67,8 @@ export class MyScene extends CGFscene {
    
     this.panorama = new MyPanorama(this, this.earth);
     this.rockSet = new MyRockSet(this, 1 , 3, 8);
-    this.bee = new MyBee(this);
     this.hive = new MyHive(this);
+    this.bee = new MyBee(this, this.hive);
     this.pollen = new MyPollen(this);
     this.flatShader = new CGFshader(this.gl, "shaders/flat.vert", "shaders/flat.frag");
     this.rockShader = new CGFshader(this.gl, "shaders/uScale.vert", "shaders/uScale.frag");
