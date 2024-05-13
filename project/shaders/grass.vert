@@ -1,4 +1,5 @@
 #version 300 es
+#define M_PI 3.1415926535897932384626433832795
 precision highp float;
 
 in vec3 aVertexPosition;
@@ -122,7 +123,7 @@ void main() {
     vec4 vertex = uMVMatrix * rotationMat * vec4(aVertexPosition, 1.0);
 
     // Transformed normal position
-    vec3 vVertexNormal = vec3(aVertexNormal.x*cos(angle),sin(angle),0.0);
+    vec3 vVertexNormal = vec3(aVertexNormal.x*cos(M_PI/2.0 + angle),aVertexNormal.x*sin(M_PI/2.0 + angle),0.0);
 	vec3 N = normalize(vec3(uNMatrix * vec4(vVertexNormal, 1.0)));
 
     vec3 eyeVec = -vec3(vertex.xyz);
