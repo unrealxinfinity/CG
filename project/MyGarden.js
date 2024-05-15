@@ -7,7 +7,7 @@ import { MyPollen } from "./Objects/MyPollen.js";
  * @param scene - Reference to MyScene object
  */
 export class MyGarden extends CGFobject {
-    constructor(scene, rows, cols) {
+    constructor(scene, rows, cols,maxHeight) {
         super(scene);
         this.petals;
         this.maxPetals=25;
@@ -46,12 +46,12 @@ export class MyGarden extends CGFobject {
         this.cols=cols;
         this.spaceInBetween=20;
         this.pollen = new MyPollen(this.scene);
+        this.maxHeight=maxHeight;
         this.updateGarden(this.rows,this.cols);
-
-        console.log(this.textures);
 
         
     }
+   
     randomize(){
         this.appIndex = Math.floor(Math.random()*this.textures.petalTextures.length);
         this.receptacleColor = [Math.random(), Math.random(), Math.random()];
@@ -74,9 +74,17 @@ export class MyGarden extends CGFobject {
                 var flower;
                 if(Math.random()<=0.5){
                     flower = new MyFlower(this.scene, this.petals, this.stems, this.innerRadius, this.outterRadius, this.petalApperances[this.appIndex], this.receptacleColor, this.stemColor, this.leafColor,this.textures,this.pollen);
+                    while(flower.getHeight()>this.maxHeight){
+                        this.randomize();
+                        flower = new MyFlower(this.scene, this.petals, this.stems, this.innerRadius, this.outterRadius, this.petalApperances[this.appIndex], this.receptacleColor, this.stemColor, this.leafColor,this.textures,this.pollen);
+                    }
                 }
                 else{
                     flower = new MyFlower(this.scene, this.petals, this.stems, this.innerRadius, this.outterRadius, this.petalApperances[this.appIndex], this.receptacleColor, this.stemColor, this.leafColor,this.textures,this.pollen);
+                    while(flower.getHeight()>this.maxHeight){
+                        this.randomize();
+                        flower = new MyFlower(this.scene, this.petals, this.stems, this.innerRadius, this.outterRadius, this.petalApperances[this.appIndex], this.receptacleColor, this.stemColor, this.leafColor,this.textures,this.pollen);
+                    }
                 }
                 const offset = [Math.random()*(this.spaceInBetween-2)+1, Math.random()*(this.spaceInBetween-2)+1]
                 this.offsets.push(offset)

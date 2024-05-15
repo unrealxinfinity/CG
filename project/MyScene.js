@@ -78,7 +78,8 @@ export class MyScene extends CGFscene {
     this.rockShader = new CGFshader(this.gl, "shaders/uScale.vert", "shaders/uScale.frag");
     this.beeShader = new CGFshader(this.gl, "shaders/beeAnimation.vert", "shaders/beeAnimation.frag");
     this.cloudShader = new CGFshader(this.gl, "shaders/cloud.vert", "shaders/cloud.frag");
-    this.garden = new MyGarden(this,this.gardenRows,this.gardenCols);
+    this.garden = new MyGarden(this,this.gardenRows,this.gardenCols,this.bee.getPosition[2]);
+  
     this.grass = new MyGrassSet(this, 50, 50);
     //this.beeShader.setUniformsValues({uSampler: 0, timeFactor: 0,normScale:1,transitionSpeed:1,flyOffset:1});
     this.setUpdatePeriod(1000/60);
