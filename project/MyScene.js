@@ -49,6 +49,7 @@ export class MyScene extends CGFscene {
     this.lastTime=0;
     this.scaleFactor=1;
     this.speedFactor = 0.1;
+    this.cloudMoveSpeedFactor = 0.1;
     this.enableTextures(true);
     this.descending=false;
     this.petalTextures = [new CGFtexture(this, "images/petal1.jpg"), new CGFtexture(this, "images/petal2.jpg"),
@@ -64,8 +65,11 @@ export class MyScene extends CGFscene {
     this.earthppearance = new CGFappearance(this);
     this.earthppearance.setTexture(this.earth);
     this.earthppearance.setTextureWrap('REPEAT', 'REPEAT');
-   
+    this.cloudText = new CGFtexture(this, "images/cloud.jpg");
+    this.cloudApp = new CGFappearance(this.cloudText);
+    this.cloudApp.setTextureWrap('REPEAT', 'REPEAT');
     this.panorama = new MyPanorama(this, this.earth);
+    
     this.rockSet = new MyRockSet(this, 1 , 3, 8);
     this.bee = new MyBee(this);
     this.hive = new MyHive(this);
@@ -73,9 +77,10 @@ export class MyScene extends CGFscene {
     this.flatShader = new CGFshader(this.gl, "shaders/flat.vert", "shaders/flat.frag");
     this.rockShader = new CGFshader(this.gl, "shaders/uScale.vert", "shaders/uScale.frag");
     this.beeShader = new CGFshader(this.gl, "shaders/beeAnimation.vert", "shaders/beeAnimation.frag");
+    this.cloudShader = new CGFshader(this.gl, "shaders/cloud.vert", "shaders/cloud.frag");
     this.garden = new MyGarden(this,this.gardenRows,this.gardenCols);
     this.grass = new MyGrassSet(this, 50, 50);
-    this.beeShader.setUniformsValues({uSampler: 0, timeFactor: 0,normScale:1,transitionSpeed:1,flyOffset:1});
+    //this.beeShader.setUniformsValues({uSampler: 0, timeFactor: 0,normScale:1,transitionSpeed:1,flyOffset:1});
     this.setUpdatePeriod(1000/60);
 
   }
@@ -122,6 +127,10 @@ export class MyScene extends CGFscene {
           console.log("Pollen detected");
         };
       }
+       // let timeFactor = t / 100000 ;
+      let timeFactor = t % (100000/this.cloudMoveSpeedFactor) / (100000/this.cloudMoveSpeedFactor);
+      this.cloudShader.setUniformsValues({timeFactor: timeFactor, uSampler1: 1});
+
 	}
   checkKeys() {
       let text="Keys pressed: ";
@@ -208,6 +217,9 @@ export class MyScene extends CGFscene {
     this.stem.display();*/
     this.pushMatrix();
     this.setActiveShader(this.defaultShader);
+    this.setActiveShader(this.cloudShader);
+    this.cloudText.bind(1);
+
     this.panorama.display(this.camera.position);
     this.grass.display();
     this.popMatrix();
