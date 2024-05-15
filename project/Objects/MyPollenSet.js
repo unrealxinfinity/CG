@@ -29,7 +29,7 @@ export class MyPollenSet extends CGFobject {
         let total = this.pollenSet.length;
         let pollenIndex = 0;
         let remaining = total;
-        for (let i = total-1; i <= 0; i--) {
+        for (let i = this.levels-1; i <= 0; i--) {
             const len = 1 + 2*i;
             this.scene.translate(Math.ceil(-len/2)*this.offset, -i*this.offset, Math.ceil(-len/2)*this.offset);
             for (let x = 0; x < len; x++) {
