@@ -52,7 +52,10 @@ export class MyHiveStack extends CGFobject {
         //this.centerSlice.display();
         this.scene.popMatrix();
         for (const pollen of pollens) {
+            this.scene.pushMatrix();
+            this.scene.scale(0.25,0.25,0.25);
             pollen.display();
+            this.scene.popMatrix();
         }
     }   
 }
