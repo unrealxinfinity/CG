@@ -53,7 +53,7 @@ export class MyHive extends CGFobject {
             this.scene.pushMatrix();
             this.scene.translate(0,i*this.stackHeight,0);
             this.scene.translate(0,this.stackHeight/2,0);
-            this.hiveStack.display();
+            this.hiveStack.display(this.pollens);
             this.scene.popMatrix();
             height+=this.stackHeight;
         }
