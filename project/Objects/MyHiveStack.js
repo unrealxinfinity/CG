@@ -1,5 +1,6 @@
-import {CGFappearance, CGFobject,CGFtexture} from '../../lib/CGF.js';
+import {CGFobject} from '../../lib/CGF.js';
 import { MyCube } from './MyCube.js';
+import { MyPollenSet } from './MyPollenSet.js';
 /**
 * MyHive
 * @constructor
@@ -13,8 +14,9 @@ export class MyHiveStack extends CGFobject {
         this.centerSlice = new MyCube(scene,this.centerText,this.centerText,this.centerText,this.centerText,this.centerText,this.centerText);
         this.sideBar = new MyCube(scene,this.barText,this.barText,this.centerText,this.barText,this.barText,this.barText);
         this.barLength = barLength;
+        this.pollenSet = new MyPollenSet(scene,[]);
     }
-    display(pollens){
+    display(i,pollens){
         //BACK BEGIN
         this.scene.pushMatrix();
         this.scene.translate(0,0,-this.barLength/2+0.5);
@@ -51,11 +53,12 @@ export class MyHiveStack extends CGFobject {
         this.scene.scale(this.barLength-2,1,this.barLength-2);
         //this.centerSlice.display();
         this.scene.popMatrix();
-        for (const pollen of pollens) {
+        if(i==1){
             this.scene.pushMatrix();
-            this.scene.scale(0.25,0.25,0.25);
-            pollen.display();
+            this.pollenSet.updatePollens(pollens);
+            this.pollenSet.display();
             this.scene.popMatrix();
         }
+        
     }   
 }
