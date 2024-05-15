@@ -10,7 +10,7 @@ export class MyPollen extends CGFobject {
 	constructor(scene) {
 		super(scene);
 
-        this.sphere = new MySphere(scene, 40, 40, false, false, 1, 1.5, 1);
+        this.sphere = new MySphere(scene, 10, 10, false, true, 1, 1.5, 1);
         this.initMaterial();
         this.initShader();
 	}
