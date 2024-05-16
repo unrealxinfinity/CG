@@ -372,6 +372,11 @@ export class MyBee extends CGFobject {
         }
         return false;
     }
-
+    getPosition(){
+        return this.position;
+    }
+    getOrientation(){
+        return this.orientation;
+    }
 
 }

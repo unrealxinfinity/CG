@@ -17,7 +17,7 @@ varying vec2 vTextureCoord;
 varying vec2 timeVec;
 
 void main() {
-	timeec = aTextureCoord + vec2(timeFactor/100.0, timeFactor/100.0);
+	timeVec = aTextureCoord + vec2(timeFactor/100.0, timeFactor/100.0);
 	vec4 color = texture2D(uSampler2,timeVec);
 	vec3 offset = vec3(0.0, 0.0, color.z/16.0);
 
