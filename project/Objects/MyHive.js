@@ -41,7 +41,7 @@ export class MyHive extends CGFobject {
         this.animationBee.getPollen2(pollen);
         return new Promise(resolve => {
             const checkAnimation = setInterval(() => {
-                if (!this.animationBee.returnHome()) {
+                if (!this.animationBee.returnHome(true)) {
                     clearInterval(checkAnimation);
                     resolve();
                 }

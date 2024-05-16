@@ -42,6 +42,7 @@ export class MyBee extends CGFobject {
         this.stopped = false;
         this.returning = false;
         this.landed = false;
+        this.continueAnim = false;
 		this.initMaterials();
 	}
 
@@ -245,10 +246,17 @@ export class MyBee extends CGFobject {
             if (proportion >= 1) {
                 this.returning = false;
                 this.velocity = 0;
-                this.stopped = true;
-                this.landed = true;
-                this.hive.addPollen(this.pollen,deltaTime);
+                if (this != this.hive.animationBee) {
+                    console.log("addPollen called");
+                    this.hive.addPollen(this.pollen,deltaTime);
+                    this.stopped = true;
+                    this.landed = true;
+                }
                 this.pollen = null;
+                if (this.continueAnim) {
+                    this.goToEntrance();
+                    this.continueAnim = false;
+                }
             }
             this.currMagnitude += Math.sqrt(deltax*deltax + deltaz*deltaz);
             this.position[1] = this.initialHeight - (this.initialHeight - this.hivePosition[1])*proportion;
@@ -334,7 +342,8 @@ export class MyBee extends CGFobject {
         }
     }
 
-    returnHome() {
+    returnHome(continueAnim = false) {
+        this.continueAnim = continueAnim;
         if (!this.pollen || this.stopped == true || this.returning == true) return true;
         this.returnHeight = this.position[0];
         const hiveVector = [this.hivePosition[0]-this.position[0], this.hivePosition[2]-this.position[2]];
@@ -346,15 +355,15 @@ export class MyBee extends CGFobject {
         this.velocity=0.02;
     }
     goToEntrance() {
-        if (this.stopped == true || this.returning == true) {
-            this.returnHeight = this.position[0];
-            const entranceVector = [this.hiveEntrancePos[0]-this.position[0], this.hiveEntrancePos[2]-this.position[2]];
-            this.returnMagnitude = Math.sqrt(entranceVector[0]*entranceVector[0] + entranceVector[1]*entranceVector[1]);
-            this.currMagnitude = 0;
-            this.orientation = [entranceVector[0]/this.returnMagnitude, 0, entranceVector[1]/this.returnMagnitude];
-            this.angle = Math.PI + Math.atan2(entranceVector[1], -entranceVector[0]);
-            this.velocity=0.02;
-        }
+        this.landed = false;
+        this.returnHeight = this.position[0];
+        const entranceVector = [this.hiveEntrancePos[0]-this.position[0], this.hiveEntrancePos[2]-this.position[2]];
+        this.returnMagnitude = Math.sqrt(entranceVector[0]*entranceVector[0] + entranceVector[1]*entranceVector[1]);
+        this.currMagnitude = 0;
+        this.orientation = [entranceVector[0]/this.returnMagnitude, 0, entranceVector[1]/this.returnMagnitude];
+        this.angle = Math.PI + Math.atan2(entranceVector[1], -entranceVector[0]);
+        this.velocity=0.02;
+        
         this.returning=true;
     }
     setEntrancePos(pos){
