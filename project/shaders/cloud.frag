@@ -32,7 +32,7 @@ void main() {
 	
     }
     vec4 finalColor;
-    if (panoramaTexture.b > 0.71) {
+    if (panoramaTexture.b > 0.70) {
         finalColor = panoramaTexture+cloudTexture;
     }
     else {
