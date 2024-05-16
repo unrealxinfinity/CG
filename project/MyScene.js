@@ -50,9 +50,9 @@ export class MyScene extends CGFscene {
     this.speedFactor = 0.1;
     this.cloudMoveSpeedFactor = 0.1;
 
-    this.grassFieldWidth=8;
-    this.grassFieldRows=50;
-    this.grassFieldCols=50;
+    this.grassFieldWidth=5;
+    this.grassFieldRows=60;
+    this.grassFieldCols=60;
     this.hiveX=-70;
     this.hiveY=-70;
     this.hiveSize=5;
@@ -239,41 +239,47 @@ export class MyScene extends CGFscene {
     if (this.displayAxis) this.axis.display();
     
     // ---- BEGIN Primitive drawing section
-    /*this.receptale.display();
-    this.stem.display();*/
-    this.garden.display();
-    /*this.receptale.display();
-    this.stem.display();*/
-    this.pushMatrix();
+
+    this.pushMatrix();//GARDEN BEGIN
+    this.garden.display([-this.garden.getWidth()/2 , 0 , -this.garden.getWidth()/2]);
+    this.popMatrix();// GARDEN END
+  
+    this.pushMatrix();//PANORAM BEGIN
     this.setActiveShader(this.defaultShader);
     this.setActiveShader(this.cloudShader);
-
     this.cloudText.bind(1);
-
     this.panorama.display(this.camera.position);
+    this.popMatrix();// PANORAM END
+
+    this.pushMatrix();//GRASS BEGIN
+    this.scale(this.grassFieldWidth,1,this.grassFieldWidth);
+    this.translate(-this.grassFieldRows/2,0,-this.grassFieldCols/2)
     this.grass.display();
-    this.popMatrix();
-    this.pushMatrix();
-    this.translate(this.hiveX,0,this.hiveY);
-    this.pushMatrix();
-    this.translate(0,this.hiveSize*6,0);
+    this.popMatrix();//GRASS END
+
+    this.pushMatrix();//HIVE BEGIN
+    this.translate(this.hiveX,this.hiveSize*6,this.hiveY);
     this.scale(this.hiveSize,this.hiveSize,this.hiveSize);
     this.rotate(Math.PI/4,0,1,0);
-    this.hive.display();
-    this.popMatrix();
-    this.pushMatrix();
+    this.hive.display([this.hiveSize,this.hiveSize,this.hiveSize]);
+    this.popMatrix();//HIVE END
+
+    this.pushMatrix();//ROCKS BEGIN
+    this.translate(this.hiveX,0,this.hiveY);
+    this.scale(this.hiveSize,this.hiveSize,this.hiveSize);
+    this.rotate(Math.PI/4,0,1,0);
     this.rockSet.display(4);
-    //this.pollen.display();
-    this.popMatrix();
-    this.popMatrix();
+    this.popMatrix();//ROCKS END
+
     this.appearance.apply();
     this.pushMatrix();
     this.scale(400,400,400);
     this.rotate(-Math.PI/2.0,1,0,0);
     this.plane.display();
     this.popMatrix();
-    this.bee.display();
-    this.hive.getAnimationBee().display();
+
+    this.bee.display(); //BEE
+    this.hive.getAnimationBee().display(); // HOUSING BEE
 
 
     // ---- END Primitive drawing section

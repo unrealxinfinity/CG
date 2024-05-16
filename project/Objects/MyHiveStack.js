@@ -17,7 +17,7 @@ export class MyHiveStack extends CGFobject {
         this.pollenSet = new MyPollenSet(scene,[]);
         this.position=[];
     }
-    display(i,pollens){
+    display(i,pollens,pollenScale){
         //BACK BEGIN
         this.scene.pushMatrix();
         this.scene.translate(0,0,-this.barLength/2+0.5);
@@ -56,6 +56,7 @@ export class MyHiveStack extends CGFobject {
         this.scene.popMatrix();
         if(i==1){
             this.scene.pushMatrix();
+            this.scene.scale(1/pollenScale[0],1/pollenScale[1],1/pollenScale[2]);
             //this.scene.translate(position[0], position[1], position[2]);
             this.pollenSet.updatePollens(pollens);
             this.pollenSet.display();
