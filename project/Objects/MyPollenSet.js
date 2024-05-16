@@ -30,7 +30,7 @@ export class MyPollenSet extends CGFobject {
         let pollenIndex = 0;
         let remaining = total;
         if ( total !=  0 ){
-           for (let i = this.levels-1; i <= 0; i--) {
+           for (let i = this.levels-1; i >= 0; i--) {
                 const len = 1 + 2*i;
                 this.scene.translate(Math.ceil(-len/2)*this.offset, -i*this.offset, Math.ceil(-len/2)*this.offset);
                 for (let x = 0; x < len; x++) {
@@ -55,18 +55,16 @@ export class MyPollenSet extends CGFobject {
         
     }
     updatePollens(pollens){
-        let tempN = 0;
         let levels = 0;
-        if(pollens.length != this.pollenSet.length){
-            this.pollenSet = pollens;
-            while(!tempN>pollens.length){
-                for (let level = 0; level < levels; level++) {
-                    const len = 1 + level*2;
-                    this.tempN += len*len;
-                }
-                this.levels = levels;
+        let requiredForNext = 1;
+        this.pollenSet = pollens;
+        for (let i = 0; i < this.pollenSet.length; i++) {
+            requiredForNext--;
+            if (requiredForNext == 0) {
                 levels++;
+                requiredForNext = (2*levels + 1) * (2*levels + 1);
             }
         }
+        this.levels = levels;
     }
 }

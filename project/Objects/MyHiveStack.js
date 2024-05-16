@@ -57,7 +57,6 @@ export class MyHiveStack extends CGFobject {
             this.scene.pushMatrix();
             this.pollenSet.updatePollens(pollens);
             this.pollenSet.display();
-            console.log("Added pollen to set")
             this.scene.popMatrix();
         }
         
