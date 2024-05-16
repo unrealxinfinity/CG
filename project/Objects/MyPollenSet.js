@@ -11,8 +11,8 @@ export class MyPollenSet extends CGFobject {
         this.offset = 0.4;
         this.pollenSet = pollens;
         this.levels = 1;
-        this.x=2;
-        this.y=2;
+        this.x=1;
+        this.y=1;
         this.initParams();
 	}
 
@@ -35,7 +35,7 @@ export class MyPollenSet extends CGFobject {
         if ( total !=  0 ){
            for (let i = 0; i <= this.levels; i--) {
                 let len = this.x*this.y;
-            this.scene.translate(Math.ceil(-len/2)*this.offset, -i*this.offset, Math.ceil(-len/2)*this.offset);
+                this.scene.translate(Math.ceil(-len/2)*this.offset, i*this.offset, Math.ceil(-len/2)*this.offset);
                 for (let x = 0; x < this.x; x++) {
                     for (let y = 0; y < this.y; y++) {
                         this.scene.pushMatrix();

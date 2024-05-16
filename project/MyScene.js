@@ -43,6 +43,7 @@ export class MyScene extends CGFscene {
 
     //Objects connected to MyInterface
     this.displayAxis = true;
+    this.lockCamera = true;
     this.scaleFactor = 1;
     this.gardenRows = 3;
     this.gardenCols = 3;
@@ -107,23 +108,24 @@ export class MyScene extends CGFscene {
     this.setShininess(10.0);
   }
   update(t) {
-
-    //Camera section
-    let beePosition = this.bee.getPosition();
-    let beeOrientation = this.bee.getOrientation();
-    let distance = 5; // Distance from the bee to the camera
-    let height = 2; // Height of the camera above the bee
-    let cameraPosition = [
-        beePosition[0] - beeOrientation[0] * distance,
-        beePosition[1] + height,
-        beePosition[2] - beeOrientation[2] * distance
-    ];
-    // Set the camera's position behind the bee 
-    this.camera.setPosition(cameraPosition);
-    // Sets the camera target as the bee
-    let cameraTarget = vec3.clone(beePosition);
-    // Set the camera's target
-    this.camera.setTarget(cameraTarget);
+      //Camera section
+      if (this.lockCamera) {
+        let beePosition = this.bee.getPosition();
+        let beeOrientation = this.bee.getOrientation();
+        let distance = 5; // Distance from the bee to the camera
+        let height = 2; // Height of the camera above the bee
+        let cameraPosition = [
+            beePosition[0] - beeOrientation[0] * distance,
+            beePosition[1] + height,
+            beePosition[2] - beeOrientation[2] * distance
+        ];
+        // Set the camera's position behind the bee 
+        this.camera.setPosition(cameraPosition);
+        // Sets the camera target as the bee
+        let cameraTarget = vec3.clone(beePosition);
+        // Set the camera's target
+        this.camera.setTarget(cameraTarget);
+      }
 			// Dividing the time by 100 "slows down" the variation (i.e. in 100 ms timeFactor increases 1 unit).
 			// Doing the modulus (%) by 100 makes the timeFactor loop between 0 and 99
 			// ( so the loop period of timeFactor is 100 times 100 ms = 10s ; the actual animation loop depends on how timeFactor is used in the shader )
@@ -228,7 +230,6 @@ export class MyScene extends CGFscene {
     if (this.displayAxis) this.axis.display();
     
     // ---- BEGIN Primitive drawing section
-    this.bee.display();
     this.garden.display();
     /*this.receptale.display();
     this.stem.display();*/
@@ -257,9 +258,12 @@ export class MyScene extends CGFscene {
     this.popMatrix();
     this.popMatrix();
     this.appearance.apply();
+    this.pushMatrix();
     this.scale(400,400,400);
     this.rotate(-Math.PI/2.0,1,0,0);
     this.plane.display();
+    this.popMatrix();
+    this.bee.display();
 
 
     // ---- END Primitive drawing section
