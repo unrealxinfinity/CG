@@ -228,7 +228,6 @@ export class MyScene extends CGFscene {
     if (this.displayAxis) this.axis.display();
     
     // ---- BEGIN Primitive drawing section
-    this.bee.display();
     this.garden.display();
     /*this.receptale.display();
     this.stem.display();*/
@@ -257,9 +256,12 @@ export class MyScene extends CGFscene {
     this.popMatrix();
     this.popMatrix();
     this.appearance.apply();
+    this.pushMatrix();
     this.scale(400,400,400);
     this.rotate(-Math.PI/2.0,1,0,0);
     this.plane.display();
+    this.popMatrix();
+    this.bee.display();
 
 
     // ---- END Primitive drawing section
