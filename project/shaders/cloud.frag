@@ -31,8 +31,12 @@ void main() {
         cloudTexture = texture(uSampler1, cloudCoords);
 	
     }
-
-    vec4 finalColor = panoramaTexture+cloudTexture;
-
+    vec4 finalColor;
+    if (panoramaTexture.b > 0.71) {
+        finalColor = panoramaTexture+cloudTexture;
+    }
+    else {
+        finalColor = panoramaTexture;
+    }
     fragColor = finalColor * vFinalColor;
 }
