@@ -29,39 +29,44 @@ export class MyPollenSet extends CGFobject {
         let total = this.pollenSet.length;
         let pollenIndex = 0;
         let remaining = total;
-        for (let i = this.levels-1; i <= 0; i--) {
-            const len = 1 + 2*i;
-            this.scene.translate(Math.ceil(-len/2)*this.offset, -i*this.offset, Math.ceil(-len/2)*this.offset);
-            for (let x = 0; x < len; x++) {
-                for (let y = 0; y < len; y++) {
-                    this.scene.pushMatrix();
-                    this.scene.translate(x*this.offset, 0, y*this.offset);
-                    this.scene.scale(0.2, 0.2, 0.2);
-                    this.pollenSet[pollenIndex].display();
-                    pollenIndex++;
-                    remaining--;
-                    this.scene.popMatrix();
-                    if(remaining==0){
-                        return;
-                    }   
+        if ( total !=  0 ){
+           for (let i = this.levels-1; i <= 0; i--) {
+                const len = 1 + 2*i;
+                this.scene.translate(Math.ceil(-len/2)*this.offset, -i*this.offset, Math.ceil(-len/2)*this.offset);
+                for (let x = 0; x < len; x++) {
+                    for (let y = 0; y < len; y++) {
+                        
+                        this.scene.pushMatrix();
+                        this.scene.translate(x*this.offset, 0, y*this.offset);
+                        this.scene.scale(0.2, 0.2, 0.2);
+                        this.pollenSet[pollenIndex].display();
+                        pollenIndex++;
+                        remaining--;
+                        this.scene.popMatrix(); 
+                        if(remaining==0){
+                            return;
+                        } 
+                       
+                    }
                 }
             }
+            console.log()
         }
+        
     }
     updatePollens(pollens){
-        let tempN=0;
-        let levels = 1;
+        let tempN = 0;
+        let levels = 0;
         if(pollens.length != this.pollenSet.length){
             this.pollenSet = pollens;
             while(!tempN>pollens.length){
-            
                 for (let level = 0; level < levels; level++) {
-                    const len = 1 + stage*2;
+                    const len = 1 + level*2;
                     this.tempN += len*len;
                 }
+                this.levels = levels;
                 levels++;
             }
-            this.levels = levels;
         }
     }
 }
