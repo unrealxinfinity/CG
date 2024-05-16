@@ -15,6 +15,7 @@ export class MyHiveStack extends CGFobject {
         this.sideBar = new MyCube(scene,this.barText,this.barText,this.centerText,this.barText,this.barText,this.barText);
         this.barLength = barLength;
         this.pollenSet = new MyPollenSet(scene,[]);
+        this.position=[];
     }
     display(i,pollens){
         //BACK BEGIN
@@ -55,10 +56,12 @@ export class MyHiveStack extends CGFobject {
         this.scene.popMatrix();
         if(i==1){
             this.scene.pushMatrix();
+            //this.scene.translate(position[0], position[1], position[2]);
             this.pollenSet.updatePollens(pollens);
             this.pollenSet.display();
             this.scene.popMatrix();
         }
+
         
-    }   
+    }
 }

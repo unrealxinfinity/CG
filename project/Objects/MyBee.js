@@ -28,8 +28,9 @@ export class MyBee extends CGFobject {
         this.wingRotationZ = 0;
         this.yAllocation = 0;
         this.pollen =null
-        this.position=[0,30,0];
+        this.position=[0,0,0];
         this.hivePosition=[-20,12,-20];
+        this.hiveEntrancePos=[0,0,0];
         this.initialHeight=30;
         this.velocity = 0;
         this.tempVelocity = null;
@@ -96,6 +97,10 @@ export class MyBee extends CGFobject {
         this.needleApp.setDiffuse(0.8,0.82,0.83,1,1); //206,211,212
         this.needleApp.setSpecular(0,0,0,1);
         
+    }
+    setBeeHeight(height){
+        this.position[1] = height;
+        this.initialHeight = height;
     }
 
     display() {
@@ -242,11 +247,10 @@ export class MyBee extends CGFobject {
                 this.velocity = 0;
                 this.stopped = true;
                 this.landed = true;
-                this.hive.addPollen(this.pollen);
+                this.hive.addPollen(this.pollen,deltaTime);
                 this.pollen = null;
             }
             this.currMagnitude += Math.sqrt(deltax*deltax + deltaz*deltaz);
-            console.log(this.currMagnitude);
             this.position[1] = this.initialHeight - (this.initialHeight - this.hivePosition[1])*proportion;
         }
         else if(this.position[1] + y < this.initialHeight){
@@ -306,6 +310,9 @@ export class MyBee extends CGFobject {
         }
         return false;
     }
+    getPollen2(pollen){
+        this.pollen=pollen;
+    }
     descend(){
         if (this.returning || this.stopped) return;
         this.orientation[1] = -1;
@@ -328,18 +335,31 @@ export class MyBee extends CGFobject {
     }
 
     returnHome() {
-        if (!this.pollen || this.stopped == true || this.returning == true) return;
+        if (!this.pollen || this.stopped == true || this.returning == true) return true;
         this.returnHeight = this.position[0];
         const hiveVector = [this.hivePosition[0]-this.position[0], this.hivePosition[2]-this.position[2]];
         this.returnMagnitude = Math.sqrt(hiveVector[0]*hiveVector[0] + hiveVector[1]*hiveVector[1]);
-        console.log(this.returnMagnitude);
         this.currMagnitude = 0;
         this.orientation = [hiveVector[0]/this.returnMagnitude, 0, hiveVector[1]/this.returnMagnitude];
         this.angle = Math.PI + Math.atan2(hiveVector[1], -hiveVector[0]);
         this.returning = true;
         this.velocity=0.02;
     }
-
+    goToEntrance() {
+        if (this.stopped == true || this.returning == true) {
+            this.returnHeight = this.position[0];
+            const entranceVector = [this.hiveEntrancePos[0]-this.position[0], this.hiveEntrancePos[2]-this.position[2]];
+            this.returnMagnitude = Math.sqrt(entranceVector[0]*entranceVector[0] + entranceVector[1]*entranceVector[1]);
+            this.currMagnitude = 0;
+            this.orientation = [entranceVector[0]/this.returnMagnitude, 0, entranceVector[1]/this.returnMagnitude];
+            this.angle = Math.PI + Math.atan2(entranceVector[1], -entranceVector[0]);
+            this.velocity=0.02;
+        }
+        this.returning=true;
+    }
+    setEntrancePos(pos){
+        this.hiveEntrancePos=pos;
+    }
     reset(){
         this.position=[0,this.initialHeight,0];
         this.velocity = 0;
@@ -375,8 +395,14 @@ export class MyBee extends CGFobject {
     getPosition(){
         return this.position;
     }
+    setPosition(pos){
+        this.position=pos
+    }
     getOrientation(){
         return this.orientation;
+    }
+    setHivePosition(position){
+        this.hivePosition=position;
     }
 
 }

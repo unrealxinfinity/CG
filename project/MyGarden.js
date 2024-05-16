@@ -7,7 +7,7 @@ import { MyPollen } from "./Objects/MyPollen.js";
  * @param scene - Reference to MyScene object
  */
 export class MyGarden extends CGFobject {
-    constructor(scene, rows, cols,maxHeight) {
+    constructor(scene, rows, cols,minHeight,maxHeight) {
         super(scene);
         this.petals;
         this.maxPetals=25;
@@ -47,6 +47,7 @@ export class MyGarden extends CGFobject {
         this.spaceInBetween=20;
         this.pollen = new MyPollen(this.scene);
         this.maxHeight=maxHeight;
+        this.minHeight=minHeight;
         this.updateGarden(this.rows,this.cols);
 
         
@@ -65,29 +66,30 @@ export class MyGarden extends CGFobject {
 
     }
     updateGarden(rows,cols){
-        
+        console.log(this.maxHeight);
         for(let i=0;i<rows;i++){
             for(let j=0;j<cols;j++){
                 this.cols=rows;
                 this.rows=cols;
                 this.randomize();
                 var flower;
-                if(Math.random()<=0.5){
+               if(Math.random()<=0.5){
                     flower = new MyFlower(this.scene, this.petals, this.stems, this.innerRadius, this.outterRadius, this.petalApperances[this.appIndex], this.receptacleColor, this.stemColor, this.leafColor,this.textures,this.pollen);
-                    while(flower.getHeight()>this.maxHeight){
+                    while(!(flower.getHeight()<=this.maxHeight && flower.getHeight()>=this.minHeight)){
                         this.randomize();
                         flower = new MyFlower(this.scene, this.petals, this.stems, this.innerRadius, this.outterRadius, this.petalApperances[this.appIndex], this.receptacleColor, this.stemColor, this.leafColor,this.textures,this.pollen);
                     }
                 }
                 else{
                     flower = new MyFlower(this.scene, this.petals, this.stems, this.innerRadius, this.outterRadius, this.petalApperances[this.appIndex], this.receptacleColor, this.stemColor, this.leafColor,this.textures,this.pollen);
-                    while(flower.getHeight()>this.maxHeight){
+                    while(!(flower.getHeight()<=this.maxHeight && flower.getHeight()>=this.minHeight)){
                         this.randomize();
                         flower = new MyFlower(this.scene, this.petals, this.stems, this.innerRadius, this.outterRadius, this.petalApperances[this.appIndex], this.receptacleColor, this.stemColor, this.leafColor,this.textures,this.pollen);
                     }
                 }
                 const offset = [Math.random()*(this.spaceInBetween-2)+1, Math.random()*(this.spaceInBetween-2)+1]
                 this.offsets.push(offset)
+                console.log(flower.getHeight());
                 flower.setPosition(j*this.spaceInBetween+offset[0],flower.getHeight(),i*this.spaceInBetween+offset[1]);
                 this.flowers.push(flower);
             }
@@ -101,7 +103,7 @@ export class MyGarden extends CGFobject {
                 //this.scene.translate(j*this.spaceInBetween,0,i*this.spaceInBetween);
                 this.scene.translate(j*this.spaceInBetween+this.offsets[flowerIndex][0],0,i*this.spaceInBetween+this.offsets[flowerIndex][1]);
                 if(translation){
-                    this.flowers[flowerIndex].setPosition(j*this.spaceInBetween+translation[0],flowers[flowerIndex].getHeight()+translation[1],i*this.spaceInBetween+translation[2]);
+                    this.flowers[flowerIndex].setPosition(j*this.spaceInBetween+translation[0]+this.offsets[flowerIndex][0],this.flowers[flowerIndex].getHeight()+translation[1]+this.offsets[flowerIndex][1],i*this.spaceInBetween+translation[2]+this.offsets[flowerIndex][2]);
                 }
                 this.flowers[flowerIndex].display();
                 this.scene.popMatrix();
@@ -110,5 +112,8 @@ export class MyGarden extends CGFobject {
     }
     getFlowers(){
         return this.flowers;
+    }
+    getWidth(){
+        return this.cols*this.spaceInBetween;
     }
 }

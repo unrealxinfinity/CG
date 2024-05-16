@@ -2,13 +2,11 @@ import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } fr
 import { MyPlane } from "./MyPlane.js";
 import { MySphere } from "./Objects/MySphere.js";
 import { MyPanorama } from "./Objects/MyPanorama.js";
-import { MyFlower } from "./Flower/MyFlower.js";
 import { MyGarden } from "./MyGarden.js";
 import { MyRockSet } from "./Objects/MyRockSet.js";
 import {MyBee} from "./Objects/MyBee.js";
 import {MyHive} from "./Objects/MyHive.js";
 import {MyPollen} from "./Objects/MyPollen.js";
-import { MyGrassBlade } from "./Objects/MyGrassBlade.js";
 import { MyGrassSet } from "./Objects/MyGrassSet.js";
 /**
  * MyScene
@@ -51,6 +49,14 @@ export class MyScene extends CGFscene {
     this.scaleFactor=1;
     this.speedFactor = 0.1;
     this.cloudMoveSpeedFactor = 0.1;
+
+    this.grassFieldWidth=8;
+    this.grassFieldRows=50;
+    this.grassFieldCols=50;
+    this.hiveX=-70;
+    this.hiveY=-70;
+    this.hiveSize=5;
+
     this.enableTextures(true);
     this.descending=false;
     this.petalTextures = [new CGFtexture(this, "images/petal1.jpg"), new CGFtexture(this, "images/petal2.jpg"),
@@ -69,19 +75,20 @@ export class MyScene extends CGFscene {
     this.cloudText = new CGFtexture(this, "images/cloud.jpg");
     this.cloudApp = new CGFappearance(this.cloudText);
     this.cloudApp.setTextureWrap('REPEAT', 'REPEAT');
-    
+
     this.panorama = new MyPanorama(this, this.earth);
     this.rockSet = new MyRockSet(this, 1 , 3, 8);
-    this.hive = new MyHive(this);
+    this.hive = new MyHive(this,[this.hiveX,this.hiveSize*6,this.hiveY]);
     this.bee = new MyBee(this, this.hive);
+    this.bee.setBeeHeight(this.hiveSize*6);
+    this.bee.setHivePosition([this.hiveX+this.hiveSize*6/2-2,this.hiveSize*6-2,this.hiveY+this.hiveSize*6/2-2]);
     this.pollen = new MyPollen(this);
     this.flatShader = new CGFshader(this.gl, "shaders/flat.vert", "shaders/flat.frag");
     this.rockShader = new CGFshader(this.gl, "shaders/uScale.vert", "shaders/uScale.frag");
     this.beeShader = new CGFshader(this.gl, "shaders/beeAnimation.vert", "shaders/beeAnimation.frag");
     this.cloudShader = new CGFshader(this.gl, "shaders/cloud.vert", "shaders/cloud.frag");
-    this.garden = new MyGarden(this,this.gardenRows,this.gardenCols,this.bee.getPosition[2]);
-  
-    this.grass = new MyGrassSet(this, 50, 50);
+    this.garden = new MyGarden(this,this.gardenRows,this.gardenCols,10,this.bee.getPosition()[1]);
+    this.grass = new MyGrassSet(this, this.grassFieldRows, this.grassFieldCols);
     //this.beeShader.setUniformsValues({uSampler: 0, timeFactor: 0,normScale:1,transitionSpeed:1,flyOffset:1});
     this.setUpdatePeriod(1000/60);
 
@@ -140,6 +147,8 @@ export class MyScene extends CGFscene {
       this.grass.update(t);
       this.bee.animate(t,3,0.005,0.06);
       this.bee.scale(this.scaleFactor);
+      this.hive.getAnimationBee().update(deltaTime);
+      this.hive.getAnimationBee().animate(t,3,0.005,0.06);
       if(this.descending){
         if(this.bee.detectPollen(this.garden)){
           this.descending=false;
@@ -230,26 +239,26 @@ export class MyScene extends CGFscene {
     if (this.displayAxis) this.axis.display();
     
     // ---- BEGIN Primitive drawing section
+    /*this.receptale.display();
+    this.stem.display();*/
     this.garden.display();
     /*this.receptale.display();
     this.stem.display();*/
     this.pushMatrix();
     this.setActiveShader(this.defaultShader);
     this.setActiveShader(this.cloudShader);
+
     this.cloudText.bind(1);
 
     this.panorama.display(this.camera.position);
     this.grass.display();
     this.popMatrix();
     this.pushMatrix();
-    this.translate(0,14,0);
-    //this.setActiveShader(this.beeShader);
-    //this.setActiveShaderSimple(this.defaultShader);
-    this.popMatrix();
+    this.translate(this.hiveX,0,this.hiveY);
     this.pushMatrix();
-    this.translate(-20,0,-20);
-    this.pushMatrix();
-    this.translate(0,6,0);
+    this.translate(0,this.hiveSize*6,0);
+    this.scale(this.hiveSize,this.hiveSize,this.hiveSize);
+    this.rotate(Math.PI/4,0,1,0);
     this.hive.display();
     this.popMatrix();
     this.pushMatrix();
@@ -264,6 +273,7 @@ export class MyScene extends CGFscene {
     this.plane.display();
     this.popMatrix();
     this.bee.display();
+    this.hive.getAnimationBee().display();
 
 
     // ---- END Primitive drawing section
