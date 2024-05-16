@@ -14,6 +14,8 @@ export class MyHive extends CGFobject {
         this.hiveTex = new CGFtexture(this.scene, "images/hive.jpg");
         this.hive = new MyCube(scene,this.hiveWoodTex,this.hiveWoodTex,this.hiveWoodTex,this.hiveWoodTex,this.hiveWoodTex,this.hiveWoodTex);
         this.hiveStack = new MyHiveStack(scene,6,this.hiveWoodTex,this.hiveTex);
+        this.centerSlice = new MyCube(scene,this.hiveTex,this.hiveTex,this.hiveTex,this.hiveTex,this.hiveTex,this.hiveTex);
+
         this.animationBee = new MyBee(scene,this);
         this.animationBee.setHivePosition(pos);
         this.animationBee.setPosition([pos[0]+12,pos[1],pos[2]+12]);
@@ -49,12 +51,17 @@ export class MyHive extends CGFobject {
         });
     }
 
-    display(){
+    display(pollenScale){
         //BOTTOM BEGIN
         this.scene.pushMatrix();
         this.scene.translate(0,-1,0)
         this.scene.scale(this.topWidth,1,this.topWidth);
         this.hive.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.scale(this.stackWidth-0.5,2,this.stackWidth-0.5);
+        this.centerSlice.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
@@ -89,7 +96,7 @@ export class MyHive extends CGFobject {
             this.scene.pushMatrix();
             this.scene.translate(0,i*this.stackHeight,0);
             this.scene.translate(0,this.stackHeight/2,0);
-            this.hiveStack.display(i,this.pollens);
+            this.hiveStack.display(i,this.pollens,pollenScale);
             this.scene.popMatrix();
             height+=this.stackHeight;
            
@@ -104,5 +111,5 @@ export class MyHive extends CGFobject {
         this.scene.popMatrix();
         //TOP END
     }   
-  
+    
 }

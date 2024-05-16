@@ -96,14 +96,16 @@ export class MyGarden extends CGFobject {
         }
     }
     display(translation) {
+        console.log("translation:");
+        console.log(translation);
         for(let i=0;i<this.rows;i++){
             for(let j=0;j<this.cols;j++){
                 const flowerIndex = i*this.rows + j;
                 this.scene .pushMatrix();
                 //this.scene.translate(j*this.spaceInBetween,0,i*this.spaceInBetween);
-                this.scene.translate(j*this.spaceInBetween+this.offsets[flowerIndex][0],0,i*this.spaceInBetween+this.offsets[flowerIndex][1]);
+                this.scene.translate(j*this.spaceInBetween+this.offsets[flowerIndex][0]+translation[0],0,i*this.spaceInBetween+this.offsets[flowerIndex][1]+translation[2]);
                 if(translation){
-                    this.flowers[flowerIndex].setPosition(j*this.spaceInBetween+translation[0]+this.offsets[flowerIndex][0],this.flowers[flowerIndex].getHeight()+translation[1]+this.offsets[flowerIndex][1],i*this.spaceInBetween+translation[2]+this.offsets[flowerIndex][2]);
+                    this.flowers[flowerIndex].setPosition(j*this.spaceInBetween+translation[0]+this.offsets[flowerIndex][0],this.flowers[flowerIndex].getHeight()+translation[1],i*this.spaceInBetween+translation[2]+this.offsets[flowerIndex][1]);
                 }
                 this.flowers[flowerIndex].display();
                 this.scene.popMatrix();

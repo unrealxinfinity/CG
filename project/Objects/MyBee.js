@@ -43,6 +43,7 @@ export class MyBee extends CGFobject {
         this.returning = false;
         this.landed = false;
         this.continueAnim = false;
+        this.colisionDetectionDistanceMultiplier = 4;
 		this.initMaterials();
 	}
 
@@ -306,8 +307,6 @@ export class MyBee extends CGFobject {
     getPollen(flower){
         if(this.detectCollision(flower) && flower.getPollen()){
             this.tempVelocity = this.velocity;
-            console.log(this.tempVelocity);
-
             this.velocity = 0;
             this.pollen = flower.getPollen();
             flower.removePollen();
@@ -389,14 +388,18 @@ export class MyBee extends CGFobject {
         }
     }
     detectCollision(flower){
+        console.log(flower);
         let x = this.position[0];
         let z = this.position[2];
         let y = this.position[1];
         let x1 = flower.position[0];
         let y1 = flower.position[1];
         let z1 = flower.position[2];
+        console.log([x1,y1,z1]);
+        console.log([x,y,z]);
         let distance = Math.sqrt((x-x1)*(x-x1) +(y-y1)*(y-y1)+(z-z1)*(z-z1));
-        if(distance <= flower.getInnerRadius()*3){
+        console.log(distance);
+        if(distance <= flower.getInnerRadius()*this.colisionDetectionDistanceMultiplier){
             return true;
         }
         return false;
