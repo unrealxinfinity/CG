@@ -43,6 +43,12 @@ export class MyGrassSet extends CGFobject {
         }
     }
 
+    updateSpeed(speed) {
+        for (let i = 0; i < this.blades.length; i++) {
+            this.blades[i].setStrength(speed);
+        }
+    }
+
     initShader() {
         this.shader = new CGFshader(this.scene.gl, "shaders/grass.vert", "shaders/pollen.frag");
     }

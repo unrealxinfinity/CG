@@ -51,6 +51,7 @@ export class MyScene extends CGFscene {
     this.scaleFactor=1;
     this.speedFactor = 0.1;
     this.cloudMoveSpeedFactor = 0.1;
+    this.grassStrength = 1;
     this.enableTextures(true);
     this.descending=false;
     this.petalTextures = [new CGFtexture(this, "images/petal1.jpg"), new CGFtexture(this, "images/petal2.jpg"),
