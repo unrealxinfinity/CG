@@ -42,9 +42,10 @@ export class MyBee extends CGFobject {
         this.stopped = false;
         this.returning = false;
         this.landed = false;
-        this.continueAnim = false;
         this.colisionDetectionDistanceMultiplier = 4;
 		this.initMaterials();
+        this.destination = undefined;
+        this.destinations = undefined;
 	}
 
     initMaterials() {
@@ -254,13 +255,13 @@ export class MyBee extends CGFobject {
                     this.landed = true;
                 }
                 this.pollen = null;
-                if (this.continueAnim) {
-                    this.goToEntrance();
-                    this.continueAnim = false;
+                if (this.destinations) {
+                    this.goToPosition(this.destinations.shift())
+                    if (this.destinations.length === 0) this.destinations = undefined;
                 }
             }
             this.currMagnitude += Math.sqrt(deltax*deltax + deltaz*deltaz);
-            this.position[1] = this.initialHeight - (this.initialHeight - this.hivePosition[1])*proportion;
+            this.position[1] = this.initialHeight - (this.initialHeight - this.destination[1])*proportion;
         }
         else if(this.position[1] + y < this.initialHeight){
             this.position[1] += this.orientation[1]*this.yVelocity*deltaTime;
@@ -341,9 +342,9 @@ export class MyBee extends CGFobject {
         }
     }
 
-    returnHome(continueAnim = false) {
-        this.continueAnim = continueAnim;
+    returnHome() {
         if (!this.pollen || this.stopped == true || this.returning == true) return true;
+        this.destination = this.hivePosition;
         this.returnHeight = this.position[0];
         const hiveVector = [this.hivePosition[0]-this.position[0], this.hivePosition[2]-this.position[2]];
         this.returnMagnitude = Math.sqrt(hiveVector[0]*hiveVector[0] + hiveVector[1]*hiveVector[1]);
@@ -356,6 +357,7 @@ export class MyBee extends CGFobject {
     goToEntrance() {
         this.landed = false;
         this.returnHeight = this.position[0];
+        this.destination = this.hiveEntrancePos;
         const entranceVector = [this.hiveEntrancePos[0]-this.position[0], this.hiveEntrancePos[2]-this.position[2]];
         this.returnMagnitude = Math.sqrt(entranceVector[0]*entranceVector[0] + entranceVector[1]*entranceVector[1]);
         this.currMagnitude = 0;
@@ -365,6 +367,27 @@ export class MyBee extends CGFobject {
         
         this.returning=true;
     }
+
+    goToPosition(destination) {
+        this.destination = destination;
+        this.landed = false;
+        this.returnHeight = this.position[0];
+        const entranceVector = [this.destination[0]-this.position[0], this.destination[2]-this.position[2]];
+        this.returnMagnitude = Math.sqrt(entranceVector[0]*entranceVector[0] + entranceVector[1]*entranceVector[1]);
+        this.currMagnitude = 0;
+        this.orientation = [entranceVector[0]/this.returnMagnitude, 0, entranceVector[1]/this.returnMagnitude];
+        this.angle = Math.PI + Math.atan2(entranceVector[1], -entranceVector[0]);
+        this.velocity=0.02;
+        
+        this.returning=true;
+    } 
+
+    goToDestinations(destinations) {
+        this.destinations = destinations;
+        this.goToPosition(destinations[0]);
+        this.destinations.shift();
+    }
+
     setEntrancePos(pos){
         this.hiveEntrancePos=pos;
     }
