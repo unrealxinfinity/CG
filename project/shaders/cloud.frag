@@ -28,6 +28,7 @@ void main() {
     if (vTextureCoord.y > regionMin.y && vTextureCoord.y < regionMax.y)
     {
         vec2 cloudCoords = (vTextureCoord - regionMin) / (regionMax - regionMin);
+        cloudCoords.x = vTextureCoord.x + scaledTime;
         cloudTexture = texture(uSampler1, cloudCoords);
 	
     }
