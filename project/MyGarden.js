@@ -1,6 +1,8 @@
 import { MyFlower } from "./Flower/MyFlower.js";
 import { CGFobject,CGFtexture,CGFappearance} from "../lib/CGF.js";
 import { MyPollen } from "./Objects/MyPollen.js";
+import { MyRock } from "./Objects/MyRock.js";
+import { MyGardenRockSet } from "./Objects/MyGardenRockSet.js";
 /**
  * MyGarden
  * @constructor
@@ -94,10 +96,10 @@ export class MyGarden extends CGFobject {
                 this.flowers.push(flower);
             }
         }
+        this.gardenRocks = new MyGardenRockSet(this.scene,this.getWidth(), 10, 4);
     }
+    
     display(translation) {
-        console.log("translation:");
-        console.log(translation);
         for(let i=0;i<this.rows;i++){
             for(let j=0;j<this.cols;j++){
                 const flowerIndex = i*this.rows + j;
@@ -111,6 +113,7 @@ export class MyGarden extends CGFobject {
                 this.scene.popMatrix();
             }
         }
+        
     }
     getFlowers(){
         return this.flowers;

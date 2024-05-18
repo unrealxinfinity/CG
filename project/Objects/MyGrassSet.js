@@ -42,7 +42,17 @@ export class MyGrassSet extends CGFobject {
             this.blades[i].update(t);
         }
     }
-
+    updateGrassSet(rows, cols) {
+        this.rows = rows;
+        this.cols = cols;
+        this.blades = [];
+        for (let y = 0; y < rows; y++) {
+            for (let x = 0; x < cols; x++) {
+                const blade = new MyGrassBlade(this.scene, 4, this.materials[Math.floor(Math.random()*2)]);
+                this.blades.push(blade);
+            }
+        }
+    }
     initShader() {
         this.shader = new CGFshader(this.scene.gl, "shaders/grass.vert", "shaders/pollen.frag");
     }

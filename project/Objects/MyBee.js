@@ -436,6 +436,9 @@ export class MyBee extends CGFobject {
     getOrientation(){
         return this.orientation;
     }
+    setOrientation(orientation){
+        this.orientation=orientation;
+    }
     setHivePosition(position){
         this.hivePosition=position;
     }

@@ -35,5 +35,8 @@ export class MyRock extends CGFobject {
         this.sphere.display();
         this.scene.popMatrix();
     }
+    getScale(){
+        return this.scales;
+    }
 
 }

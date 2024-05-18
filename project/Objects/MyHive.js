@@ -18,8 +18,9 @@ export class MyHive extends CGFobject {
 
         this.animationBee = new MyBee(scene,this);
         this.animationBee.setHivePosition(pos);
-        this.animationBee.setPosition([pos[0]+12,pos[1],pos[2]+12]);
-        this.animationBee.setEntrancePos([pos[0]+10,pos[1],pos[2]+10]);
+        this.animationBee.setPosition([pos[0]+11,pos[1]-1,pos[2]+11]);
+        this.animationBee.turn(-Math.PI/4);
+        this.animationBee.setEntrancePos([pos[0]+11,pos[1]-1,pos[2]+11]);
         this.stacks = 4;
         this.stackHeight=1;
         this.stackWidth=6; 

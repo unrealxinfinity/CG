@@ -8,6 +8,7 @@ import {MyBee} from "./Objects/MyBee.js";
 import {MyHive} from "./Objects/MyHive.js";
 import {MyPollen} from "./Objects/MyPollen.js";
 import { MyGrassSet } from "./Objects/MyGrassSet.js";
+import { MyGardenRockSet } from "./Objects/MyGardenRockSet.js";
 /**
  * MyScene
  * @constructor
@@ -50,9 +51,9 @@ export class MyScene extends CGFscene {
     this.speedFactor = 0.1;
     this.cloudMoveSpeedFactor = 0.1;
 
-    this.grassFieldWidth=5;
-    this.grassFieldRows=60;
-    this.grassFieldCols=60;
+    this.grassFieldWidth=80;
+    this.grassHeight=1;
+
     this.hiveX=-70;
     this.hiveY=-70;
     this.hiveSize=5;
@@ -88,7 +89,9 @@ export class MyScene extends CGFscene {
     this.beeShader = new CGFshader(this.gl, "shaders/beeAnimation.vert", "shaders/beeAnimation.frag");
     this.cloudShader = new CGFshader(this.gl, "shaders/cloud.vert", "shaders/cloud.frag");
     this.garden = new MyGarden(this,this.gardenRows,this.gardenCols,10,this.bee.getPosition()[1]);
-    this.grass = new MyGrassSet(this, this.grassFieldRows, this.grassFieldCols);
+    this.grass = new MyGrassSet(this, this.grassFieldWidth, this.grassFieldWidth);
+    this.gardenRocks = new MyGardenRockSet(this,this.garden.getWidth(), 10, 4);
+
     //this.beeShader.setUniformsValues({uSampler: 0, timeFactor: 0,normScale:1,transitionSpeed:1,flyOffset:1});
     this.setUpdatePeriod(1000/60);
 
@@ -252,8 +255,8 @@ export class MyScene extends CGFscene {
     this.popMatrix();// PANORAM END
 
     this.pushMatrix();//GRASS BEGIN
-    this.scale(this.grassFieldWidth,1,this.grassFieldWidth);
-    this.translate(-this.grassFieldRows/2,0,-this.grassFieldCols/2)
+    this.scale(1,this.grassHeight,1);
+    this.translate(-this.grassFieldWidth/2,0,-this.grassFieldWidth/2)
     this.grass.display();
     this.popMatrix();//GRASS END
 
@@ -276,6 +279,10 @@ export class MyScene extends CGFscene {
     this.scale(400,400,400);
     this.rotate(-Math.PI/2.0,1,0,0);
     this.plane.display();
+    this.popMatrix();
+
+    this.pushMatrix();
+    this.gardenRocks.display();
     this.popMatrix();
 
     this.bee.display(); //BEE
