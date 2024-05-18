@@ -115,7 +115,7 @@ export class MySphere extends CGFobject {
             }
         }
     }
-
+    
 	initBuffers() {
 		this.normals = [];
 		this.vertices = []

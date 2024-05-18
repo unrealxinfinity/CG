@@ -17,6 +17,8 @@ import { MyCylinder } from '../Objects/MyCylinder.js';
  * @param receptacleColor - color of the receptacle
  * @param stemColor - color of the stem
  * @param leafColor - color of the leaf
+ * @param textures - textures to apply
+ * @param pollen - pollen object
  */
 export class MyFlower extends CGFobject {
     constructor(scene, petals,stems, innerRadius, outerRadius, petalTex, receptacleColor,stemColor,leafColor,textures,pollen) {
@@ -24,7 +26,7 @@ export class MyFlower extends CGFobject {
         this.stacks = 20;
         this.slices = 20;
         this.position=[];
-        this.objects={'sphere':new MySphere(scene, this.slices, this.stacks, false, false,2),'triangle':new MyTriangle(scene),'cylinder':new MyCylinder(scene, this.slices, this.stacks)};
+        this.objects={'sphere':new MySphere(scene, this.slices, this.stacks, false, false,1),'triangle':new MyTriangle(scene),'cylinder':new MyCylinder(scene, this.slices, this.stacks)};
         this.innerRadius = innerRadius;
         this.outerRadius = outerRadius;
         this.petals = petals;
@@ -45,7 +47,7 @@ export class MyFlower extends CGFobject {
             //this.texCoords.push(MyFlower.generateTexCoords());
         }
     }
-
+    
     removePollen() {
         this.pollen = null;
     }

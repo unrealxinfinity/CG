@@ -13,7 +13,7 @@ export class MyGarden extends CGFobject {
         super(scene);
         this.petals;
         this.maxPetals=25;
-        this.minPetals=1;
+        this.minPetals=8;
         this.stems;
         this.maxStems=10;
         this.minStems=1;
@@ -30,7 +30,7 @@ export class MyGarden extends CGFobject {
         this.textures = {
             'petalTextures': [new CGFtexture(this.scene, "images/petal1.jpg"), new CGFtexture(this.scene, "images/petal2.jpg"),new CGFtexture(this.scene, "images/petal3.jpg")],
             'leafTexture':new CGFtexture(this.scene, "images/leaf.jpg"),
-            'receptaleTexture':new CGFtexture(this.scene, "images/receptacle.jpg"),
+            'receptaleTexture':new CGFtexture(this.scene, "images/receptacleTest.jpg"),
             'stemTexture': new CGFtexture(this.scene, "images/stem.jpg"),
             'leafTexture':new CGFtexture(this.scene, "images/leaf.jpg")
             };
@@ -57,7 +57,7 @@ export class MyGarden extends CGFobject {
    
     randomize(){
         this.appIndex = Math.floor(Math.random()*this.textures.petalTextures.length);
-        this.receptacleColor = [Math.random(), Math.random(), Math.random()];
+        this.receptacleColor = [0.8 + Math.random() * 0.2, 0.8 + Math.random() * 0.2,Math.random() * 0.2];
         this.stemColor = [Math.random(), Math.random(), Math.random()];
         this.leafColor = [Math.random(), Math.random(), Math.random()];
         this.outterRadius = Math.random()*(this.maxOutterRadius-this.minOutterRadius)+this.minOutterRadius;

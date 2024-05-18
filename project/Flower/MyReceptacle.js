@@ -22,11 +22,13 @@ export class MyReceptacle extends CGFobject {
 		this.receptaleApp.setSpecular(0, 0, 0, 0);
 		this.receptaleApp.setShininess(10);
     }
+    
 
     display() {
         this.receptaleApp.apply();
         this.scene.pushMatrix();
         this.scene.scale(this.radius, this.radius, this.radius);
+        this.scene.rotate(Math.PI/2, 1, 0, 0);
         this.sphere.display();
         this.scene.popMatrix();
     }
