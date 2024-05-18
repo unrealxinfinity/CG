@@ -68,6 +68,7 @@ export class MyGarden extends CGFobject {
 
     }
     updateGarden(rows,cols){
+        console.log(this.maxHeight);
         for(let i=0;i<rows;i++){
             for(let j=0;j<cols;j++){
                 this.cols=rows;
@@ -90,10 +91,12 @@ export class MyGarden extends CGFobject {
                 }
                 const offset = [Math.random()*(this.spaceInBetween-2)+1, Math.random()*(this.spaceInBetween-2)+1]
                 this.offsets.push(offset)
+                console.log(flower.getHeight());
                 flower.setPosition(j*this.spaceInBetween+offset[0],flower.getHeight(),i*this.spaceInBetween+offset[1]);
                 this.flowers.push(flower);
             }
         }
+        this.gardenRocks = new MyGardenRockSet(this.scene,this.getWidth(), 10, 4);
     }
     
     display(translation) {
@@ -110,6 +113,7 @@ export class MyGarden extends CGFobject {
                 this.scene.popMatrix();
             }
         }
+        
         
     }
     getFlowers(){

@@ -5,19 +5,15 @@ import { MyRock } from './MyRock.js';
  * @constructor
  * @param scene - Reference to MyScene object
  * @param gardenWidth - Garden's width
- * @param rocks - Number of rocks
  * @param radius - Radius of the rocks
  */
 export class MyGardenRockSet extends CGFobject {
-	constructor(scene, gardenWidth,rocks,radius) {
+	constructor(scene, gardenWidth,radius,rocks) {
 		super(scene);
-    
         this.rocks = rocks;
         this.gardenWidth = gardenWidth;
         this.radius=radius;
-        
         this.rockObjs = [];
-        this.perimeter = 4*gardenWidth;        
         this.initParams();
         this.initMaterial();
 	}
@@ -33,61 +29,54 @@ export class MyGardenRockSet extends CGFobject {
     }
 
     initParams() {
-        console.log(this.perimeter);
         const twoPi = 2*Math.PI;
-        let tempPerimeter = 0;
-        let nRocks=0;
-        while(tempPerimeter<this.perimeter && nRocks<this.rocks){
-            let scale = [Math.random()*10, Math.random()*10, Math.random()*10];
-            let angle =[Math.random() * twoPi, Math.random(), Math.random(), Math.random()];
-            this.rockObjs.push(new MyRock(this.scene, this.radius, scale, angle));
-            console.log(this.radius);
-            
-            tempPerimeter+=Math.max(scale[0],scale[2]);
-            nRocks++;
-            
+        let directions = ["top", "right", "bottom", "left"];
+        let tempWidth=0;
+        let nrocks=0;
+        for(let dir of directions){
+            while(nrocks<this.rocks/4){
+                let scaleN = Math.random();
+                let scale = [scaleN, scaleN, scaleN];
+                let angle =[Math.random() * twoPi, Math.random(), Math.random(), Math.random()];
+                this.rockObjs.push(new MyRock(this.scene, this.radius, scale, angle));
+                console.log(Math.max(scale[0],scale[2]));
+                tempWidth+=Math.max(scale[0],scale[2])*this.radius;
+                nrocks++;
+            }
+            nrocks=0;
+            tempWidth=0;
         }
-        console.log("here");
-        console.log(this.rockObjs);
+        
     }
 
     display() {
         this.appearance.apply();
-        let tempLength=0; 
-        let directions = ["top","bottom","left","right"];
-        let chosenDir = 0 ;
-        for(let i = 0;i<this.rockObjs.length;i++){
-            let rock = this.rockObjs[i];
-            tempLength+=this.radius*Math.max(...rock.getScale());
-            console.log(tempLength);
-            console.log(directions[chosenDir]);
-            if(directions[chosenDir]=="top"){
+        let totalRocks = this.rockObjs.length;
+        let directions = ["top", "right", "bottom", "left"];
+        let rockIndex = 0;
+    
+        for (let dirIndex = 0; dirIndex < directions.length; dirIndex++) {
+            let rocksPerEdge = Math.ceil(totalRocks / (4 - dirIndex)); // Calculate rocks per edge
+            totalRocks -= rocksPerEdge; // Update total rocks for next calculation
+    
+            for (let i = 0; i < rocksPerEdge && rockIndex < this.rockObjs.length; i++) {
+                let rock = this.rockObjs[rockIndex];
+                let position = (this.gardenWidth / (rocksPerEdge + 1)) * (i + 1) - this.gardenWidth / 2; // Calculate position
                 this.scene.pushMatrix();
-                this.scene.translate(tempLength,0,-this.gardenWidth/2);
-                rock.display();
+                if (dirIndex === 0) {
+                    this.scene.translate(position, 0, -this.gardenWidth / 2);
+                } else if (dirIndex === 1) {
+                    this.scene.translate(this.gardenWidth / 2, 0, position);
+                } else if (dirIndex === 2) {
+                    this.scene.translate(position, 0, this.gardenWidth / 2);
+                } else if (dirIndex === 3) {
+                    this.scene.translate(-this.gardenWidth / 2, 0, position);
+                }
+                
+                rock.display([this.radius,this.radius,this.radius]);
                 this.scene.popMatrix();
-            }
-            else if(directions[chosenDir]=="bottom"){
-                this.scene.pushMatrix();
-                this.scene.translate(tempLength,0,this.gardenWidth/2);
-                rock.display();
-                this.scene.popMatrix();
-            }
-            else if(directions[chosenDir]=="left"){
-                this.scene.pushMatrix();
-                this.scene.translate(-this.gardenWidth/2,0,tempLength);
-                rock.display();
-                this.scene.popMatrix();
-            }
-            else if(directions[chosenDir]=="right"){
-                this.scene.pushMatrix();
-                this.scene.translate(this.gardenWidth/2,0,tempLength);
-                rock.display();
-                this.scene.popMatrix();
-            }
-            if(tempLength>this.gardenWidth){
-                tempLength=0;
-                chosenDir++;
+                
+                rockIndex++;
             }
         }
     }

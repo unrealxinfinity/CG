@@ -71,4 +71,7 @@ export class MyGrassSet extends CGFobject {
         }
         this.scene.setActiveShader(this.scene.defaultShader);
     }
+    getWidth(){
+        return this.cols;
+    }
 }

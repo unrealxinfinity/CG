@@ -35,7 +35,8 @@ export class MyInterface extends CGFinterface {
 
         });
         this.gui.add(this.scene, 'grassHeight', 1, 10).name('Grass Height');
-
+        
+        
         this.gui.add(this.scene,'speedFactor',0.1,3).name('Speed Factor');
         this.gui.add(this.scene,'cloudMoveSpeedFactor',0.01,1).name("Cloud Speed Factor");
         this.initKeys();

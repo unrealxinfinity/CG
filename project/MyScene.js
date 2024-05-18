@@ -53,7 +53,8 @@ export class MyScene extends CGFscene {
 
     this.grassFieldWidth=80;
     this.grassHeight=1;
-
+    this.gardenPositionX=0;
+    this.gardenPositionZ=0;
     this.hiveX=-70;
     this.hiveY=-70;
     this.hiveSize=5;
@@ -90,7 +91,7 @@ export class MyScene extends CGFscene {
     this.cloudShader = new CGFshader(this.gl, "shaders/cloud.vert", "shaders/cloud.frag");
     this.garden = new MyGarden(this,this.gardenRows,this.gardenCols,10,this.bee.getPosition()[1]);
     this.grass = new MyGrassSet(this, this.grassFieldWidth, this.grassFieldWidth);
-    this.gardenRocks = new MyGardenRockSet(this,this.garden.getWidth(), 60, 10);
+    this.gardenRocks = new MyGardenRockSet(this,this.grass.getWidth(),4,68);
 
     //this.beeShader.setUniformsValues({uSampler: 0, timeFactor: 0,normScale:1,transitionSpeed:1,flyOffset:1});
     this.setUpdatePeriod(1000/60);
@@ -243,13 +244,7 @@ export class MyScene extends CGFscene {
     
     // ---- BEGIN Primitive drawing section
 
-    this.pushMatrix();//GARDEN BEGIN
-    this.garden.display([-this.garden.getWidth()/2 , 0 , -this.garden.getWidth()/2]);
-    this.translate(-this.garden.getWidth()/2,0,-this.garden.getWidth()/2);
-    console.log(this.gardenRocks);
-    this.gardenRocks.display();
-    this.popMatrix();// GARDEN END
-  
+   
     this.pushMatrix();//PANORAM BEGIN
     this.setActiveShader(this.defaultShader);
     this.setActiveShader(this.cloudShader);
@@ -257,12 +252,27 @@ export class MyScene extends CGFscene {
     this.panorama.display(this.camera.position);
     this.popMatrix();// PANORAM END
 
+
+    this.pushMatrix(); //GARDEN
+    this.translate(this.gardenPositionX,0,this.gardenPositionZ);
+
     this.pushMatrix();//GRASS BEGIN
     this.scale(1,this.grassHeight,1);
     this.translate(-this.grassFieldWidth/2,0,-this.grassFieldWidth/2)
     this.grass.display();
     this.popMatrix();//GRASS END
 
+    this.pushMatrix();//FLOWERS BEGIN
+    this.garden.display([-this.garden.getWidth()/2 , 0 , -this.garden.getWidth()/2]);
+    
+    this.popMatrix();// FLOWERS END
+
+    this.pushMatrix();//GARDENROCKS BEGIN
+    this.gardenRocks.display();
+    this.popMatrix();//GARDENROCKS END
+    this.popMatrix();
+    
+    
     this.pushMatrix();//HIVE BEGIN
     this.translate(this.hiveX,this.hiveSize*6,this.hiveY);
     this.scale(this.hiveSize,this.hiveSize,this.hiveSize);
