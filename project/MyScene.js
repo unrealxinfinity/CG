@@ -90,7 +90,7 @@ export class MyScene extends CGFscene {
     this.cloudShader = new CGFshader(this.gl, "shaders/cloud.vert", "shaders/cloud.frag");
     this.garden = new MyGarden(this,this.gardenRows,this.gardenCols,10,this.bee.getPosition()[1]);
     this.grass = new MyGrassSet(this, this.grassFieldWidth, this.grassFieldWidth);
-    this.gardenRocks = new MyGardenRockSet(this,this.garden.getWidth(), 10, 4);
+    this.gardenRocks = new MyGardenRockSet(this,this.garden.getWidth(), 60, 10);
 
     //this.beeShader.setUniformsValues({uSampler: 0, timeFactor: 0,normScale:1,transitionSpeed:1,flyOffset:1});
     this.setUpdatePeriod(1000/60);
@@ -246,6 +246,7 @@ export class MyScene extends CGFscene {
     this.pushMatrix();//GARDEN BEGIN
     this.garden.display([-this.garden.getWidth()/2 , 0 , -this.garden.getWidth()/2]);
     this.translate(-this.garden.getWidth()/2,0,-this.garden.getWidth()/2);
+    console.log(this.gardenRocks);
     this.gardenRocks.display();
     this.popMatrix();// GARDEN END
   

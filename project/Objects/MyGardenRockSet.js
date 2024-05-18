@@ -33,6 +33,7 @@ export class MyGardenRockSet extends CGFobject {
     }
 
     initParams() {
+        console.log(this.perimeter);
         const twoPi = 2*Math.PI;
         let tempPerimeter = 0;
         let nRocks=0;
@@ -40,21 +41,26 @@ export class MyGardenRockSet extends CGFobject {
             let scale = [Math.random()*10, Math.random()*10, Math.random()*10];
             let angle =[Math.random() * twoPi, Math.random(), Math.random(), Math.random()];
             this.rockObjs.push(new MyRock(this.scene, this.radius, scale, angle));
-            tempPerimeter+=this.radius*Math.max(...scale);
+            console.log(this.radius);
+            
+            tempPerimeter+=Math.max(scale[0],scale[2]);
             nRocks++;
             
         }
+        console.log("here");
+        console.log(this.rockObjs);
     }
 
     display() {
         this.appearance.apply();
-        let tempLength=0; 
+       /* let tempLength=0; 
         let directions = ["top","bottom","left","right"];
         let chosenDir = 0 ;
         for(let i = 0;i<this.rockObjs.length;i++){
             let rock = this.rockObjs[i];
-            console.log(rock);
             tempLength+=this.radius*Math.max(...rock.getScale());
+            console.log(tempLength);
+            console.log(directions[chosenDir]);
             if(directions[chosenDir]=="top"){
                 this.scene.pushMatrix();
                 this.scene.translate(tempLength,0,-this.gardenWidth/2);
@@ -82,7 +88,8 @@ export class MyGardenRockSet extends CGFobject {
             if(tempLength>this.gardenWidth){
                 tempLength=0;
                 chosenDir++;
-            }
-        }
+            }*/
+            this.rockObjs[0].display();
+        //}
     }
 }
