@@ -71,13 +71,13 @@ export class MyBee extends CGFobject {
         this.toraxApp.setTexture(this.toraxTex);
         this.toraxApp.setAmbient(0.9,0.9,0,1);
         this.toraxApp.setDiffuse(0.9,0.9,0,1);
-        this.toraxApp.setSpecular(0,0,0,1);
+        this.toraxApp.setSpecular(0.9,0.9,0,1);
         this.toraxApp.setTextureWrap('REPEAT', 'REPEAT');
 
         this.headApp = new CGFappearance(this.scene);
         this.headApp.setAmbient(1,1,0.06,1);
         this.headApp.setDiffuse(1,1,0.06,1);
-        this.headApp.setSpecular(0,0,0,1);
+        this.headApp.setSpecular(1,1,0.06,1);
 
         this.legApp = new CGFappearance(this.scene);
         this.legApp.setAmbient(0.1,0.1,0.1,1);
@@ -219,6 +219,25 @@ export class MyBee extends CGFobject {
         this.scene.rotate(this.wingRotationY, 0, 1, 0);
         this.scene.translate(0,0,2);
         this.scene.scale(0.5, 0.1, 2);
+        this.sphere.display();
+        this.scene.popMatrix();
+
+        this.wingApp.apply();
+        this.scene.pushMatrix();
+        this.scene.translate(-1.1*this.sin*this.cos, 1.1*this.sin*this.sin, 1.1*this.cos);
+        this.scene.rotate(-this.wingRotationZ, 0, 0, 1);
+        this.scene.rotate(2*this.wingRotationY, 0, 1, 0);
+        this.scene.translate(0,0,1);
+        this.scene.scale(0.25, 0.05, 1);
+        this.sphere.display();
+        this.scene.popMatrix();
+        this.scene.pushMatrix();
+        this.scene.scale(1,1,-1);
+        this.scene.translate(-1.1*this.sin*this.cos, 1.1*this.sin*this.sin, 1.1*this.cos);
+        this.scene.rotate(-this.wingRotationZ, 0, 0, 1);
+        this.scene.rotate(2*this.wingRotationY, 0, 1, 0);
+        this.scene.translate(0,0,1);
+        this.scene.scale(0.25, 0.05, 1);
         this.sphere.display();
         this.scene.popMatrix();
 
