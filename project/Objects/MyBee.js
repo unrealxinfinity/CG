@@ -354,19 +354,7 @@ export class MyBee extends CGFobject {
         this.returning = true;
         this.velocity=0.02;
     }
-    goToEntrance() {
-        this.landed = false;
-        this.returnHeight = this.position[0];
-        this.destination = this.hiveEntrancePos;
-        const entranceVector = [this.hiveEntrancePos[0]-this.position[0], this.hiveEntrancePos[2]-this.position[2]];
-        this.returnMagnitude = Math.sqrt(entranceVector[0]*entranceVector[0] + entranceVector[1]*entranceVector[1]);
-        this.currMagnitude = 0;
-        this.orientation = [entranceVector[0]/this.returnMagnitude, 0, entranceVector[1]/this.returnMagnitude];
-        this.angle = Math.PI + Math.atan2(entranceVector[1], -entranceVector[0]);
-        this.velocity=0.02;
-        
-        this.returning=true;
-    }
+   
 
     goToPosition(destination) {
         this.destination = destination;
