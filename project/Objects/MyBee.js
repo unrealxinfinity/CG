@@ -76,7 +76,7 @@ export class MyBee extends CGFobject {
         this.toraxApp.setTexture(this.toraxTex);
         this.toraxApp.setAmbient(0.9,0.9,0,1);
         this.toraxApp.setDiffuse(0.9,0.9,0,1);
-        this.toraxApp.setSpecular(0.9,0.9,0,1);
+        this.toraxApp.setSpecular(0,0,0,1);
         this.toraxApp.setTextureWrap('REPEAT', 'REPEAT');
 
         this.headApp = new CGFappearance(this.scene);
