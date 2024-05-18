@@ -20,10 +20,9 @@ export class MyRock extends CGFobject {
     initParams() {
         this.scales = [];
         this.angles = [];
-        for (let i = 0; i < 3; i++) {
-            this.scales.push(Math.random()*0.5 + 0.7);
-            this.angles.push(Math.random());
-        }
+        const twoPi = 2*Math.PI;
+        this.scales = [Math.random()*0.5 + 0.6, Math.random()*0.5 + 0.6, Math.random()*0.5 + 0.6];
+        this.angles = [Math.random() * twoPi, Math.random(), Math.random(), Math.random()];
     }
 
     display(scales, angles) {
