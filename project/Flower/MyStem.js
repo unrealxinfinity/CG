@@ -50,6 +50,7 @@ export class MyStem extends CGFobject {
 		this.leafAnglesY = [];
 		this.leaf = new MyLeaf(scene, this.stemApp,leafColor,objects,textures);
 		this.cylinder = objects.cylinder;
+		this.sphere = objects.sphere;
 		this.randomize();
 		this.calculateStemEnds();
 		
@@ -104,6 +105,13 @@ export class MyStem extends CGFobject {
 		this.scene.rotate(Math.PI/2, 1, 0, 0);
 		this.cylinder.display();
 		this.scene.popMatrix();
+		
+		this.scene.pushMatrix();
+		this.scene.translate(this.stemEndCoords[i][0],this.stemEndCoords[i][1],this.stemEndCoords[i][2]);
+		this.scene.scale(this.radius, this.radius, this.radius);
+		this.sphere.display();
+		this.scene.popMatrix();
+		
 	}
 	display(){
 		for(var i=0;i<this.numberOfStems;i++){
