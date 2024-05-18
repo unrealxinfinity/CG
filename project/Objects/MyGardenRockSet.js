@@ -53,7 +53,7 @@ export class MyGardenRockSet extends CGFobject {
 
     display() {
         this.appearance.apply();
-       /* let tempLength=0; 
+        let tempLength=0; 
         let directions = ["top","bottom","left","right"];
         let chosenDir = 0 ;
         for(let i = 0;i<this.rockObjs.length;i++){
@@ -88,8 +88,7 @@ export class MyGardenRockSet extends CGFobject {
             if(tempLength>this.gardenWidth){
                 tempLength=0;
                 chosenDir++;
-            }*/
-            this.rockObjs[0].display();
-        //}
+            }
+        }
     }
 }
