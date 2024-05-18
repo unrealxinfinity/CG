@@ -245,6 +245,8 @@ export class MyScene extends CGFscene {
 
     this.pushMatrix();//GARDEN BEGIN
     this.garden.display([-this.garden.getWidth()/2 , 0 , -this.garden.getWidth()/2]);
+    this.translate(-this.garden.getWidth()/2,0,-this.garden.getWidth()/2);
+    this.gardenRocks.display();
     this.popMatrix();// GARDEN END
   
     this.pushMatrix();//PANORAM BEGIN
@@ -282,7 +284,6 @@ export class MyScene extends CGFscene {
     this.popMatrix();
 
     this.pushMatrix();
-    this.gardenRocks.display();
     this.popMatrix();
 
     this.bee.display(); //BEE

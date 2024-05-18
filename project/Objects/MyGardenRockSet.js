@@ -79,8 +79,7 @@ export class MyGardenRockSet extends CGFobject {
                 rock.display();
                 this.scene.popMatrix();
             }
-            if(tempLength>this.perimeter){
-                
+            if(tempLength>this.gardenWidth){
                 tempLength=0;
                 chosenDir++;
             }
