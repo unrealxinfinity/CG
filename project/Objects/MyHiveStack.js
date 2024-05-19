@@ -15,7 +15,7 @@ export class MyHiveStack extends CGFobject {
         this.centerText = centerText;
         this.barText = barText
         this.centerSlice = new MyCube(scene,this.centerText,this.centerText,this.centerText,this.centerText,this.centerText,this.centerText);
-        this.sideBar = new MyCube(scene,this.barText,this.barText,this.centerText,this.barText,this.barText,this.barText);
+        this.sideBar = new MyCube(scene,this.barText,this.barText,this.centerText,this.barText,this.barText,this.barText,0.75);
         this.barLength = barLength;
         this.pollenSet = new MyPollenSet(scene,[]);
         this.position=[];
