@@ -386,15 +386,7 @@ export class MyBee extends CGFobject {
      */
     returnHome() {
         if (!this.pollen || this.state != BeeStates.READY) return;
-        this.destination = this.hivePosition;
-        this.returnHeight = this.position[0];
-        const hiveVector = [this.hivePosition[0]-this.position[0], this.hivePosition[2]-this.position[2]];
-        this.returnMagnitude = Math.sqrt(hiveVector[0]*hiveVector[0] + hiveVector[1]*hiveVector[1]);
-        this.currMagnitude = 0;
-        this.orientation = [hiveVector[0]/this.returnMagnitude, 0, hiveVector[1]/this.returnMagnitude];
-        this.angle = Math.PI + Math.atan2(hiveVector[1], -hiveVector[0]);
-        this.state = BeeStates.RETURNING;
-        this.velocity=0.02;
+        this.goToPosition(this.hivePosition);
     }
    
     /**
