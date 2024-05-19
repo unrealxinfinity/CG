@@ -30,7 +30,7 @@ export class MyHiveStack extends CGFobject {
         //BACK BEGIN
         this.scene.pushMatrix();
         this.scene.translate(0,0,-this.barLength/2+0.5);
-        this.scene.scale(this.barLength,1,1);
+        this.scene.scale(this.barLength,0.99,1);
         this.scene.rotate(-Math.PI/2, 0, 1, 0);
         this.sideBar.display();
         this.scene.popMatrix();
@@ -38,7 +38,7 @@ export class MyHiveStack extends CGFobject {
         //FRONT BEGIN
         this.scene.pushMatrix();
         this.scene.translate(0,0,this.barLength/2-0.5);
-        this.scene.scale(this.barLength,1,1);
+        this.scene.scale(this.barLength,0.99,1);
         this.scene.rotate(Math.PI/2, 0, 1, 0);
         this.sideBar.display();
         this.scene.popMatrix();
@@ -46,7 +46,7 @@ export class MyHiveStack extends CGFobject {
         //RIGHT BEGIN
         this.scene.pushMatrix();
         this.scene.translate(this.barLength/2-0.5,0,0);
-        this.scene.scale(1,1,this.barLength-2);
+        this.scene.scale(1,0.99,this.barLength-2);
         this.scene.rotate(Math.PI, 0, 1, 0);
         this.sideBar.display();
         this.scene.popMatrix();
@@ -54,7 +54,7 @@ export class MyHiveStack extends CGFobject {
         //LEFT BEGIN
         this.scene.pushMatrix();
         this.scene.translate(-this.barLength/2+0.5,0,0);
-        this.scene.scale(1,1,this.barLength-2);
+        this.scene.scale(1,0.99,this.barLength-2);
         this.sideBar.display();
         this.scene.popMatrix();
         //LEFT END
