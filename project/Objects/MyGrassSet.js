@@ -1,7 +1,7 @@
 import { CGFobject,CGFtexture,CGFappearance, CGFshader} from "../../lib/CGF.js";
 import { MyGrassBlade } from "./MyGrassBlade.js";
 /**
- * MyGarden
+ * MyGrassSet
  * @constructor
  * @param scene - Reference to MyScene object
  * @param rows - number of rows of grass blades

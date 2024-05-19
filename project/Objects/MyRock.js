@@ -1,10 +1,9 @@
 import {CGFappearance, CGFobject, CGFtexture} from '../../lib/CGF.js';
 import { MySphere } from './MySphere.js';
 /**
- * MySphere
+ * MyRock
  * @constructor
  * @param scene - Reference to MyScene object
- * @param texture - texture to apply
  */
 export class MyRock extends CGFobject {
 	constructor(scene, radius, scales, angles) {

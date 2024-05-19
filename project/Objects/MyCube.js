@@ -1,9 +1,10 @@
 import {CGFappearance, CGFobject} from '../../lib/CGF.js';
 import { MyQuad } from './MyQuad.js';
 /**
- * MyDiamond
+ * MyCube
  * @constructor
  * @param scene - Reference to MyScene object
+ * @note the remaining params are the textures to be used in each face
  */
 export class MyCube extends CGFobject {
 	constructor(scene,textura1,texture,texture3,textura4,textura5,textura6) {

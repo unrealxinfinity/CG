@@ -1,6 +1,6 @@
 import {CGFobject, CGFshader} from '../../lib/CGF.js';
 /**
-* MyCone
+* MyGrassBlade
 * @constructor
  * @param scene - Reference to MyScene object
  * @param slices - number of divisions around the Y axis

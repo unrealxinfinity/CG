@@ -1,7 +1,7 @@
 import {CGFappearance, CGFobject, CGFtexture} from '../../lib/CGF.js';
 import { MyRock } from './MyRock.js';
 /**
- * MyGardenRocks
+ * MyGardenRockSet
  * @constructor
  * @param scene - Reference to MyScene object
  * @param gardenWidth - Garden's width

@@ -4,7 +4,7 @@ import { MySphere } from './MySphere.js';
 import { MyCone } from './MyCone.js';
 import { MyPollen } from './MyPollen.js';
 /**
- * MySphere
+ * MyBee
  * @constructor
  * @param scene - Reference to MyScene object
  * @param hive - Reference to MyHive object

@@ -2,7 +2,7 @@ import {CGFappearance, CGFobject, CGFtexture} from '../../lib/CGF.js';
 import { MyRock } from './MyRock.js';
 import { MySphere } from './MySphere.js';
 /**
- * MySphere
+ * MyRockSet
  * @constructor
  * @param scene - Reference to MyScene object
  * @param texture - texture to apply
