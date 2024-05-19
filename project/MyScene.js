@@ -74,7 +74,7 @@ export class MyScene extends CGFscene {
 
     //Initialize scene objects
     this.axis = new CGFaxis(this);
-    this.plane = new MyPlane(this,30);
+    this.plane = new MyPlane(this,30,0,10,0,10);
     //this.gui.initKeys();
 
     //Objects connected to MyInterface
