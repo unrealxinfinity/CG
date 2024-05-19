@@ -257,8 +257,12 @@ export class MyScene extends CGFscene {
     this.pushMatrix(); //GARDEN
     this.translate(this.gardenPositionX,0,this.gardenPositionZ);
 
+    this.pushMatrix();//GARDENROCKS BEGIN
+    this.gardenRocks.display();
+    this.popMatrix();//GARDENROCKS END
+
     this.pushMatrix();//GRASS BEGIN
-    this.scale(1,this.grassHeight,1);
+    this.scale((this.garden.getWidth()-this.gardenRocks.getOffset()-2)/this.garden.getWidth(),this.grassHeight,(this.garden.getWidth()-this.gardenRocks.getOffset()-2)/this.garden.getWidth());
     this.translate(-this.grassFieldWidth/2,0,-this.grassFieldWidth/2)
     this.grass.display();
     this.popMatrix();//GRASS END
@@ -268,9 +272,7 @@ export class MyScene extends CGFscene {
     
     this.popMatrix();// FLOWERS END
 
-    this.pushMatrix();//GARDENROCKS BEGIN
-    this.gardenRocks.display();
-    this.popMatrix();//GARDENROCKS END
+    
     this.popMatrix();
     
     
