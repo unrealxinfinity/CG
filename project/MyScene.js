@@ -17,6 +17,44 @@ export class MyScene extends CGFscene {
   constructor() {
     super();
   }
+
+  loadTextures() {
+    this.petalTextures = [new CGFtexture(this, "images/petal1.jpg"), new CGFtexture(this, "images/petal2.jpg"),
+                  new CGFtexture(this, "images/petal3.jpg")];
+
+    this.texture = new CGFtexture(this, "images/terrain.jpg");
+    this.earth = new CGFtexture(this, "images/landscape.jpg");
+    this.appearance = new CGFappearance(this);
+    this.appearance.setTexture(this.texture);
+    this.appearance.setAmbient(1,1,1,1);
+    this.appearance.setDiffuse(1,1,1,1);
+    this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+    this.earthppearance = new CGFappearance(this);
+    this.earthppearance.setTexture(this.earth);
+    this.earthppearance.setTextureWrap('REPEAT', 'REPEAT');
+    this.cloudText = new CGFtexture(this, "images/multiple_clouds.jpg");
+    this.cloudApp = new CGFappearance(this.cloudText);
+    this.cloudApp.setTextureWrap('REPEAT', 'REPEAT');
+  }
+
+  loadObjects() {
+    this.panorama = new MyPanorama(this, this.earth);
+    this.rockSet = new MyRockSet(this, 1 , 3, 8);
+    this.hive = new MyHive(this,[this.hiveX,this.hiveSize*6,this.hiveY]);
+    this.bee = new MyBee(this, this.hive);
+    this.bee.setBeeHeight(this.hiveSize*6);
+    //this.bee.setHivePosition([this.hiveX+this.hiveSize*6/2-2,this.hiveSize*6-2,this.hiveY+this.hiveSize*6/2-2]);
+    this.bee.setHivePosition([this.hive.getAnimationBee().getPosition()[0]+2,this.hive.getAnimationBee().getPosition()[1]-1,this.hive.getAnimationBee().getPosition()[2]+2]);
+    this.pollen = new MyPollen(this);
+    this.flatShader = new CGFshader(this.gl, "shaders/flat.vert", "shaders/flat.frag");
+    this.rockShader = new CGFshader(this.gl, "shaders/uScale.vert", "shaders/uScale.frag");
+    this.beeShader = new CGFshader(this.gl, "shaders/beeAnimation.vert", "shaders/beeAnimation.frag");
+    this.cloudShader = new CGFshader(this.gl, "shaders/cloud.vert", "shaders/cloud.frag");
+    this.garden = new MyGarden(this,this.gardenRows,this.gardenCols,10,this.bee.getPosition()[1]);
+    this.grass = new MyGrassSet(this, this.grassFieldWidth, this.grassFieldWidth);
+    this.gardenRocks = new MyGardenRockSet(this,this.grass.getWidth(),4,68);
+  }
+
   init(application) {
     super.init(application);
     
@@ -37,7 +75,6 @@ export class MyScene extends CGFscene {
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
-    this.sphere = new MySphere(this, 50, 50, true, 1);
     //this.gui.initKeys();
 
     //Objects connected to MyInterface
@@ -48,8 +85,8 @@ export class MyScene extends CGFscene {
     this.gardenCols = 3;
     this.lastTime=0;
     this.scaleFactor=1;
-    this.speedFactor = 0.1;
-    this.cloudMoveSpeedFactor = 0.1;
+    this.speedFactor = 0.4;
+    this.cloudMoveSpeedFactor = 1;
 
     this.grassFieldWidth=80;
     this.grassHeight=1;
@@ -59,40 +96,12 @@ export class MyScene extends CGFscene {
     this.hiveY=-70;
     this.hiveSize=5;
 
+    this.grassStrength = 1;
     this.enableTextures(true);
     this.descending=false;
-    this.petalTextures = [new CGFtexture(this, "images/petal1.jpg"), new CGFtexture(this, "images/petal2.jpg"),
-                  new CGFtexture(this, "images/petal3.jpg")];
 
-    this.texture = new CGFtexture(this, "images/terrain.jpg");
-    this.earth = new CGFtexture(this, "images/landscape.jpg");
-    this.appearance = new CGFappearance(this);
-    this.appearance.setTexture(this.texture);
-    this.appearance.setAmbient(1,1,1,1);
-    this.appearance.setDiffuse(1,1,1,1);
-    this.appearance.setTextureWrap('REPEAT', 'REPEAT');
-    this.earthppearance = new CGFappearance(this);
-    this.earthppearance.setTexture(this.earth);
-    this.earthppearance.setTextureWrap('REPEAT', 'REPEAT');
-    this.cloudText = new CGFtexture(this, "images/cloud.jpg");
-    this.cloudApp = new CGFappearance(this.cloudText);
-    this.cloudApp.setTextureWrap('REPEAT', 'REPEAT');
-
-    this.panorama = new MyPanorama(this, this.earth);
-    this.rockSet = new MyRockSet(this, 1 , 3, 8);
-    this.hive = new MyHive(this,[this.hiveX,this.hiveSize*6,this.hiveY]);
-    this.bee = new MyBee(this, this.hive);
-    this.bee.setBeeHeight(this.hiveSize*6);
-    //this.bee.setHivePosition([this.hiveX+this.hiveSize*6/2-2,this.hiveSize*6-2,this.hiveY+this.hiveSize*6/2-2]);
-    this.bee.setHivePosition([this.hive.getAnimationBee().getPosition()[0]+2,this.hive.getAnimationBee().getPosition()[1],this.hive.getAnimationBee().getPosition()[2]+2]);
-    this.pollen = new MyPollen(this);
-    this.flatShader = new CGFshader(this.gl, "shaders/flat.vert", "shaders/flat.frag");
-    this.rockShader = new CGFshader(this.gl, "shaders/uScale.vert", "shaders/uScale.frag");
-    this.beeShader = new CGFshader(this.gl, "shaders/beeAnimation.vert", "shaders/beeAnimation.frag");
-    this.cloudShader = new CGFshader(this.gl, "shaders/cloud.vert", "shaders/cloud.frag");
-    this.garden = new MyGarden(this,this.gardenRows,this.gardenCols,10,this.bee.getPosition()[1]);
-    this.grass = new MyGrassSet(this, this.grassFieldWidth, this.grassFieldWidth);
-    this.gardenRocks = new MyGardenRockSet(this,this.grass.getWidth(),4,68);
+    this.loadTextures();
+    this.loadObjects();
 
     //this.beeShader.setUniformsValues({uSampler: 0, timeFactor: 0,normScale:1,transitionSpeed:1,flyOffset:1});
     this.setUpdatePeriod(1000/60);
@@ -246,12 +255,12 @@ export class MyScene extends CGFscene {
     // ---- BEGIN Primitive drawing section
 
    
-    this.pushMatrix();//PANORAM BEGIN
+    this.pushMatrix();//PANORAMA BEGIN
     this.setActiveShader(this.defaultShader);
     this.setActiveShader(this.cloudShader);
     this.cloudText.bind(1);
     this.panorama.display(this.camera.position);
-    this.popMatrix();// PANORAM END
+    this.popMatrix();// PANORAMA END
 
 
     this.pushMatrix(); //GARDEN
@@ -262,7 +271,7 @@ export class MyScene extends CGFscene {
     this.popMatrix();//GARDENROCKS END
 
     this.pushMatrix();//GRASS BEGIN
-    this.scale((this.garden.getWidth()-this.gardenRocks.getOffset()-2)/this.garden.getWidth(),this.grassHeight,(this.garden.getWidth()-this.gardenRocks.getOffset()-2)/this.garden.getWidth());
+    this.scale((this.garden.getWidth()-this.gardenRocks.getOffset()-1)/this.garden.getWidth(),this.grassHeight,(this.garden.getWidth()-this.gardenRocks.getOffset()-1)/this.garden.getWidth());
     this.translate(-this.grassFieldWidth/2,0,-this.grassFieldWidth/2)
     this.grass.display();
     this.popMatrix();//GRASS END

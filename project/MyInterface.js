@@ -25,20 +25,24 @@ export class MyInterface extends CGFinterface {
         //Slider element in GUI
         this.gui.add(this.scene, 'scaleFactor', 0.1, 5).name('Scale Factor');
         //TextBox for number of rows in the garden
-        this.gui.add(this.scene, 'gardenRows', 1, 10).step(1).name('Garden Rows').onChange((rows)=>{
+        this.gui.add(this.scene, 'gardenRows', 1, 4).step(1).name('Garden Rows').onChange((rows)=>{
             this.scene.garden.updateGarden(rows, this.scene.gardenCols);
 
         });
         //TextBox for number of columns in the garden
-        this.gui.add(this.scene, 'gardenCols', 1, 10).step(1).name('Garden Columns').onChange((cols)=>{
+        this.gui.add(this.scene, 'gardenCols', 1, 4).step(1).name('Garden Columns').onChange((cols)=>{
             this.scene.garden.updateGarden(this.scene.gardenRows,cols);
 
         });
         this.gui.add(this.scene, 'grassHeight', 1, 10).name('Grass Height');
         
         
-        this.gui.add(this.scene,'speedFactor',0.1,3).name('Speed Factor');
-        this.gui.add(this.scene,'cloudMoveSpeedFactor',0.01,1).name("Cloud Speed Factor");
+        this.gui.add(this.scene,'speedFactor',0.1,3,0.4).name('Speed Factor');
+        this.gui.add(this.scene,'scaleFactor',0.5,3).name('Scale Factor');
+        this.gui.add(this.scene,'cloudMoveSpeedFactor',0.01,5, 1).name("Cloud Speed Factor");
+        this.gui.add(this.scene, 'grassStrength', 0.1, 5, 1).step(0.05).name('Wind Speed').onChange((speed) => {
+            this.scene.grass.updateSpeed(speed);
+        })
         this.initKeys();
         return true;
     }

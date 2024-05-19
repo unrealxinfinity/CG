@@ -123,8 +123,9 @@ void main() {
     vec4 vertex = uMVMatrix * rotationMat * vec4(aVertexPosition, 1.0);
 
     // Transformed normal position
-    vec3 vVertexNormal = vec3(aVertexNormal.x*cos(M_PI/2.0 + angle),aVertexNormal.x*sin(M_PI/2.0 + angle),0.0);
-	vec3 N = normalize(vec3(uNMatrix * vec4(aVertexNormal, 1.0)));
+    vec4 vVertexNormal = rotationMat * vec4(aVertexNormal, 1.0);
+    //vec3 vVertexNormal = vec3(aVertexNormal.x*cos(M_PI/2.0 + angle),aVertexNormal.x*sin(M_PI/2.0 + angle),0.0);
+	vec3 N = normalize(vec3(uNMatrix * vVertexNormal));
 
     vec3 eyeVec = -vec3(vertex.xyz);
     vec3 E = normalize(eyeVec);

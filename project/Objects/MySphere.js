@@ -6,6 +6,11 @@ import {CGFobject} from '../../lib/CGF.js';
  * @param scene - Reference to MyScene object
  * @param slices - number of faces
  * @param stacks - number of stacked prisms
+ * @param inverted - true if the sphere is to be visible on the inside, false otherwise
+ * @param perturb - if true, the vertices are displaced along their normals, used for rocks and pollen
+ * @param xTexOffset - value by which the horizontal texture coordinates are multiplied (if the texture we have is not wide enough, we can use a value higher than 1 to repeat it along the sphere)
+ * @param bottomOffset - offset used to displace the vertices on the bottom hemisphere, to create an ellipsoid shape
+ * @param topOffset - offset used to displace the vertices on the top hemisphere, to create an ellipsoid shape
  */
 export class MySphere extends CGFobject {
 	constructor(scene, slices, stacks, inverted, perturb, xTexOffset, bottomOffset=1.0, topOffset=1.0) {
@@ -22,6 +27,10 @@ export class MySphere extends CGFobject {
 		this.initBuffers();
 	}
 
+
+    /**
+     * Builds the vertex array for the object, along with normals and texture coordinates
+     */
     constructVertices() {
         const firstLastPerturb = Math.random()*0.3+0.85;
         const jPart = Math.PI/this.stacks;
@@ -89,6 +98,9 @@ export class MySphere extends CGFobject {
         }
     }
 
+    /**
+     * Builds the index array for the object
+     */
     constructIndices() {
         for (let i = 0; i < this.slices; i++) {
             for (let j = 0; j < this.stacks-2; j++) {

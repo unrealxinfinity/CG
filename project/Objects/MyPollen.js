@@ -1,10 +1,9 @@
 import { CGFappearance, CGFobject, CGFtexture, CGFshader } from '../../lib/CGF.js';
 import { MySphere } from './MySphere.js';
 /**
- * MySphere
+ * MyPollen
  * @constructor
  * @param scene - Reference to MyScene object
- * @param texture - texture to apply
  */
 export class MyPollen extends CGFobject {
 	constructor(scene) {

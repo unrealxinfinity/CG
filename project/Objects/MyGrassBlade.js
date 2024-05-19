@@ -1,6 +1,6 @@
 import {CGFobject, CGFshader} from '../../lib/CGF.js';
 /**
-* MyCone
+* MyGrassBlade
 * @constructor
  * @param scene - Reference to MyScene object
  * @param slices - number of divisions around the Y axis
@@ -16,6 +16,7 @@ export class MyGrassBlade extends CGFobject {
         const sixthPi = Math.PI/6;
         this.angle = Math.random()*sixthPi*2.5 + sixthPi;
         this.angleAmplitude = Math.PI/2 - this.angle;
+        this.strength = 1.0;
         this.initBuffers();
     }
     /**
@@ -23,8 +24,11 @@ export class MyGrassBlade extends CGFobject {
      * @param {Number} t 
      */
     update(t) {
-        this.angle = Math.cos(0.01*t)*this.angleAmplitude;
-        
+        this.angle = Math.cos(0.01*t*this.strength)*this.angleAmplitude;
+    }
+
+    setStrength(strength) {
+        this.strength = strength;
     }
     /**
      * Applies the shader to the grass blade
@@ -35,7 +39,10 @@ export class MyGrassBlade extends CGFobject {
         shader.setUniformsValues({'angle': this.angle});
     }
   
-    
+    /**
+     * Builds the buffers for the object. The grass blade is build as a set of trapezoids that are thinner at the top than at the bottom.
+     * Each trapezoid is smaller than the trapezoid below it, and a trianlge is put on the tip of the blade.
+     */
     initBuffers() {
         this.vertices = [];
         this.indices = [];

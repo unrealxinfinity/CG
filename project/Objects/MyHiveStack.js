@@ -2,7 +2,7 @@ import {CGFobject} from '../../lib/CGF.js';
 import { MyCube } from './MyCube.js';
 import { MyPollenSet } from './MyPollenSet.js';
 /**
-* MyHive
+* MyHiveStack
 * @constructor
  * @param scene - Reference to MyScene object
  * @param barLength - length of the sides

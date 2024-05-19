@@ -1,7 +1,7 @@
 import { CGFobject,CGFtexture,CGFappearance, CGFshader} from "../../lib/CGF.js";
 import { MyGrassBlade } from "./MyGrassBlade.js";
 /**
- * MyGarden
+ * MyGrassSet
  * @constructor
  * @param scene - Reference to MyScene object
  * @param rows - number of rows of grass blades
@@ -68,6 +68,13 @@ export class MyGrassSet extends CGFobject {
     /**
      * Initiates the shader for the grass
      */
+
+    updateSpeed(speed) {
+        for (let i = 0; i < this.blades.length; i++) {
+            this.blades[i].setStrength(speed);
+        }
+    }
+
     initShader() {
         this.shader = new CGFshader(this.scene.gl, "shaders/grass.vert", "shaders/pollen.frag");
     }
