@@ -5,7 +5,9 @@ import { MySphere } from './MySphere.js';
  * MyRockSet
  * @constructor
  * @param scene - Reference to MyScene object
- * @param texture - texture to apply
+ * @param radius - Radius of the rocks
+ * @param startStage - Stage at which to start drawing (for example, if we want a pyramid without the top stages)
+ * @param stages - Stages of the pyramid
  */
 export class MyRockSet extends CGFobject {
 	constructor(scene, radius,startStage, stages) {
@@ -39,6 +41,9 @@ export class MyRockSet extends CGFobject {
         this.appearance.setSpecular(0,0,0,1);
     }
 
+    /**
+     * Initializes the random values that will be used to differentiate each rock by scaling and rotating it
+     */
     initParams() {
         this.scales = [];
         this.angles = [];
@@ -50,6 +55,9 @@ export class MyRockSet extends CGFobject {
         }
     }
 
+    /**
+     * Displays the rockset in stages of increasing size (1x1, 3x3, 5x5, ...)
+     */
     display() {
         this.appearance.apply();
         this.scene.pushMatrix();

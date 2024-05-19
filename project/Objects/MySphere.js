@@ -27,6 +27,10 @@ export class MySphere extends CGFobject {
 		this.initBuffers();
 	}
 
+
+    /**
+     * Builds the vertex array for the object, along with normals and texture coordinates
+     */
     constructVertices() {
         const firstLastPerturb = Math.random()*0.3+0.85;
         const jPart = Math.PI/this.stacks;
@@ -94,6 +98,9 @@ export class MySphere extends CGFobject {
         }
     }
 
+    /**
+     * Builds the index array for the object
+     */
     constructIndices() {
         for (let i = 0; i < this.slices; i++) {
             for (let j = 0; j < this.stacks-2; j++) {

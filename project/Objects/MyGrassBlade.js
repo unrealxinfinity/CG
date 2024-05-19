@@ -35,7 +35,10 @@ export class MyGrassBlade extends CGFobject {
         shader.setUniformsValues({'angle': this.angle});
     }
   
-    
+    /**
+     * Builds the buffers for the object. The grass blade is build as a set of trapezoids that are thinner at the top than at the bottom.
+     * Each trapezoid is smaller than the trapezoid below it, and a trianlge is put on the tip of the blade.
+     */
     initBuffers() {
         this.vertices = [];
         this.indices = [];

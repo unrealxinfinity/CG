@@ -4,6 +4,9 @@ import { MySphere } from './MySphere.js';
  * MyRock
  * @constructor
  * @param scene - Reference to MyScene object
+ * @param radius - Radius of the rock
+ * @param scales - Scaling with which to display the rock
+ * @param angles - Rotation with which to display the rock
  */
 export class MyRock extends CGFobject {
 	constructor(scene, radius, scales, angles) {

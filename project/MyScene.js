@@ -84,7 +84,7 @@ export class MyScene extends CGFscene {
     this.bee = new MyBee(this, this.hive);
     this.bee.setBeeHeight(this.hiveSize*6);
     //this.bee.setHivePosition([this.hiveX+this.hiveSize*6/2-2,this.hiveSize*6-2,this.hiveY+this.hiveSize*6/2-2]);
-    this.bee.setHivePosition([this.hive.getAnimationBee().getPosition()[0]+2,this.hive.getAnimationBee().getPosition()[1],this.hive.getAnimationBee().getPosition()[2]+2]);
+    this.bee.setHivePosition([this.hive.getAnimationBee().getPosition()[0]+2,this.hive.getAnimationBee().getPosition()[1]-1,this.hive.getAnimationBee().getPosition()[2]+2]);
     this.pollen = new MyPollen(this);
     this.flatShader = new CGFshader(this.gl, "shaders/flat.vert", "shaders/flat.frag");
     this.rockShader = new CGFshader(this.gl, "shaders/uScale.vert", "shaders/uScale.frag");
