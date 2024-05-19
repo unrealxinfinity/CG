@@ -38,8 +38,7 @@ export class MyGardenRockSet extends CGFobject {
         let nrocks=0;
         for(let dir of directions){
             while(nrocks<this.rocks/4){
-                let scaleN = Math.random();
-                let scale = [scaleN, scaleN, scaleN];
+                let scale = [Math.random()*0.6 + 0.4, Math.random()*0.6 + 0.4, Math.random()*0.6 + 0.4];
                 let angle =[Math.random() * twoPi, Math.random(), Math.random(), Math.random()];
                 this.rockObjs.push(new MyRock(this.scene, this.radius, scale, angle));
                 console.log(Math.max(scale[0],scale[2]));
@@ -76,7 +75,7 @@ export class MyGardenRockSet extends CGFobject {
                     this.scene.translate(-this.gardenWidth / 2, 0, position);
                 }
                 
-                rock.display([this.radius,this.radius,this.radius]);
+                rock.display();
                 this.scene.popMatrix();
                 
                 rockIndex++;
