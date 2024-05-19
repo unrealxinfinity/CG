@@ -303,7 +303,7 @@ export class MyBee extends CGFobject {
                 }
             }
             this.currMagnitude += Math.sqrt(deltax*deltax + deltaz*deltaz);
-                        this.position[1] = this.initialHeight - (this.initialHeight - this.destination[1])*proportion;
+                        this.position[1] = this.returnHeight - (this.returnHeight - this.destination[1])*proportion;
                     }
         else if(this.position[1] + y < this.initialHeight){
             this.position[1] += this.orientation[1]*this.yVelocity*deltaTime;
@@ -420,7 +420,7 @@ export class MyBee extends CGFobject {
      */
     goToPosition(destination) {
         this.destination = destination;
-        this.returnHeight = this.position[0];
+        this.returnHeight = this.position[1];
         const entranceVector = [this.destination[0]-this.position[0], this.destination[2]-this.position[2]];
         this.returnMagnitude = Math.sqrt(entranceVector[0]*entranceVector[0] + entranceVector[1]*entranceVector[1]);
         this.currMagnitude = 0;

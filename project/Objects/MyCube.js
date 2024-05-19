@@ -8,8 +8,9 @@ import { MyQuad } from './MyQuad.js';
  * @note the remaining params are the textures to be used in each face
  */
 export class MyCube extends CGFobject {
-	constructor(scene,textura1,texture,texture3,textura4,textura5,textura6, maxT3) {
+	constructor(scene,textura1,texture,texture3,textura4,textura5,textura6, maxT3, doubleSided=false) {
 		super(scene);
+		this.doubleSided = doubleSided;
 		this.texture1=textura1;
 		this.texture2=texture;
 		this.texture3=texture3;
@@ -48,6 +49,10 @@ export class MyCube extends CGFobject {
 		this.scene.rotate(Math.PI,1,0,0);
 		this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
 		this.quad.display();
+		if (this.doubleSided) {
+			this.scene.rotate(Math.PI,1,0,0);
+			this.quad.display();
+		}
 		this.scene.popMatrix();
 
 		this.material.setTexture(this.texture1);
@@ -56,6 +61,10 @@ export class MyCube extends CGFobject {
 		this.scene.translate(0,0.5,0);
 		this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
 		this.quad.display();
+		if (this.doubleSided) {
+			this.scene.rotate(Math.PI,1,0,0);
+			this.quad.display();
+		}
 		this.scene.popMatrix();
 
 		this.material.setTexture(this.texture2);
@@ -66,6 +75,10 @@ export class MyCube extends CGFobject {
 		this.quad.updateTexCoords([0,0,1,0,0,1,1,1]);
 		this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
 		this.quad.display();
+		if (this.doubleSided) {
+			this.scene.rotate(Math.PI,1,0,0);
+			this.quad.display();
+		}
 		this.scene.popMatrix();
 
 		this.material.setTexture(this.texture4);
@@ -76,6 +89,10 @@ export class MyCube extends CGFobject {
 		this.quad.updateTexCoords([1,1,0,1,1,0,0,0]);
 		this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
 		this.quad.display();
+		if (this.doubleSided) {
+			this.scene.rotate(Math.PI,1,0,0);
+			this.quad.display();
+		}
 		this.scene.popMatrix();
 
 		this.material.setTexture(this.texture5);
@@ -86,6 +103,10 @@ export class MyCube extends CGFobject {
 		this.quad.updateTexCoords([0,1,0,0,1,1,1,0]);
 		this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
 		this.quad.display();
+		if (this.doubleSided) {
+			this.scene.rotate(Math.PI,1,0,0);
+			this.quad.display();
+		}
 		this.scene.popMatrix();
 
 		this.material.setTexture(this.texture3);
@@ -97,6 +118,11 @@ export class MyCube extends CGFobject {
 		this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
 		if (this.maxT3) this.quad3.display();
 		else this.quad.display();
+		if (this.doubleSided) {
+			this.scene.rotate(Math.PI,1,0,0);
+			if (this.maxT3) this.quad3.display();
+			else this.quad.display();
+		}
 		this.scene.popMatrix();
 
 		
