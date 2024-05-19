@@ -363,6 +363,7 @@ export class MyBee extends CGFobject {
      * @returns {boolean} - true if pollen is detected
      */
     getPollen(flower){
+        if (this.state != BeeStates.READY) return;
         if(this.detectCollision(flower) && flower.getPollen()){
             this.tempVelocity = this.velocity;
             this.velocity = 0;
