@@ -82,4 +82,7 @@ export class MyGardenRockSet extends CGFobject {
             }
         }
     }
+    getOffset(){
+        return this.radius;
+    }
 }
