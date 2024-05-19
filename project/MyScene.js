@@ -49,7 +49,7 @@ export class MyScene extends CGFscene {
     this.lastTime=0;
     this.scaleFactor=1;
     this.speedFactor = 0.1;
-    this.cloudMoveSpeedFactor = 0.1;
+    this.cloudMoveSpeedFactor = 1;
 
     this.grassFieldWidth=80;
     this.grassHeight=1;
