@@ -8,6 +8,8 @@ import { MyPetal } from './MyPetal.js';
  * @param scene - Reference to MyScene object
  * @param stemApp - CGFappearance for the stem
  * @param  leafColor- color of the leaf
+ * @param objects - various objects
+ * @param textures - various textures
  */
 export class MyLeaf extends CGFobject {
 	constructor(scene, stemApp,leafColor,objects,textures) {
@@ -36,9 +38,12 @@ export class MyLeaf extends CGFobject {
 		this.leafHeight;
 		this.leafWidth;
 	}
+	/**
+	 * Initiates some attributes, length is the max diagonal length of the leaf + root
+	 * @param {Number} length 
+	 */
 	setAttributes(length){
-		//this.zAngle = zAngle;
-		this.totalLength = length //Math.abs(this.flowerRadius/Math.sin(Math.abs(this.zAngle)));
+		this.totalLength = length 
 
 		//root parameters
 		this.rootPercentage=0.3;
@@ -52,6 +57,9 @@ export class MyLeaf extends CGFobject {
 		this.leafWidth=this.totalLength*this.trianglePercentage/4;
 		
 	}
+	/**
+	 * Displays the leaf
+	 */
 	makeLeaf(){
 		this.leafApp.apply();
 		this.scene.pushMatrix();
@@ -69,6 +77,9 @@ export class MyLeaf extends CGFobject {
 		this.leaf.display();
 		this.scene.popMatrix();
 	}
+	/**
+	 * Displays the leaf ends (root)
+	 */
 	makeRoot(){
 		this.scene.pushMatrix();
 		this.scene.scale(this.rootRadius,this.totalLength*this.rootPercentage,this.rootRadius);

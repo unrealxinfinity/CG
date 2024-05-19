@@ -4,6 +4,8 @@ import { MyGrassBlade } from "./MyGrassBlade.js";
  * MyGarden
  * @constructor
  * @param scene - Reference to MyScene object
+ * @param rows - number of rows of grass blades
+ * @param cols - number of columns of grass blades
  */
 export class MyGrassSet extends CGFobject {
     constructor(scene, rows, cols) {
@@ -36,12 +38,22 @@ export class MyGrassSet extends CGFobject {
         
         this.initShader();
     }
+    /**
+     * Updates the grass blades according to time
+     * @param {Number} t - time
+     */
 
     update(t) {
         for (let i = 0; i < this.blades.length; i++) {
             this.blades[i].update(t);
         }
     }
+    /**
+     * Updates the blades buffer according to the new rows and columns
+     * Not in use
+     * @param {Number} rows 
+     * @param {Number} cols 
+     */
     updateGrassSet(rows, cols) {
         this.rows = rows;
         this.cols = cols;
@@ -53,6 +65,9 @@ export class MyGrassSet extends CGFobject {
             }
         }
     }
+    /**
+     * Initiates the shader for the grass
+     */
     initShader() {
         this.shader = new CGFshader(this.scene.gl, "shaders/grass.vert", "shaders/pollen.frag");
     }

@@ -47,13 +47,24 @@ export class MyFlower extends CGFobject {
             //this.texCoords.push(MyFlower.generateTexCoords());
         }
     }
-    
+    //Removes the pollen
     removePollen() {
         this.pollen = null;
     }
+    /**
+     * Sets the position of the flower
+     * @param {*} x 
+     * @param {*} y 
+     * @param {*} z 
+     */
     setPosition(x,y,z){
         this.position=[x,y,z];
     }
+
+    /**
+     * Generates the texture coordinates for the flower petals
+     * @returns the texture coordinates for the flower petals
+     */
     static generateTexCoords() {
         const x = Math.random()*0.85;
         const y = Math.random()*Math.sqrt(3)/20;
@@ -78,6 +89,9 @@ export class MyFlower extends CGFobject {
     getHeight(){
         return this.stem.stemYHeight+this.innerRadius;
     }
+    /**
+     * Displays the flower object
+     */
     display() {
 
         const rotationStep = 2*Math.PI/this.petals;

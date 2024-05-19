@@ -6,6 +6,7 @@ import { MyRock } from './MyRock.js';
  * @param scene - Reference to MyScene object
  * @param gardenWidth - Garden's width
  * @param radius - Radius of the rocks
+ * @param rocks - Number of rocks to display
  */
 export class MyGardenRockSet extends CGFobject {
 	constructor(scene, gardenWidth,radius,rocks) {
@@ -27,7 +28,9 @@ export class MyGardenRockSet extends CGFobject {
         this.appearance.setDiffuse(0.75,0.75,0.75,1);
         this.appearance.setSpecular(0,0,0,1);
     }
-
+    /**
+     * Initiates the parameters of the rocks
+     */
     initParams() {
         const twoPi = 2*Math.PI;
         let directions = ["top", "right", "bottom", "left"];

@@ -13,6 +13,7 @@ import { MyLeaf } from './MyLeaf.js';
  * @stemColor - color of the stem
  * @leafColor - color of the leaf
  * @objects - objects to be used in the stem
+ * @textures - textures for various objects
  */
 export class MyStem extends CGFobject {
 	constructor(scene, numStems,innerRadius,outterRadius,maxLength,stemColor,leafColor,objects,textures) {
@@ -39,6 +40,9 @@ export class MyStem extends CGFobject {
 		this.stemAngles=[];
 		this.stemLengths=[];
 		this.stemYHeight=0;
+		this.sphere = objects.sphere;
+		this.cylinder = objects.cylinder;
+
 		//leaf related attributes
 		this.maxLeafAngleZ = Math.PI/1.5;
 		this.minLeafAngleZ = Math.PI/4;
@@ -49,12 +53,13 @@ export class MyStem extends CGFobject {
 		this.leafAnglesZ = [];
 		this.leafAnglesY = [];
 		this.leaf = new MyLeaf(scene, this.stemApp,leafColor,objects,textures);
-		this.cylinder = objects.cylinder;
-		this.sphere = objects.sphere;
 		this.randomize();
 		this.calculateStemEnds();
 		
 	}
+	/**
+	 * Randomizes stem parameters
+	 */
 	randomize(){
 		for(var i=0;i<this.numberOfStems;i++){
 			var stemAngleZ =  Math.random() * (this.maxStemAngleZ - this.minStemAngleZ) + this.minStemAngleZ;
@@ -71,6 +76,9 @@ export class MyStem extends CGFobject {
 		}
 		
 	}
+	/**
+	 * Calculates the translation coordinates for the stem starting point
+	 */
 	calculateStemEnds(){
 		
 		for(var i=0;i<this.numberOfStems;i++){
@@ -85,6 +93,10 @@ export class MyStem extends CGFobject {
 		}
 	
 	}
+	/**
+	 * *Makes the stem as a whole, including leaves
+	 * @param {Number} i - index of the stem
+	 */
 	makeStem(i){
 		if(i!=0){
 			//draws leaves
@@ -96,7 +108,7 @@ export class MyStem extends CGFobject {
 			this.leaf.display(this.leafLengths[i]);
 			this.scene.popMatrix();
 			}
-		this.stemApp.apply();
+		this.stemApp.apply(); //STEM BEGIN
 		this.scene.pushMatrix();
 		this.scene.translate(this.stemEndCoords[i][0],this.stemEndCoords[i][1],this.stemEndCoords[i][2]);
 		this.scene.rotate(this.stemAngles[i].y,0,1,0);
@@ -104,26 +116,19 @@ export class MyStem extends CGFobject {
 		this.scene.scale(this.radius, this.stemLengths[i], this.radius);
 		this.scene.rotate(Math.PI/2, 1, 0, 0);
 		this.cylinder.display();
-		this.scene.popMatrix();
+		this.scene.popMatrix();//STEM END
 		
-		this.scene.pushMatrix();
+		this.scene.pushMatrix(); //STEM SPHERE BEGIN
 		this.scene.translate(this.stemEndCoords[i][0],this.stemEndCoords[i][1],this.stemEndCoords[i][2]);
 		this.scene.scale(this.radius, this.radius, this.radius);
 		this.sphere.display();
-		this.scene.popMatrix();
+		this.scene.popMatrix(); ///STEM SPHERE END
 		
 	}
 	display(){
 		for(var i=0;i<this.numberOfStems;i++){
 			this.makeStem(i);	
 		}
-
-		/*this.scene.pushMatrix();
-		this.scene.scale(this.radius, 1, this.radius);
-		this.scene.rotate(Math.PI/2, 1, 0, 0);
-		this.cylinder.display();
-		this.scene.popMatrix();*/
-
 	}
 }
 

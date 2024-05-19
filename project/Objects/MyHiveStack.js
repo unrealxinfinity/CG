@@ -5,6 +5,9 @@ import { MyPollenSet } from './MyPollenSet.js';
 * MyHive
 * @constructor
  * @param scene - Reference to MyScene object
+ * @param barLength - length of the sides
+ * @param barText - texture of the sides
+ * @param centerText - texture of the center piece
 */
 export class MyHiveStack extends CGFobject {
     constructor(scene,barLength,barText,centerText) {
@@ -17,6 +20,12 @@ export class MyHiveStack extends CGFobject {
         this.pollenSet = new MyPollenSet(scene,[]);
         this.position=[];
     }
+    /**
+     * Displays the stacks for the hive levels
+     * @param {Number} i - index of the stack 
+     * @param {Array} pollens -array of pollens to be displayed
+     * @param {Number} pollenScale - scale of the pollens in reverse to make it smaller
+     */
     display(i,pollens,pollenScale){
         //BACK BEGIN
         this.scene.pushMatrix();

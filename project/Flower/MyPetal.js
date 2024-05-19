@@ -6,7 +6,7 @@ import { MyTriangle } from '../Objects/MyTriangle.js';
  * @param scene - Reference to MyScene object
  * @param innerRadius - inner radius of the flower
  * @param outerRadius - outer radius of the flower
- * @param objects - objects to be used in the petal
+ * @param texCoords - texture coordinates for the petal
  */
 export class MyPetal extends CGFobject {
 	constructor(scene, innerRadius, outerRadius, texCoords) {
@@ -19,20 +19,21 @@ export class MyPetal extends CGFobject {
                 this.triangle1.updateTexCoords(texCoords[0]);
                 this.triangle2.updateTexCoords(texCoords[1]);
 	}
-	
-	display(angle, texCoords) {
+	/**
+         * displays the petals according to certain rotation
+         * @param {Number} angle 
+         */
+	display(angle) {
                 this.scene.pushMatrix();
                 this.scene.pushMatrix();
                 this.scene.rotate(Math.PI, 0, 0, 1);
                 this.scene.scale(0.8, this.diff, 1);
                 this.scene.translate(0, -1, 0);
-                //this.triangle.updateTexCoords(texCoords[0]);
                 this.triangle1.display();
                 this.scene.popMatrix(); 
                 this.scene.scale(0.8, this.diff, 1);
                 this.scene.translate(0, 1, 0);
                 this.scene.rotate(angle, 1, 0, 0);
-                //this.triangle.updateTexCoords(texCoords[1]);
                 this.triangle2.display();
                 this.scene.popMatrix();
 	}

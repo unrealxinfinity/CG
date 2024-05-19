@@ -2,10 +2,12 @@ import {CGFappearance, CGFobject,CGFtexture} from '../../lib/CGF.js';
 import { MyBee } from './MyBee.js';
 import { MyCube } from './MyCube.js';
 import { MyHiveStack } from './MyHiveStack.js';
+import { MyPollen } from './MyPollen.js';
 /**
 * MyHive
 * @constructor
  * @param scene - Reference to MyScene object
+ * @param pos - position of the hive
 */
 export class MyHive extends CGFobject {
     constructor(scene,pos) {
@@ -30,9 +32,17 @@ export class MyHive extends CGFobject {
         
 
     }
+    /**
+     * Gets the hive bee
+     * @returns the bee of the hive
+     */
     getAnimationBee(){
         return this.animationBee;
     }
+    /**
+     * Adds a pollen to the hive
+     * @param {MyPollen} pollen - reference to the pollen added
+     */
     addPollen(pollen) {
         this.playBeeAnimation(pollen).then(() => {
             setTimeout(() => {
@@ -40,6 +50,11 @@ export class MyHive extends CGFobject {
             }, 1000);
         });
     }
+    /**
+     * Plays the helper bee animation in the hive
+     * @param {MyPollen} pollen 
+     * @returns promise that adds the pollen to the hive when the animation is finished
+     */
     playBeeAnimation(pollen){
         this.animationBee.getPollen2(pollen);
         return new Promise(resolve => {
@@ -51,7 +66,10 @@ export class MyHive extends CGFobject {
             }, 100); 
         });
     }
-
+    /**
+     * Displays the hive
+     * @param {Number} pollenScale - scale of the pollen
+     */
     display(pollenScale){
         //BOTTOM BEGIN
         this.scene.pushMatrix();

@@ -4,6 +4,7 @@ import {CGFobject, CGFshader} from '../../lib/CGF.js';
 * @constructor
  * @param scene - Reference to MyScene object
  * @param slices - number of divisions around the Y axis
+ * @param material - material to be applied
 */
 export class MyGrassBlade extends CGFobject {
     constructor(scene, slices, material) {
@@ -17,17 +18,24 @@ export class MyGrassBlade extends CGFobject {
         this.angleAmplitude = Math.PI/2 - this.angle;
         this.initBuffers();
     }
-
+    /**
+     * Updates the angle of the grass blade according to time
+     * @param {Number} t 
+     */
     update(t) {
         this.angle = Math.cos(0.01*t)*this.angleAmplitude;
         
     }
-
+    /**
+     * Applies the shader to the grass blade
+     * @param {CGFshader} shader 
+     */
     apply(shader) {
         this.material.apply();
         shader.setUniformsValues({'angle': this.angle});
     }
-
+  
+    
     initBuffers() {
         this.vertices = [];
         this.indices = [];
