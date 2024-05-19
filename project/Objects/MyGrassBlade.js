@@ -16,6 +16,7 @@ export class MyGrassBlade extends CGFobject {
         const sixthPi = Math.PI/6;
         this.angle = Math.random()*sixthPi*2.5 + sixthPi;
         this.angleAmplitude = Math.PI/2 - this.angle;
+        this.strength = 1.0;
         this.initBuffers();
     }
     /**
@@ -23,8 +24,11 @@ export class MyGrassBlade extends CGFobject {
      * @param {Number} t 
      */
     update(t) {
-        this.angle = Math.cos(0.01*t)*this.angleAmplitude;
-        
+        this.angle = Math.cos(0.01*t*this.strength)*this.angleAmplitude;
+    }
+
+    setStrength(strength) {
+        this.strength = strength;
     }
     /**
      * Applies the shader to the grass blade

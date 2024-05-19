@@ -66,10 +66,15 @@ export class MyBee extends CGFobject {
         this.stripedApp = new CGFappearance(this.scene);
         this.stripedTex = new CGFtexture(this.scene, "images/beestripe.jpg");
         this.stripedApp.setTexture(this.stripedTex);
-        this.stripedApp.setAmbient(1,1,1,1);
-        this.stripedApp.setDiffuse(1,1,1,1);
-        this.stripedApp.setSpecular(0,0,0,1);
+        this.stripedApp.setAmbient(0.5,0.5,0.06,1);
+        this.stripedApp.setDiffuse(1,1,0.06,1);
+        this.stripedApp.setSpecular(1,1,0.06,1);
         this.stripedApp.setTextureWrap('REPEAT', 'REPEAT');
+
+        this.stingerApp = new CGFappearance(this.scene);
+        this.stingerApp.setAmbient(1,1,1,1);
+        this.stingerApp.setDiffuse(1,1,1,1);
+        this.stingerApp.setSpecular(1,1,1,1);
 
         this.eyeApp = new CGFappearance(this.scene);
         this.eyeTex = new CGFtexture(this.scene, "images/beeeye.jpg");
@@ -88,9 +93,9 @@ export class MyBee extends CGFobject {
         this.toraxApp.setTextureWrap('REPEAT', 'REPEAT');
 
         this.headApp = new CGFappearance(this.scene);
-        this.headApp.setAmbient(1,1,0.06,1);
+        this.headApp.setAmbient(0.5,0.5,0.06,1);
         this.headApp.setDiffuse(1,1,0.06,1);
-        this.headApp.setSpecular(0,0,0,1);
+        this.headApp.setSpecular(1,1,0.06,1);
 
         this.legApp = new CGFappearance(this.scene);
         this.legApp.setAmbient(0.1,0.1,0.1,1);
@@ -176,6 +181,7 @@ export class MyBee extends CGFobject {
         this.scene.translate(0,-0.8,0);
         this.scene.rotate(Math.PI, 0, 0, 1);
         this.scene.scale(0.2,0.5,0.2);
+        this.stingerApp.apply();
         this.cone.display();
         this.scene.popMatrix(); //END NEEDLE
         this.scene.popMatrix();
@@ -243,6 +249,25 @@ export class MyBee extends CGFobject {
         this.scene.scale(0.5, 0.1, 2);
         this.sphere.display();
         this.scene.popMatrix(); 
+
+        this.wingApp.apply();
+        this.scene.pushMatrix();
+        this.scene.translate(-1.1*this.sin*this.cos, 1.1*this.sin*this.sin, 1.1*this.cos);
+        this.scene.rotate(-this.wingRotationZ, 0, 0, 1);
+        this.scene.rotate(2*this.wingRotationY, 0, 1, 0);
+        this.scene.translate(0,0,1);
+        this.scene.scale(0.25, 0.05, 1);
+        this.sphere.display();
+        this.scene.popMatrix();
+        this.scene.pushMatrix();
+        this.scene.scale(1,1,-1);
+        this.scene.translate(-1.1*this.sin*this.cos, 1.1*this.sin*this.sin, 1.1*this.cos);
+        this.scene.rotate(-this.wingRotationZ, 0, 0, 1);
+        this.scene.rotate(2*this.wingRotationY, 0, 1, 0);
+        this.scene.translate(0,0,1);
+        this.scene.scale(0.25, 0.05, 1);
+        this.sphere.display();
+        this.scene.popMatrix();
 
         
         this.scene.popMatrix(); //END WINGS

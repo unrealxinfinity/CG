@@ -18,16 +18,21 @@ void main() {
 
     float scaledTime = timeFactor;
 
-    if((scaledTime+0.05)>1.0){
-        scaledTime = 0.0 ;
-    }
+    
     vec2 regionMin = vec2(scaledTime, 0.2); 
     vec2 regionMax = vec2(scaledTime + 0.05, 0.30); 
+    float transformedX = vTextureCoord.x;
+    if (scaledTime >= 0.95 && vTextureCoord.x <= 0.1) {
+        transformedX += 1.0;
+    }
+    vec2 aTextureCoord = vec2(transformedX, vTextureCoord.y);
     
     // Check if the current fragment is in the region
     if (vTextureCoord.y > regionMin.y && vTextureCoord.y < regionMax.y)
     {
-        vec2 cloudCoords = (vTextureCoord - regionMin) / (regionMax - regionMin);
+        vec2 cloudCoords = (aTextureCoord - regionMin) / vec2(0.05,0.1);
+        cloudCoords.x = mod(vTextureCoord.x + scaledTime, 1.0);
+        
         cloudTexture = texture(uSampler1, cloudCoords);
 	
     }

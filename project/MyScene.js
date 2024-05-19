@@ -59,6 +59,7 @@ export class MyScene extends CGFscene {
     this.hiveY=-70;
     this.hiveSize=5;
 
+    this.grassStrength = 1;
     this.enableTextures(true);
     this.descending=false;
     this.petalTextures = [new CGFtexture(this, "images/petal1.jpg"), new CGFtexture(this, "images/petal2.jpg"),
@@ -74,7 +75,7 @@ export class MyScene extends CGFscene {
     this.earthppearance = new CGFappearance(this);
     this.earthppearance.setTexture(this.earth);
     this.earthppearance.setTextureWrap('REPEAT', 'REPEAT');
-    this.cloudText = new CGFtexture(this, "images/cloud.jpg");
+    this.cloudText = new CGFtexture(this, "images/multiple_clouds.jpg");
     this.cloudApp = new CGFappearance(this.cloudText);
     this.cloudApp.setTextureWrap('REPEAT', 'REPEAT');
 
